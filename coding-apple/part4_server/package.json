@@ -1,0 +1,16 @@
+{
+  "name": "part4_server",
+  "version": "1.0.0",
+  "description": "Node+Express 서버와 React 연동하기\r <br />\r <br />",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {}
+}

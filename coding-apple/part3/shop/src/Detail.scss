@@ -1,0 +1,47 @@
+.wow {
+  &-enter {
+    opacity: 0;
+  }
+  &-enter-active {
+    opacity: 1;
+    transition: all 500ms;
+  }
+}
+
+@mixin myAlert() {
+  background: #eee;
+  padding: 20px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+.my-alert {
+  @include myAlert();
+}
+.my-alert p {
+  margin-bottom: 0;
+}
+
+.my-alert2 {
+  @extend .my-alert;
+  background: #ffe591;
+}
+
+.viewbox {
+  width: 100%;
+  max-width: 450px;
+  padding: 20px 0;
+  background: #eee;
+  margin: 100px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .item {
+    width: 100px;
+    margin: 0 10px;
+    padding: 10px;
+    background: #fff;
+  }
+}

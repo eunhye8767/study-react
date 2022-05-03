@@ -1,0 +1,25 @@
+{  // 앱정보
+  "short_name": "React App",  // 앱 이름(앱 아이콘 아래에 보여지는 이름)
+  "name": "Create React App Sample",
+  "icons": [  // Android, iOS, Windows 마다 요구하는 아이콘 크기가 다름
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",  // 앱 누르면 처음 뜨는 페이지 경로
+  "display": "standalone",  // 앱 켜면 브라우저 상단바 제거할지> 말지? (기본값 제거)
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
