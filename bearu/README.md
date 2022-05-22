@@ -51,3 +51,30 @@ function App() {
 }
 ```
 
+### state 활용
+```javascript
+// Input.js
+function Input () {
+  const [inputs, setInputs] = useState({
+    subject: "",
+    score: "",
+  })
+
+  // input에 입력한 값으로 체인지 함수
+  const onChange = (e) => {
+    const { value, name } = e.target;
+    setInputs({
+      // 객체 값을 변경할 땐, 항시 복사를 먼저 한 후에 수정해야 한다.
+      ...inputs,
+      // name만 써주게되면 string으로 인식이 되기 때문에 []로 표시 한다.
+      [name] : value
+    })
+  }
+
+  return (<div>
+    <h2>성적: {inputs.subject} {inputs.score}</h2>
+    <input type="text" name="subject" placeholder="수학" value={inputs.subject} onChange={onChange} />
+    <input type="text" name="score" placeholder="99" value={inputs.score} onChange={onChange} />
+  </div>)
+}
+```
