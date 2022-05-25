@@ -147,3 +147,51 @@ export default App;
 <br />
 <br />
 
+## useHistory
+- `npm install react-router-dom` :<br />서로 다른 페이지로 이동할 떄 주로 쓰는 기능을 모아둔 패키지.
+```javascript
+import React from "react";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+function App() {
+  return (
+    <BrowserRouter>
+      // to에 명시된 페이지로 이동.
+      <Link to ="/home">Home</Link>
+
+      <Routes>
+        // 현재 경로에 맞는 컴포넌트를 보여준다.
+        <Route path="/" element={<Index />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function Index() {
+  let navigate = useNavigate();
+  function handleClick() {
+    // 입력받은 경로로 이동이 된다.
+    navigate("/home");
+  }
+  return (
+    <>
+      <h2>Index</h2>
+      <button onClick={handleClick}>Go to Home</button>
+    </>
+  );
+}
+
+function Home() {
+  return (
+    <>
+      <h2>Home</h2>
+      <p>This is home</p>
+    </>
+  );
+}
+
+export default App;
+```
+<br />
+<br />
