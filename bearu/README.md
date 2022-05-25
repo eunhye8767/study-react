@@ -1,10 +1,7 @@
-## BEAR U
-<hr />
-
-<br />
+# BEAR U
 <br />
 
-### defaultProps
+## defaultProps
 - props(프롭스) 기본값을 정의.
 ```javascript
 // App.js
@@ -26,8 +23,9 @@ Hello.defaultProps = {
 export default Hello;
 ```
 <br />
+<br />
 
-### 'children'으로 하위 컴포넌트 불러오기
+## 'children'으로 하위 컴포넌트 불러오기
 - 감싸는 컴포넌트(ex. Wrapper)가 `{children}`을 넣어줘야 하위요소를 감싸준다.
 ```javascript
 // Wrapper.js
@@ -51,8 +49,9 @@ function App() {
 }
 ```
 <br />
+<br />
 
-### state 활용
+## state 활용
 ```javascript
 // Input.js
 function Input () {
@@ -81,9 +80,9 @@ function Input () {
 ```
 <br />
 
-### Hook
-#### 라이프사이클 (lifecycle, 컴포넌트의 생명주기)
-![react-lifecycle-diagram](./imgs/hook-lifecycle.png);
+## Hook
+### 라이프사이클 (lifecycle, 컴포넌트의 생명주기)
+![react-lifecycle-diagram](./imgs/hook-lifecycle.png)
 - 리액트 라이프 사이클 다이어그램 : [자세히보기](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
 <br />
 
@@ -98,27 +97,28 @@ function Input () {
 - 사용하다가 컴포넌트가 필요없어지게 된다면 **Unmounting** 페이지를 거쳐서 사라지게 된다.
 <br />
 
-#### render 페이지와 commit 페이지
+### render 페이지와 commit 페이지
 - **render 페이지** : 리액트에서 관리.
 - **commit 페이지** : 브라우저에 나타나는 부분.
 <br />
+<br />
 
 
-### useEffect
+## useEffect
 - 페이지가 로딩될 때 작동하는 Hook.
 - 자동으로 호출이 되는 훅 => **useEffect**.
 - 컴포넌트가 마운트가 되고 DOM이 변경이 된 다음, 렌더링이 일어난 다음 useEffect가 실행이 된다.
 
-#### useEffect 언제 필요할 까?
+### useEffect 언제 필요할 까?
 - **props 속한 값을 컴포넌트의 로컬 변수로 선언한 경우 :**,<br />컴포넌트의 로컬 변수가 props로 부터 오는 경우에 useEffect에서 할당.
 - **외부 api를 호출해서 통신을 통해 어떤 값을 받아오거나 받아온 값을 state로 넣어주는 경우**
 - **3rd party(써드파티) 라이브러리를 써서 무언가 다른 작업들을 해줘야 할 때**<br />* 3rd party(써드파디) 라이브러리란? 제 3자 라이브러리. 개인 개발자나 프로젝트 팀 혹은 업체 등에서 개발한 라이브러리.
 <br />
 
-**렌더링이 다 되면, 화면에는 요소들이 다 나타나고 그 다음에 다시 한 번 데이터를 변경하는 그런 작업들을 useEffect가 한다.**
+#### 렌더링이 다 되면, 화면에는 요소들이 다 나타나고 그 다음에 다시 한 번 데이터를 변경하는 그런 작업들을 useEffect가 한다.
 <br />
 
-#### useEffect 예제
+### useEffect 예제
 ```javascript
 import React, { useState, useEffect } from "react";
 
@@ -126,7 +126,7 @@ function App() {
   const [count, setCount] = useState(0);
   useEffect(() => {
     console.log("useEffect");
-    
+
     // 브라우저 타이틀 변경
     document.title = "You Clicked ${count} times";
   });
@@ -147,3 +147,6 @@ function App() {
 
 export default App;
 ```
+<br />
+<br />
+
