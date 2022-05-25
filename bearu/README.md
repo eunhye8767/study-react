@@ -195,3 +195,41 @@ export default App;
 ```
 <br />
 <br />
+
+## useRef (베어유 강의 내용 아님.)
+- `useRef` 함수는 current 속성을 가지고 있는 객체를 반환하는데, 인자로 넘어온 초기값을 current 속성에 할당한다.
+- 이 current 속성은 값을 변경해도 상태를 변경할 때 처럼 React 컴포넌트가 다시 랜더링되지 않는다. 
+- React 컴포넌트가 다시 랜더링될 때도 마찬가지로 이 current 속성의 값이 유실되지 않는다.
+- `useRef` 훅 함수가 반환하는 객체의 이러한 독특한 성질을 이용하여 startCounter()와 stopCounter() 함수를 구현했다.
+```javascript
+import React, { useState, useRef } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+  const intervalId = useRef(null);
+  console.log(`랜더링... count: ${count}`);
+
+  const startCounter = () => {
+    intervalId.current = setInterval(
+      () => setCount((count) => count + 1),
+      1000
+    );
+    console.log(`시작... intervalId: ${intervalId.current}`);
+  };
+
+  const stopCounter = () => {
+    clearInterval(intervalId.current);
+    console.log(`정지... intervalId: ${intervalId.current}`);
+  };
+
+  return (
+    <>
+      <p>자동 카운트: {count}</p>
+      <button onClick={startCounter}>시작</button>
+      <button onClick={stopCounter}>정지</button>
+    </>
+  );
+}
+
+export default App;
+```
