@@ -103,3 +103,47 @@ function Input () {
 - **commit 페이지** : 브라우저에 나타나는 부분.
 <br />
 
+
+### useEffect
+- 페이지가 로딩될 때 작동하는 Hook.
+- 자동으로 호출이 되는 훅 => **useEffect**.
+- 컴포넌트가 마운트가 되고 DOM이 변경이 된 다음, 렌더링이 일어난 다음 useEffect가 실행이 된다.
+
+#### useEffect 언제 필요할 까?
+- **props 속한 값을 컴포넌트의 로컬 변수로 선언한 경우 :**,<br />컴포넌트의 로컬 변수가 props로 부터 오는 경우에 useEffect에서 할당.
+- **외부 api를 호출해서 통신을 통해 어떤 값을 받아오거나 받아온 값을 state로 넣어주는 경우**
+- **3rd party(써드파티) 라이브러리를 써서 무언가 다른 작업들을 해줘야 할 때**<br />* 3rd party(써드파디) 라이브러리란? 제 3자 라이브러리. 개인 개발자나 프로젝트 팀 혹은 업체 등에서 개발한 라이브러리.
+<br />
+
+**렌더링이 다 되면, 화면에는 요소들이 다 나타나고 그 다음에 다시 한 번 데이터를 변경하는 그런 작업들을 useEffect가 한다.**
+<br />
+
+#### useEffect 예제
+```javascript
+import React, { useState, useEffect } from "react";
+
+function App() {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    console.log("useEffect");
+    
+    // 브라우저 타이틀 변경
+    document.title = "You Clicked ${count} times";
+  });
+  return (
+    <>
+      <p>You clicked {count} times</p>
+      <button
+        onClick={() => {
+          console.log("click");
+          setCount(count + 1);
+        }}
+      >
+        click me
+      </button>
+    </>
+  );
+}
+
+export default App;
+```
