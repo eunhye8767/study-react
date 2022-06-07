@@ -388,4 +388,9 @@ export default App;
   ```
   json-server --watch ./src/db/data.json --port 3001
   ```
-
+- `http://localhost:3001/items` => json 파일을 확인할 수 있다.
+- `http://localhost:3001/items/1` => 1처럼 해당 id 값을 넣으면 그에 해당하는 id값 정보를 확인할 수 있다.
+- 쿼리 셀렉트로 todo만 보고 싶을 때 items 뒤에 `?키=밸류` 값을 넣어주면 확인할 수 있다.
+  ```
+  http://localhost:3001/items?status=done
+  ```
