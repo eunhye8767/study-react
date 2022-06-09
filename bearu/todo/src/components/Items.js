@@ -1,8 +1,16 @@
+import { useEffect, useState } from "react";
 import Item from "./Item";
 
 export default function Items() {
-  let item = { status: "todo", task: "커피마시기", due: "20220331"};
-  
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:3001/items")
+      .then((res) => res.json())
+      .then((json_res) => setData(json_res));
+  });
+  let item = { status: "todo", task: "커피마시기", due: "20220331" };
+
   return (
     <table>
       <thead>
@@ -14,10 +22,10 @@ export default function Items() {
         </tr>
       </thead>
       <tbody>
-        <Item item={item} />
-        <Item item={item} />
-        <Item item={item} />
+        {data.map((item) => {
+          return <Item key={item.id} item={item} />
+        })}
       </tbody>
     </table>
   );
-};
+}
