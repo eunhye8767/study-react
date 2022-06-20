@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import Item from "./Item";
 
-export default function Items() {
+export default function Items({endpoint = ""}) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/items")
+    fetch(`http://localhost:3001/items${endpoint}`)
       .then((res) => res.json())
       .then((json_res) => setData(json_res));
   });
