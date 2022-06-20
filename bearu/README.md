@@ -394,3 +394,71 @@ export default App;
   ```
   http://localhost:3001/items?status=done
   ```
+
+<br />
+<br />
+
+## 배포
+### json-server 재설치
+- 빌드할 프로젝트 폴더를 기준, `npm install json-server express path dotenv`
+- server.js (src 폴더)
+  ```javascript
+  const jsonServer = require("json-server");
+  const app = jsonServer.create();
+  const path = require("path");
+  const express = require("express");
+  const middlewares = jsonServer.defaults();
+  const router = jsonServer.router("src/db/data.json");
+
+
+  app.use("/api", middlewares, router);
+  app.use(express.static(path.join(__dirname, "build")));
+  app.get("/*", function (req, res) {
+    res.sendFile(path.join(__dirname, "build", "index.html"));
+  });
+  app.listen(3000);
+  console.log(`Start server with port 3000`);
+  ```
+- .env (src 폴더)
+  ```
+  PORT=3000
+  REACT_APP_BACKEND_API_URI=/api
+  ```
+  <Br />
+
+  - 위와 같이 생성한 후에 기존에 적용한 주소를 수정해준다.
+    ```javascript
+    // 기존
+    useEffect(() => {
+      fetch(`http://localhost:3001/items${endpoint}`)
+        .then((res) => res.json())
+        .then((json_res) => setData(json_res));
+    });
+    ```
+    ```javascript
+    // 변경
+    useEffect(() => {
+      fetch(`${REACT_APP_BACKEND_API_URI}/items${endpoint}`)
+        .then((res) => res.json())
+        .then((json_res) => setData(json_res));
+    });
+    ```
+
+  - `App.js`에 아래 코드를 추가한다.<br />아래를 추가해줘야 `.env` 파일을 읽어올 수 있다.
+    ```javascript
+    import dotenv from "dotenv";
+    dotenv.config();
+    ```
+- 위와 같이 설정한 후에 `build` 한다.
+  - `npm run build` 실행
+  - `node server.js` 실행
+
+- src 폴더 기준, `Procfile` 파일을 생성한다.<Br />헤로쿠(Heroku)에 배포할 예정.
+  ```
+  web: nodo server.js
+  ```
+
+- 헤로쿠에 배포하기 전, github에 등록을 먼저 한다.
+- 헤로쿠에 가입 후 배포한다.
+  - Automatic deploys => 특정 브랜치로 푸시할 때마다 업데이트
+  - Manual deploys => 사이트 내 Deploy Branch 버튼을 누를 떄마다 업데이트
