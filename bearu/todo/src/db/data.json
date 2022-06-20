@@ -19,16 +19,10 @@
       "status": "done"
     },
     {
-      "id": 4,
-      "task": "달리기",
-      "due": "20210904",
-      "status": "done"
-    },
-    {
       "id": 5,
       "task": "숙제하기",
       "due": "20210905",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": 6,
@@ -83,12 +77,6 @@
       "due": "처리완료 ㅋㅋ",
       "status": "todo",
       "id": 14
-    },
-    {
-      "task": "asdfasdfasdf",
-      "due": "asdfjkasdljf;lkasdj;flkas",
-      "status": "todo",
-      "id": 15
     }
   ]
 }
