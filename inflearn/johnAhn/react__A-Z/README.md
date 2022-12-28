@@ -128,6 +128,7 @@
 - [To-Do 앱 최적화 하기-1.pdf](https://github.com/eunhye8767/study-react/blob/master/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%233%20To-Do%20%E1%84%8B%E1%85%A2%E1%86%B8%20%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%92%E1%85%AA%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%B5-1.pdf)
 - [To-Do 앱 최적화 하기-2.pdf](https://github.com/eunhye8767/study-react/blob/master/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%233%20To-Do%20%E1%84%8B%E1%85%A2%E1%86%B8%20%E1%84%8E%E1%85%AC%E1%84%8C%E1%85%A5%E1%86%A8%E1%84%92%E1%85%AA%20%E1%84%92%E1%85%A1%E1%84%80%E1%85%B5-2.pdf)
 
+<br />
 
 ### [참조] 리액트 모듈 설치 시 나는 종속성(dependency) 에러 해결 방법
 리액트18 버전에서 라이브러리들을 설치할 때<br />
@@ -168,7 +169,7 @@ npm의 강제 설치 옵션으로 설치해주시면 됩니다.
 <br />
 <br />
 
-#### tailwind CSS 사용
+### tailwind CSS 사용
 - vscode 경우, `tailwind CSS IntelliSense`를 설치한다.
 - [Tailwind CSS 공홈 바로가기](https://tailwindcss.com/)
 - [CRA에 TailWindCSS 적용하기](https://tailwindcss.com/docs/guides/create-react-app)
