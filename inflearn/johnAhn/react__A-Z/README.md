@@ -465,3 +465,26 @@ root.render(
     setTodoData(newTodoData);
   }
   ```
+
+<br />
+<br />
+<br />
+
+#### 3-5. React.memo를 이용한 컴포넌트 렌더링 최적화
+- 모든 컴포넌트에 `console.log("?? is Rendering")`으로 보여지게 적용.<br />
+  ![3-5-1](./imgs/3-5-1.png)<br />
+  <br />
+  
+- 한 글자 입력 시마다 `props`가 바뀌지 않아서 렌더링을 하지 않아도 되는 `Lists` 컴포넌트와 `List` 컴포넌트까지 다시 렌더링 되는 것을 볼 수 있다.<br />
+  ![3-5-2](./imgs/3-5-2.png)<br />
+  <br />
+
+> React.memo 적용으로 문제를 해결
+- `React.mome` 적용은 간단하게 원하는 컴포넌트를 React.memo로 감싸주면 된다.
+  ```javascript
+  const Lists = React.memo(({ todoData, setTodoData}) => {
+
+  })
+
+  export default Lists;
+  ```
