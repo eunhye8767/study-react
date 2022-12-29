@@ -576,3 +576,158 @@ const handleClick = useCallback((id) => {
 <br />
 <br />
 <br />
+
+#### 3-9. 할 일 리스트 모두 지우기 버튼 생성
+```javascript
+// App.js 
+
+// 할일 리스트 모두 지우기
+const handleRemoveClick = () => {
+  setTodoData([]);
+}
+
+<div className="flex justify-between mb-3">
+  <h1>할 일 목록</h1>
+  <button onClick={handleRemoveClick}>Delete All</button>
+</div>
+```
+
+<br />
+<br />
+<br />
+
+#### 3-10. 할 일 목록을 수정하는 기능 추가하기
+
+![3-10-1](./imgs/3-10-1.png)<br />
+<br />
+
+> 다른 UI 제공을 위한 State 생성
+
+```javascript
+const [isEditing, setIsEditing] = useState(false);
+const [editedTitle, setEditedTitle] = useState(title);
+```
+
+<br />
+
+> Edit 버튼 추가 & 클릭 시 isEditing State 변경
+
+```html
+<div className="items-center">
+  <button className="float-right px-4 py-2" onClick={() => handleClick(id)}>
+    x
+  </button>
+  <button className="float-right px-4 py-2" onClick={() => setIsEditing(true)}>
+    edit
+  </button>
+</div>
+```
+
+<br />
+
+> 조건에 따른 UI 렌더링
+
+![3-10-2](./imgs/3-10-2.png)<br />
+<br />
+
+> editing 시 UI 작성
+```javascript
+if (isEditing) {
+  return (
+    // 조건에 따른 UI 렌더링
+    <div className="flex items-center justify-between w-full px-4 py-1 my-2 bg-gray-100 text-gray-600 border rounded">
+      <form>
+        <input type="text" value={editedTitle} className="w-full px-3 py-2 mr-4 text-gray-500 rounded" />
+      </form>
+
+      <div className="items-center">
+        <button className="float-right px-4 py-2" onClick={() => setIsEditing(false)}>
+          x
+        </button>
+        <button type="submit" className="float-right px-4 py-2">
+          save
+        </button>
+      </div>
+    </div>
+  );
+} else {
+  return (
+    <div
+      key={id}
+      {...provided.draggableProps}
+      ref={provided.innerRef}
+      {...provided.dragHandleProps}
+      className={`
+        ${snapshot.isDragging ? "bg-gray-400" : "bg-gray-100"}
+        flex items-center justify-between w-full px-4 py-1 my-2 text-gray-600 border rounded
+    `}>
+      <div className="items-center">
+        <input
+          type="checkbox"
+          id={`ck-${id}`}
+          onChange={() => {
+            handleCompleChange(id);
+          }}
+          defaultChecked={false}
+        />
+```
+
+<br />
+
+> editing 입력할 때 editedTitle State 변경
+```javascript
+const handleEditChange = (e) => {
+  setEditedTitle(e.target.value);
+}
+
+<form>
+  <input
+    type="text"
+    value={editedTitle}
+    className="w-full px-3 py-2 mr-4 text-gray-500 rounded"
+    onChange={handleEditChange}
+    autoFocus
+  />
+</form>
+```
+
+<br />
+
+> editing 입력 후 Save
+
+```javascript
+const handleSubmit = (e) => {
+  e.preventDefault();
+
+  let newTodoData = todoData.map((data) => {
+    if (data.id === id) {
+      data.title = editedTitle;
+    }
+
+    return data;
+  });
+
+  setTodoData(newTodoData);
+  setIsEditing(false);
+};
+
+
+// form 안에 없기 때문에 onClick 이벤트와 onSubmit 이벤트로 연결
+<form onSubmit={handleSubmit}>
+  <input
+    type="text"
+    value={editedTitle}
+    className="w-full px-3 py-2 mr-4 text-gray-500 rounded"
+    onChange={handleEditChange}
+    autoFocus
+  />
+</form>
+
+<button
+  type="submit"
+  className="float-right px-4 py-2"
+  onClick={handleSubmit}
+>
+  save
+</button>
+```
