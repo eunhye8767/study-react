@@ -546,7 +546,6 @@ const handleClick = useCallback((id) => {
 <br />
 
 ![3-7-1](./imgs/3-7-1.png)<br />
-<br />
 
 - `Component` 내의 `compute 함수`가 만약 복잡한 연산을 수행하면<br />결과 값을 리턴하는데 오랜 시간이 걸리게 된다.<br />이럴 시에 컴포넌트가 계속 리렌더링 된다면 연산을 계속 수행하는데 오랜 시간이 걸려서<br />성능에 안 좋은 영향을 미치게 되며 UI 지연 현상도 일어나게 된다.
 
@@ -558,9 +557,22 @@ const handleClick = useCallback((id) => {
 
 > useMemo 적용하기
 
-`useMemo`로 감싸준 후에 첫번째 인수에 의존성 배열에 `compute 함수`에서 사용하는 값을 넣어준다.<br />
+- `useMemo`로 감싸준 후에 첫번째 인수에 의존성 배열에 `compute 함수`에서 사용하는 값을 넣어준다.<br />
 ![3-7-2](./imgs/3-7-2.png)<br />
 <br />
 <br />
 <br />
 
+
+#### 3-8. 리액트 확장 프로그램 추가
+- [크롬, React Developer Tools 다운로드 받기](https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=ko&)
+
+<br />
+
+> 익스텐션을 이용해서 렌더링 되는 부분 표시하기
+
+- `components 탭`에서 `Highligh updates` 부분을 **체크**해주면 쉽게 컴포넌트가 렌더링 되는 것을 볼 수 있다.<br />
+![3-8-1](./imgs/3-8-1.png)<br />
+<br />
+<br />
+<br />
