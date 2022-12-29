@@ -130,7 +130,7 @@
 
 <br />
 
-### [참조] 리액트 모듈 설치 시 나는 종속성(dependency) 에러 해결 방법
+#### 3-1. [참조] 리액트 모듈 설치 시 나는 종속성(dependency) 에러 해결 방법
 리액트18 버전에서 라이브러리들을 설치할 때<br />
 종속성에 관한 에러가 날 때가 많이 있습니다. 
 
@@ -169,7 +169,7 @@ npm의 강제 설치 옵션으로 설치해주시면 됩니다.
 <br />
 <br />
 
-### tailwind CSS 사용
+#### 3-2. tailwind CSS 사용
 - vscode 경우, `tailwind CSS IntelliSense`를 설치한다.
 - [Tailwind CSS 공홈 바로가기](https://tailwindcss.com/)
 - [CRA에 TailWindCSS 적용하기](https://tailwindcss.com/docs/guides/create-react-app)
@@ -210,3 +210,14 @@ npm의 강제 설치 옵션으로 설치해주시면 됩니다.
     ```html
     <h1 className="text-3xl font-bold underline">할 일 목록</h1>
     ```
+
+<br />
+<br />
+
+#### 3-3. react-beautiful-dnd react 18 버전에서 나는 에러 해결 방법
+리액트 18버전을 사용할 때 드래그 앤 드랍 기능을 사용하면 이러한 에러가 나옵니다.<br />
+![3-3-1](./imgs/3-3-1.png)<br />
+<br />
+
+그럴 때는 리액트의 StricMode를 제거해주시면 됩니다.<br />
+![3-3-2](./imgs/3-3-2.png)<br />
