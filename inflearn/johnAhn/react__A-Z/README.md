@@ -488,3 +488,46 @@ root.render(
 
   export default Lists;
   ```
+
+<br />
+<br />
+<br />
+
+#### 3-6. useCallback을 이용한 함수 최적화
+원래 컴포넌트가 렌더링 될 때 그 안에 있는 함수도 다시 만들게 된다.<br />
+하지만 똑같은 함수를 컴포넌트가 리렌더링 된다 해서 **계속 만드는 것은 좋은 현상이 아니다**.<br />
+그리고 이렇게 컴포넌트가 리렌더링 될 때마다 함수를 계속 다시 만든다고 하면<br />
+만약 이 함수가 자식 컴포넌트에 `props`로 내려준다면 <br />
+함수를 포함하고 있는 컴포넌트가 리렌더링 될 때마다 <br />
+**자식 컴포넌트도 함수가 새롭게 만들어지니 계속 리렌더링**하게 된다.<br />
+![3-6-1](./imgs/3-6-1.png)<br />
+<br />
+
+> 삭제 버튼 함수 App 컴포넌트로 이동
+```javascript
+// useCallback 적용 전
+
+// App.js
+const handleClick = (id) => {
+  let newTodoData = todoData.filter(data => data.id !== id);
+  setTodoData(newTodoData);
+}
+```
+- `React.memo()`을 사용하여 컴포넌트 최적화한 부분이 다시 리렌더링 되는 것으로 확인.
+- 이 경우, `useCallback()`을 사용하여 최적화 한다.
+
+<br />
+
+```javascript
+// useCallback 적용 후
+
+// App.js
+const handleClick = useCallback((id) => {
+  let newTodoData = todoData.filter(data => data.id !== id);
+  setTodoData(newTodoData);
+}, [todoData])
+```
+- `useCallback()` 적용은 `useCallback` 안에 콜백함수와 의존성 배열을 순서대로 넣어주면 된다.
+- 함수 내에서 참조하는 `state, props`가 있다면 의존성 배열에 추가해주면 된다.
+- `useCallback`으로 인해 todoData가 변하지 않는 다면 함수는 새로 생성되지 않는다.
+- **의존성 배열에 아무것도 없다면 컴포넌트가 최초 렌더링 시에만 함수가 생성되며, <br />그 이후에는 동일한 참조 값을 사용하는 함수가 된다.**
