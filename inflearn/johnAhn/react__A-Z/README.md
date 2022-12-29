@@ -103,6 +103,7 @@
 > 리액트 앱 설치 방법
 - `npx create-react-app 폴더이름` 명령어를 실행하여 설치.
 - vscode에서 현재 폴더 기준으로 리액트를 설치하고자 할 땐,<br />`npx create-react-app ./` 명령어를 실행.
+- `package.json` 기준, 재설치 등을 해야할 때 `npm install`
 
 <br />
 <br />
@@ -214,10 +215,253 @@ npm의 강제 설치 옵션으로 설치해주시면 됩니다.
 <br />
 <br />
 
-#### 3-3. react-beautiful-dnd react 18 버전에서 나는 에러 해결 방법
+#### 3-4. HTML 드래그 앤 드롭 
+- [MDN, Drag and Drop API 자세히 보기](https://developer.mozilla.org/ko/docs/Web/API/HTML_Drag_and_Drop_API)
+- HTML 드래그 앤 드롭 API를 사용하여 원하는 목록을 드래그 가능하게 만든다.
+<br />
+
+> react-beautiful-dnd 라이브러리
+- 사용자가 드래그를 할 때 적절한 애니메이션을 준다.<br />사용자가 드래그를 멈췄는 지 확인하고 여기에서도 애니메이션을 준다.<br />클라이언트가 목록을 재정렬한 경우 항목의 위치를 새 항목으로 업데이트 한다.<br /><br />**이것을 쉽게 구현할 수 있게 도와주는 모듈.**
+
+- 모듈 설치 : `npm install react-beautiful-dnd --save`
+- [npm js - react-beautiful-dnd 자세히보기](https://www.npmjs.com/package/react-beautiful-dnd)<br />
+  ![3-4-1](./imgs/3-4-1.png)<br />
+
+<br />
+<br />
+
+> (1) API를 이용한 틀 만들어주기
+```javascript
+// Lists.js
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
+<div>
+  <DragDropContext>
+    <Droppable>
+      {todoData.map(data => (
+        <Draggable>
+          <div key={data.id}>
+            <div className="flex items-center justify-between w-full px-4 py-1 my-2 text-gray-600 bg-gray-100 border rounded">
+              <div className="items-center">
+                <input 
+                  type="checkbox" 
+                  id={`ck-${data.id}`}
+                  onChange={ () => { handleCompleChange(data.id) } }
+                  defaultChecked={false}
+                />
+
+                <label htmlFor={`ck-${data.id}`} className={`pl-2 ${data.completed && 'line-through'}`}>{data.title}</label>
+              </div>
+              <div className="items-center">
+                <button onClick={ () => handleClick(data.id) }>x</button>
+              </div>
+            </div>
+          </div>
+        </Draggable>
+      ))}
+    </Droppable>
+  </DragDropContext>
+</div>
+```
+- `DragDropContext` : 드래그(drag) & 드랍(drop)을 원하는 부분을 감싸준다.
+- `Droppable` : 드랍(drop)할 수 있는 부분을 감싸준다.
+- `Draggable` : 드래그(drag)할 수 있는 부분을 감싸준다.
+
+<br />
+<br />
+
+> (2) provided object를 적용
+```javascript
+// Lists.js
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+
+<div>
+  <DragDropContext>
+    <Droppable droppableId="to-dos">
+      {(provided) => (
+        // provided 정보와 ref를 적용한다.
+        <div {...provided.droppableProps} ref={provided.innerRef}>
+          {todoData.map((data, index) => (
+            /**
+             *  map 이기 때문에 Draggable 태그에 key 값을 적용한다.
+             *  draggableId와 index 값을 적용한다.
+             */
+            <Draggable
+              key={data.id}
+              draggableId={data.id.toString()}
+              index={index}
+            >
+              {(provided, snapshot) => (
+                /**
+                 *  map 이기 때문에 key 값을 적용한다.
+                 *  provided의 props를 적용한다 (정보가 있어야 드래그 앤 드롭이 가능하다.)
+                 *    ㄴ draggableProps, dragHandleProps
+                 * 
+                 *  snapshot.isDragging을 기준으로 
+                 *  드래그 할 때, 하지 않았을 때 클래스 값을 적용한다.
+                 */
+                <div 
+                  key={data.id}
+                  {...provided.draggableProps}
+                  ref={provided.innerRef}
+                  {...provided.dragHandleProps}
+                  className={
+                    snapshot.isDragging ? "selected" : "not-selected"
+                  }>
+                  <div className="flex items-center justify-between w-full px-4 py-1 my-2 text-gray-600 bg-gray-100 border rounded">
+                    <div className="items-center">
+                      <input 
+                        type="checkbox" 
+                        id={`ck-${data.id}`}
+                        onChange={ () => { handleCompleChange(data.id) } }
+                        defaultChecked={false}
+                      />
+
+                      <label htmlFor={`ck-${data.id}`} className={`pl-2 ${data.completed && 'line-through'}`}>{data.title}</label>
+                    </div>
+                    <div className="items-center">
+                      <button onClick={ () => handleClick(data.id) }>x</button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </Draggable>
+          ))}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
+  </DragDropContext>
+</div>
+```
+- `<Droppable droppableId="to-dos">` : `droppableId`로 아이디 값을 적용한다.
+- `provided object` : 스타일 지정 및 조회를 위한 속성이 포함되어 있다.
+- 사용자가 요소를 드래그한 경우, `className` 속성을 `selected`로 변경한다. 나중에 스타일을 적용하는데 사용할 것이다.
+- `placeholder` 속성은 목록에 빈 공간을 만든다.<br />이렇게 하면 드래그 작업이 자연스럽게 느껴진다.<br />(적용했을 때, 적용하지 않았을 때 차이를 확인할 것!)
+- 현재까지 작업했을 때, 드래그 & 드랍 기능은 작동하나 데이터가 변경되진 않는다.
+
+<br />
+<br />
+
+> react 18 버전에서 나는 에러 해결 방법
 리액트 18버전을 사용할 때 드래그 앤 드랍 기능을 사용하면 이러한 에러가 나옵니다.<br />
 ![3-3-1](./imgs/3-3-1.png)<br />
 <br />
 
 그럴 때는 리액트의 StricMode를 제거해주시면 됩니다.<br />
 ![3-3-2](./imgs/3-3-2.png)<br />
+<br />
+
+```javascript
+// index.js
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  // <React.StrictMode>
+    <App />
+  // </React.StrictMode>
+);
+```
+
+<br />
+<br />
+
+> Dragging 하는 요소의 스타일링 변경
+- 수정전
+```javascript
+<div 
+  key={data.id}
+  {...provided.draggableProps}
+  ref={provided.innerRef}
+  {...provided.dragHandleProps}
+  className={ snapshot.isDragging ? "selected" : "not-selected" }
+  >
+  <div className="flex items-center justify-between w-full px-4 py-1 my-2 text-gray-600 bg-gray-100 border rounded">
+```
+<br />
+
+- 수정후 : 드래그 할 때 배경색 변경.
+- 의미없는 `div` 태그가 `<div><div></div></div>` 중복되어 있어서 하나로 합쳤다.
+```javascript
+<div 
+  key={data.id}
+  {...provided.draggableProps}
+  ref={provided.innerRef}
+  {...provided.dragHandleProps}
+  className={`
+    ${snapshot.isDragging ? "bg-gray-400" : "bg-gray-100"}
+    flex items-center justify-between w-full px-4 py-1 my-2 text-gray-600 border rounded
+  `}>
+```
+
+<br />
+<br />
+
+> splice 메서드 알아보기
+- [MDN, splice 메서드 자세히 보기](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/splice)
+- `splice() 메서드` : 배열의 기존 요소를 삭제 또는 교체하거나 새 요소를 추가하여 배열의 내용을 변경.
+- (예제) 3번 인덱스에서 한 개 요소 제거
+  ```javascript
+  var myFish = ['angel', 'clown', 'drum', 'mandarin', 'sturgeon'];
+  var removed = myFish.splice(3, 1);
+
+  // removed is ["mandarin"]
+  // myFish is ["angel", "clown", "drum", "sturgeon"]
+  ```
+
+- (예제) 2번 인덱스에서 한 개 요소 제거하고 "trumpet" 추가
+  ```javascript
+  var myFish = ['angel', 'clown', 'drum', 'sturgeon'];
+  var removed = myFish.splice(2, 1, 'trumpet');
+
+  // myFish is ["angel", "clown", "trumpet", "sturgeon"]
+  // removed is ["drum"]
+  ```
+
+- (예제) 하나도 제거하지 않고, 2번 인덱스에 "drum" 추가
+  ```javascript
+  var myFish = ['angel', 'clown', 'mandarin', 'sturgeon'];
+  var removed = myFish.splice(2, 0, 'drum');
+
+  // myFish is ["angel", "clown", "drum", "mandarin", "sturgeon"]
+  // removed is [], no elements removed
+  ```
+
+<br />
+<br />
+
+> Dragging 한 후 데이터 순서 적용(persistence)
+- `<DragDropContext onDragEnd={handleEnd}>` : `DragDropContext`에 드래그가 끝나는 이벤트 적용.
+- `handleEnd` 이벤트 생성.<br />`console.log(result)`를 콘솔 로그로 출력하면 관련 정보를 확인할 수 있다.
+  - `destination` : 어디로 이동 했는 지에 대한 정보 확인.<br />
+    ![3-4-2](./imgs/3-4-2.png)<br />
+    <br />
+
+  - `source` : 기존 어디에 있었는 지에 대한 정보 확인.<br />
+    ![3-4-3](./imgs/3-4-3.png)<br />
+    <br />
+  
+  ```javascript
+  const handleEnd = (result) => {
+    /**
+     *  result 매개변수에는 source 항목 및 대상 위치와 같은 
+     *  드래그 이벤트에 대한 정보가 포함된다.
+     */
+    console.log(result)
+
+    // 목적지가 없으면(이벤트 취소) 이 함수를 종료한다.
+    if (!result.destination) return;
+
+    // 리액트 불변성을 지켜주기 위해 새로운 todoData 생성
+    const newTodoData = todoData;
+
+    /**
+     *  1. 변경시키는 아이템을 배열에서 지워준다
+     *  2. return 값으로 지워진 아이템을 잡아준다.
+     */
+    const [reorderedItem] = newTodoData.splice(result.source.index, 1);
+
+    // 원하는 자리에 reorderedItem을 insert 해준다.
+    newTodoData.splice(result.destination.index, 0, reorderedItem);
+    setTodoData(newTodoData);
+  }
+  ```
