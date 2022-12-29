@@ -538,6 +538,7 @@ const handleClick = useCallback((id) => {
 
 #### 3-7. useMemo를 이용한 결과 값 최적화
 > Memoization 이란?
+
 메모이제이션은 비용이 많이 드는 함수 호출의 결과를 저장하고 <br />
 동일한 입력이 다시 발생할 때 **캐시된 결과를 반환하여 컴퓨터의 프로그램의 속도를 높이는데**<br />
 **주로 사용되는 최적화 기술**이다.<br />
@@ -556,6 +557,7 @@ const handleClick = useCallback((id) => {
 <br />
 
 > useMemo 적용하기
+
 `useMemo`로 감싸준 후에 첫번째 인수에 의존성 배열에 `compute 함수`에서 사용하는 값을 넣어준다.<br />
 ![3-7-2](./imgs/3-7-2.png)<br />
 <br />
