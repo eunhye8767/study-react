@@ -731,3 +731,77 @@ const handleSubmit = (e) => {
   save
 </button>
 ```
+
+<br />
+<br />
+<br />
+
+#### 3-11. localStorage에 todoData 값 담기
+`localStorage`에 `todoData` 값을 담아서 페이지를 refresh 해도 `todoData`가 계속 남아 있을 수 있게 해준다.
+
+> localStorage를 사용해서 데이터를 저장하기
+
+- [MDN, local storage 자세히 보기](https://developer.mozilla.org/ko/docs/Web/API/Window/localStorage)
+- 저장할 때
+  ```javascript
+  // localStorage.setItem('key', 'value');
+  localStorage.setItem('myCat', 'Tom');
+  ```
+
+<br />
+<br />
+
+> setTodoData를 이용해서 todoData State 를 바꿔줄 때 localStorage에도 같이 바꿔주기
+
+```javascript
+// App.js
+const handleClick = useCallback((id) => {
+  let newTodoData = todoData.filter(data => data.id !== id);
+
+  setTodoData(newTodoData);
+
+  localStorage.setItem("todoData", JSON.stringify(newTodoData));
+}, [todoData]);
+```
+
+- **객체나 배열을 저장해줄 시에는 `JSON.stringfy`를 이용해서 텍스트로 변환해준 후 저장**을 해준다.<br />
+  ![3-11-1](./imgs/3-11-1.png);
+
+- `setTodoData` 를 검색하여 해당 부분에 `localStorage.setItem()`을 추가 적용한다.
+  ```javascript
+  // javascript
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    let newTodo = {
+      id: Date.now(),
+      title: value,
+      completed: false,
+    }
+
+    setTodoData(prev => [...prev, newTodo]);
+
+    // ...prev 경우, 기존 데이터로 ...todoData로 대체 적용한다.
+    localStorage.setItem("todoData", JSON.stringify([...todoData, newTodo]));
+    setValue("");
+  }
+  ```
+
+  <br />
+  <br />
+
+> localStorage에 저장된 todoData 활용하기
+
+- 수정 전 
+  ```javascript
+  function App() {
+    const [todoData, setTodoData] = useState([]);
+  ```
+
+- 수정 후
+  ```javascript
+  const initialTodoData = localStorage.getItem("todoData") ? JSON.parse(localStorage.getItem("todoData")) : [];
+  
+  function App() {
+    const [todoData, setTodoData] = useState(initialTodoData);
+  ```
