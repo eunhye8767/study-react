@@ -805,3 +805,13 @@ const handleClick = useCallback((id) => {
   function App() {
     const [todoData, setTodoData] = useState(initialTodoData);
   ```
+
+<br />
+<br />
+<br />
+
+<hr />
+
+<br />
+<br />
+<br />
