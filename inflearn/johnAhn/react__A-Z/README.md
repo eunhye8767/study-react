@@ -810,8 +810,15 @@ const handleClick = useCallback((id) => {
 <br />
 <br />
 
-<hr />
+## 4. Netflix 앱 만들기 시작
+- [#4 Netflix 앱 만들기 시작-1.pdf](https://github.com/eunhye8767/study-react/blob/master/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%234%20Netflix%20%E1%84%8B%E1%85%A2%E1%86%B8%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20%E1%84%89%E1%85%B5%E1%84%8C%E1%85%A1%E1%86%A8-1.pdf)
+- [#4 Netflix 앱 만들기 시작-2.pdf](https://github.com/eunhye8767/study-react/blob/master/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%234%20Netflix%20%E1%84%8B%E1%85%A2%E1%86%B8%20%E1%84%86%E1%85%A1%E1%86%AB%E1%84%83%E1%85%B3%E1%86%AF%E1%84%80%E1%85%B5%20%E1%84%89%E1%85%B5%E1%84%8C%E1%85%A1%E1%86%A8-2.pdf)
 
 <br />
 <br />
-<br />
+
+#### 4-1. create-react-app 으로 프로젝트 시작
+
+> create-react-app 으로 프로젝트 만들기
+
+- `react-netflix-clone` 프로젝트 폴더 생성
