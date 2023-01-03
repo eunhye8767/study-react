@@ -822,3 +822,62 @@ const handleClick = useCallback((id) => {
 > create-react-app 으로 프로젝트 만들기
 
 - `react-netflix-clone` 프로젝트 폴더 생성
+
+<br />
+<br />
+
+> the Movie DB API 생성
+
+- [the Movie DB API 바로가기](https://www.themoviedb.org/)
+- 가입 후, `API_KEY` 받는다.<br />`settings > API` : 생성을 누른 후 `developer` 선택 후 진행.
+  ```
+  eb590f23d26955d7ae6c6edc0288ff8e
+  ```
+
+<br />
+<br />
+
+> API URL
+
+![4-1-1](./imgs/4-1-1.png)<br />
+
+```
+https://api.themoviedb.org/3/
+```
+
+- Get Movie BY Latest :
+  ```
+  https://api.themoviedb.org/3/movie/latest?api_key=eb590f23d26955d7ae6c6edc0288ff8e&language=en-US
+  ```
+
+- Get Movie Detail
+  ```
+  <!-- movie_id : 변동 -->
+  https://api.themoviedb.org/3/movie/movie_id?api_key=eb590f23d26955d7ae6c6edc0288ff8e&language=en-US
+  ```
+
+- Get Movie Reviews 
+  ```
+  <!-- movie_id : 변동 -->
+  https://api.themoviedb.org/3/movie/movie_id/reviews?api_key=eb590f23d26955d7ae6c6edc0288ff8e&language=en-US&page=1
+  ```
+
+- Get Trending
+  ```
+  https://api.themoviedb.org/3/movie/latest?api_key=eb590f23d26955d7ae6c6edc0288ff8e&language=en-US
+  ```
+
+<br />
+<br />
+
+> API URL - 이미지 가져오기
+
+![4-1-2](./imgs/4-1-2.png)<br />
+
+```
+https://image.tmdb.org/3
+```
+
+- `https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg` <br />: 넷플릭스 로고 svg
+- `https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.png` <br />: 넷플릭스 로고 png
+- `https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png` <br />: 넷플릭스 로고 - 가로너비 500 png
