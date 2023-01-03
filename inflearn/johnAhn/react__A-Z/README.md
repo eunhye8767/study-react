@@ -952,3 +952,14 @@ https://image.tmdb.org/3
 
   export default requests;
   ```
+
+<br />
+<br />
+<br />
+
+#### 4-3. 넷플릭스 애플리케이션 전체 구조 생성하기
+![4-3-1](./imgs/4-3-1.png)<br />
+
+![4-3-2](./imgs/4-3-2.png)<br />
+
+- 위 그림과 같은 구조로 폴더 생성 및 파일을 만든다.
