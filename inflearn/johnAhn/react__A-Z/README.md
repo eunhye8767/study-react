@@ -967,3 +967,11 @@ https://image.tmdb.org/3
 <br />
 <br />
 <br />
+
+#### 4-4. 네이게이션 생성
+- `onClick={ () => window.location.reload() }` : 클릭 시, 현재 페이지 리오더
+- `object-fit: contain;` <br />
+  [MDN, object-fit 자세히보기](https://developer.mozilla.org/en-US/docs/Web/CSS/object-fit)<br />
+  `img` 태그에 적용하는 css 속성.<br />
+  `fill, contain, cover, none, scale-down` 속성값을 상황에 맞게 적용.<br />
+  예상 이미지 값은 mdn 사이트 참조.
