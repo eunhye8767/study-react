@@ -881,3 +881,74 @@ https://image.tmdb.org/3
 - `https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg` <br />: 넷플릭스 로고 svg
 - `https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.png` <br />: 넷플릭스 로고 png
 - `https://image.tmdb.org/t/p/w500/wwemzKWzjKYJFfCeiB57q3r4Bcm.png` <br />: 넷플릭스 로고 - 가로너비 500 png
+
+<br />
+<br />
+
+
+#### 4-2. The Movie DB API 요청을 위한 Axios 인스턴스 생성 및 요청 보내기
+
+![4-2-1](./imgs/4-2-1.png)
+
+> Axios란?
+
+- `Axios`는 브라우저, node.js를 위한 `Promise API`를 활용하는 **HTTP 비동기 통신 라이브러리.**
+- 쉽게 말해서 백엔드랑 프론트엔드랑 통신을 쉽게하기 위해 Ajax와 더불어 사용한다.
+
+<br />
+<br />
+
+> Axios 사용 방법
+
+- axios 모듈 설치 
+  ```
+  npm install axios --save 
+  ```
+  ```javascript
+  // axios.get(경로)
+  axios.get('https://api.themoviedb.org/3/trending/all/week')
+  ```
+
+<br />  
+<br />  
+
+> Axios 인스턴스화 하는 이유
+- 중복(=반복)된 부분을 계속 입력하지 않아도 되기 때문에
+
+<br />
+<br />
+
+> Axios 인스턴스 만드는 순서
+
+- `api` 폴더를 만들고, `axios.js` 파일과 `requests.js` 파일을 만든다.
+- `api/axios.js`
+  ```javascript
+  import axios from "axios";
+
+  const instance = axios.create({
+    baseURL: 'https://api.themoviedb.org/3',
+    params: {
+      api_key: "eb590f23d26955d7ae6c6edc0288ff8e",
+      language: "ko-KR",
+    }
+  })
+
+  export default instance;
+  ```
+
+- `api/requests.js`
+  ```javascript
+  const requests = {
+    fetchNowPlaying : `movie/now_playing`,
+    fetchNetflixOriginals: `/discover/tv?with_networks=213`,
+    fetchTrending: `/trending/all/week`,
+    fetchTopRated: `/movie/top_rated`,
+    fetchActionMovies: `/discover/movie?with_genres=28`,
+    fetchComedyMovies: `/discover/movie?with_genres=35`,
+    fetchHorrorMovies: `/discover/movie?with_genres=27`,
+    fetchRomanceMovies: `/discover/movie?with_genres=10749`,
+    fetchDocumentaries: `/discover/movie?with_genres=99`,
+  }
+
+  export default requests;
+  ```
