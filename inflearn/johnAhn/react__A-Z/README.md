@@ -975,3 +975,32 @@ https://image.tmdb.org/3
   `img` 태그에 적용하는 css 속성.<br />
   `fill, contain, cover, none, scale-down` 속성값을 상황에 맞게 적용.<br />
   예상 이미지 값은 mdn 사이트 참조.
+
+  <br />
+  <br />
+  <br />
+
+#### 4-5. 이미지 배너 생성하기
+- `Math.floor(Math.random() * max)` == 자바스크립트로 랜덤 숫자 가져오기
+- `?.`**(옵셔널 체이닝 연산자)** : 옵셔널 체이닝 연산자를 이용한 object 검증방법
+  ```javascript
+  var obj = undefined;
+
+  console.log(obj?.data); // undefined
+  ```
+  ```javascript
+  var obj = {
+      data : 'test',
+  }
+
+  console.log(obj?.data); // test
+  ```
+- **글자 자르기 (자바스크립트)**
+  ```javascript
+  const truncate = (str, n) => {
+    return str?.length > n ? str.substr(0, n - 1) + "..." : str;
+  }
+
+  // 100글자 이상일 때 ... 으로 보여지게 적용
+  {truncate(movie?.overview, 100)}
+  ```
