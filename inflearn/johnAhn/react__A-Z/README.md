@@ -1004,3 +1004,106 @@ https://image.tmdb.org/3
   // 100글자 이상일 때 ... 으로 보여지게 적용
   {truncate(movie?.overview, 100)}
   ```
+
+<br />
+<br />
+<br />
+
+#### 4-6. Styled Component 란?
+- `Css-in-JS`라고 하는 Javascript 파일 안에서 CSS를 처리 할 수 있게 해주는 대표적인 라이브러리.
+- [공홈 바로가기](https://styled-components.com/docs/basics)
+
+<br />
+
+> 설치 방법
+
+- 터미널 설치
+  ```javascript
+  // # with npm
+  npm install --save styled-components
+
+  // # with yarn
+  yarn add styled-components
+  ```
+
+- 사용법 예제 1
+  ```javascript
+  // Create a Title component that'll render an <h1> tag with some styles
+  const Title = styled.h1`
+    font-size: 1.5em;
+    text-align: center;
+    color: palevioletred;
+  `;
+
+  // Create a Wrapper component that'll render a <section> tag with some styles
+  const Wrapper = styled.section`
+    padding: 4em;
+    background: papayawhip;
+  `;
+
+  // Use Title and Wrapper like any other React component – except they're styled!
+  render(
+    <Wrapper>
+      <Title>
+        Hello World!
+      </Title>
+    </Wrapper>
+  );
+  ```
+
+- 사용법 예제 2 (props 사용)
+  ```javascript
+  const Button = styled.button`
+    /* Adapt the colors based on primary prop */
+    background: ${props => props.primary ? "palevioletred" : "white"};
+    color: ${props => props.primary ? "white" : "palevioletred"};
+
+    font-size: 1em;
+    margin: 1em;
+    padding: 0.25em 1em;
+    border: 2px solid palevioletred;
+    border-radius: 3px;
+  `;
+
+  render(
+    <div>
+      <Button>Normal</Button>
+      <Button primary>Primary</Button>
+    </div>
+  );
+  ```
+  ![4-6-1](./imgs/4-6-1.png)
+  <br />
+
+- 사용법 예제 3 (상속)
+  ```javascript
+  // The Button from the last section without the interpolations
+  const Button = styled.button`
+    color: palevioletred;
+    font-size: 1em;
+    margin: 1em;
+    padding: 0.25em 1em;
+    border: 2px solid palevioletred;
+    border-radius: 3px;
+  `;
+
+  // A new component based on Button, but with some override styles
+  const TomatoButton = styled(Button)`
+    color: tomato;
+    border-color: tomato;
+  `;
+
+  render(
+    <div>
+      <Button>Normal Button</Button>
+      <TomatoButton>Tomato Button</TomatoButton>
+    </div>
+  );
+  ```
+  ![4-6-2](./imgs/4-6-2.png)
+
+- 사용법 그 외 : <br />[해당 문서](https://styled-components.com/docs/basics)를 살펴보면 아래 이미지처럼 사용 예제를 볼 수 있다.<br />
+  ![4-6-3](./imgs/4-6-3.png)
+<br />
+<br />
+<br />
