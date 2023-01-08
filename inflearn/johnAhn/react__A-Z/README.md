@@ -1107,3 +1107,27 @@ https://image.tmdb.org/3
 <br />
 <br />
 <br />
+
+## 5. Netflix 앱 완성하기
+- [#5 넷플릭스 앱 모달 및 이미지 불러오기-1.pdf](https://github.com/eunhye8767/study-react/blob/9e5f3342538bc6958a5dc143e04fd1db047fc1b6/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%235%20%EB%84%B7%ED%94%8C%EB%A6%AD%EC%8A%A4%20%EC%95%B1%20%EB%AA%A8%EB%8B%AC%20%EB%B0%8F%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0-1.pdf)
+- [#5 넷플릭스 앱 모달 및 이미지 불러오기-2.pdf](https://github.com/eunhye8767/study-react/blob/9e5f3342538bc6958a5dc143e04fd1db047fc1b6/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%235%20%EB%84%B7%ED%94%8C%EB%A6%AD%EC%8A%A4%20%EC%95%B1%20%EB%AA%A8%EB%8B%AC%20%EB%B0%8F%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0-2.pdf)
+- [#5 넷플릭스 앱 모달 및 이미지 불러오기-3.pdf](https://github.com/eunhye8767/study-react/blob/9e5f3342538bc6958a5dc143e04fd1db047fc1b6/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%235%20%EB%84%B7%ED%94%8C%EB%A6%AD%EC%8A%A4%20%EC%95%B1%20%EB%AA%A8%EB%8B%AC%20%EB%B0%8F%20%EC%9D%B4%EB%AF%B8%EC%A7%80%20%EB%B6%88%EB%9F%AC%EC%98%A4%EA%B8%B0-3.pdf)
+
+<br />
+<br />
+
+> scrollLeft
+
+- [MDN, scrollLeft 자세히 보기](https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollLeft)
+  ```javascript
+  const button = document.getElementById('slide');
+
+  button.onclick = () => {
+    document.getElementById('container').scrollLeft += 20;
+  };
+  ```
+  ![5-1-1](./imgs/5-1-1.png)
+
+<br />
+<br />
+<br />
