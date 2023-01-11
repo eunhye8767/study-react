@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import "./index.css"
+import "./MovieModal.css"
 
 export default function MovieModal({
   backdrop_path,
