@@ -1229,6 +1229,8 @@ react-router-dom에서 `BrowserRouter`를 가져온 다음<br />
 <br />
 
 - 이 Hooks 는 현재 위치 객체를 반환합니다.<br />이것은 현재 위치가 변경될 때마다 일부 side effect를 수행하려는 경우에 유용할 수 있습니다.
+- `useLocation()`을 콘솔로그로 출력해보면 아래와 같이 나온다.<Br />
+  ![5-8-2](./imgs/5-8-2.png)<br />
 
 <br />
 
