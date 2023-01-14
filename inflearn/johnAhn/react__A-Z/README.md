@@ -1244,3 +1244,28 @@ react-router-dom에서 `BrowserRouter`를 가져온 다음<br />
 <br />
 <br />
 
+#### 10 useDebounce Custom Hooks 만들기 (★★★)
+
+아래 그림을 보면 검색 입력에 입력할 때 입력 결과가 나타날 때까지 지연이 있습니다. <br />
+이 기능은 debounce디바운스라는 function에 의해 제어됩니다. <br />
+debounce function 은 사용자가 미리 결정된 시간 동 안 타이핑을 멈출 때까지 keyup 이벤트의 처리를 지연시킵니다.<br />
+이렇게 하면 UI 코드가 모든 이벤트를 처리할 필요가 없고 서버로 전송되는 API 호출 수도 크게 줄어듭니다.<br />
+입력된 모든 문자를 처리하면 성능이 저하되고 백엔드에 불필요한 로드가 추가될 수 있습니다.<br />
+<br />
+
+- 적용 예시 : 검색창
+  - 검색할 때 아래 `function`을 계속 부르다 보니 성능에 부담을 주게 된다
+    ```javascript
+    const fetchSearchMovie = async (searchTerm) => {
+      try {
+        const request = await axios.get(
+          `/search/multi?include_adult=false&query=${searchTerm}`
+        )
+        setSearchResults(request.data.results);
+      } catch (error) {
+        console.log("error", error);
+      }
+    }
+    ```
+  
+  - 때문에 `useDebounce` `hooks`를 만들어서 타이핑 시 요청하지 않게 제어하도록 한다!

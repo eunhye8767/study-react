@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
 import "./SearchPage.css"
+import { useDebounce } from '../../hooks/useDebounce';
 
 export default function SearchPage() {
   const [searchResults, setSearchResults] = useState([]);
@@ -23,10 +24,13 @@ export default function SearchPage() {
    */
   const searchTerm = query.get("q");
 
-  const fetchSearchMovie = async (searchTerm) => {
+  const debouncedSearchTerm  = useDebounce(searchTerm, 500);
+
+  const fetchSearchMovie = async (debouncedSearchTerm) => {
+    console.log(debouncedSearchTerm);
     try {
       const request = await axios.get(
-        `/search/multi?include_adult=false&query=${searchTerm}`
+        `/search/multi?include_adult=false&query=${debouncedSearchTerm}`
       )
       setSearchResults(request.data.results);
     } catch (error) {
@@ -35,10 +39,10 @@ export default function SearchPage() {
   }
 
   useEffect(() => {
-    if (searchTerm) {
-      fetchSearchMovie(searchTerm);
+    if (debouncedSearchTerm) {
+      fetchSearchMovie(debouncedSearchTerm);
     }
-  }, [searchTerm])
+  }, [debouncedSearchTerm])
 
   const renderSearchResults = () => {
     return searchResults.length > 0 ? (
@@ -47,7 +51,7 @@ export default function SearchPage() {
           if (movie.backdrop_path !== null && movie.media_type !== "person") {
             const movieImageUrl = `https://image.tmdb.org/t/p/w500${movie.backdrop_path}`
             return (
-              <div className="movie">
+              <div className="movie" key={movie.id}>
                 <div className="movie__column-poster">
                   <img src={movieImageUrl} alt="movie_poster" />
                 </div>
@@ -59,7 +63,7 @@ export default function SearchPage() {
     ) : (
       <section className="no-results">
         <div className="no-results__text">
-          <p>Your search for "{searchTerm} did not have any matches.</p>
+          <p>Your search for "{debouncedSearchTerm} did not have any matches.</p>
           <p>Suggestions:</p>
           <ul>
             <li>Try different keywords</li>
