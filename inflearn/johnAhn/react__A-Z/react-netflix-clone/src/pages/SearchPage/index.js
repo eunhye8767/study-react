@@ -1,9 +1,8 @@
-import axios from '../../api/axios';
 import React, { useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-
-import "./SearchPage.css"
+import axios from '../../api/axios';
 import { useDebounce } from '../../hooks/useDebounce';
+import "./SearchPage.css"
 
 export default function SearchPage() {
   const navigate = useNavigate();
@@ -28,11 +27,11 @@ export default function SearchPage() {
 
   const debouncedSearchTerm  = useDebounce(searchTerm, 500);
 
-  const fetchSearchMovie = async (debouncedSearchTerm) => {
-    console.log(debouncedSearchTerm);
+  const fetchSearchMovie = async (searchTerm) => {
+    console.log(searchTerm);
     try {
       const request = await axios.get(
-        `/search/multi?include_adult=false&query=${debouncedSearchTerm}`
+        `/search/multi?include_adult=false&query=${searchTerm}`
       )
       setSearchResults(request.data.results);
     } catch (error) {
@@ -55,7 +54,7 @@ export default function SearchPage() {
             return (
               <div className="movie" key={movie.id}>
                 <div className="movie__column-poster" onClick={ () => navigate(`/${movie.id}`)}>
-                  <img src={movieImageUrl} alt="movie_poster" />
+                  <img src={movieImageUrl} alt="movie_poster" className="movie__poster" />
                 </div>
               </div>
             )

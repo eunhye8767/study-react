@@ -1,6 +1,6 @@
-import axios from '../../api/axios';
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import axios from '../../api/axios';
 
 export default function DetailPage() {
   const { movieId } = useParams();
@@ -9,8 +9,8 @@ export default function DetailPage() {
   useEffect(() => {
     async function fetchData() {
       const request = await axios.get(`/movie/${movieId}`);
-      // setMovie(request.data);
-      console.log(request);
+      setMovie(request.data);
+      // console.log(request);
     }
 
     fetchData();

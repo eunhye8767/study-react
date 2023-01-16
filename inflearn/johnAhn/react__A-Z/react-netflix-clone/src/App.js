@@ -1,6 +1,5 @@
 import React from 'react';
 import { Outlet, Route, Routes } from "react-router-dom";
-
 import './App.css';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
@@ -26,7 +25,7 @@ function App() {
       <Routes>
         <Route path='/' element={ <Layout /> }>
           <Route index element={ <MainPage /> }></Route>
-          <Route path=':movidid' element={ <DetailPage /> }></Route>
+          <Route path=':movieId' element={ <DetailPage /> }></Route>
           <Route path='search' element={ <SearchPage /> }></Route>
         </Route>
       </Routes>
