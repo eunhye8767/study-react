@@ -1298,3 +1298,70 @@ debounce function 은 사용자가 미리 결정된 시간 동 안 타이핑을 
     1. 엘리먼트 크기를 가져와야 할 때
     2. 스크롤바 위치를 가져와야 할 때
     3. 엘리먼트에 포커스를 설정 해줘야 할 때 등등등
+
+<br />
+<br />
+<br />
+
+> API_KEY 환경변수로 숨기기
+
+- root 폴더에 `.env` 파일을 만든다.
+  ```javascript
+  // .env
+  REACT_APP_MOVIE_DB_API_KEY=apikey입력
+  ```
+
+- API_KEY 키를 `.env` 파일에 적용한 후, `src/api/axios.js`에 적용한다.
+  ```javascript
+  // api/axios.js
+
+  const instance = axios.create({
+    params: {
+      api_key: process.env.REACT_APP_MOVIE_DB_API_KEY,
+  ```
+
+<br />
+<br />
+<br />
+
+> github를 이용해서 배포하기
+
+- gh-pages 모듈 설치
+  ```
+  npm install gh-pages --save-dev
+  ```
+
+- 홈페이지 url 작성
+  ```
+  // package.json
+  "homepage": "https://{깃허브 유저 이름}.github.io/{저장소 이름}/",
+  ```
+
+- 배포를 위한 script 추가
+  ```
+  // package.json
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  ```
+
+- react router dom의 기본 경로 변경
+  - 만약 기본 경로가 `https://~~~/react-netflix(basename)`
+  ```
+  ReactDOM.render(
+    <BrowserRouter basename="deploy-test">
+      <App />
+    </BrowserRouter>.
+    document.getElementById('root')
+  )
+  ```
+
+- deploy 시작 !!!
+  ```
+  npm run deploy
+  ```
