@@ -1159,14 +1159,6 @@ react-router-dom에서 `BrowserRouter`를 가져온 다음<br />
 <br />
 
 #### 1 BrowserRouter로 루트 컴포넌트 감싸주 기
-  ![5-1](./imgs/5-1.png)<br />
-  <br />
-  
-  - BrowserRouter :<br />HTML5 History API(pushState, replaceState 및 popstate 이벤트)를 사용하여 UI를 URL과 동기화된 상태로 유지.
-
-<br />
-
-#### 1 BrowserRouter로 루트 컴포넌트 감싸주 기
 ![5-1](./imgs/5-1.png)<br />
 <br />
 
@@ -1269,3 +1261,40 @@ debounce function 은 사용자가 미리 결정된 시간 동 안 타이핑을 
     ```
   
   - 때문에 `useDebounce` `hooks`를 만들어서 타이핑 시 요청하지 않게 제어하도록 한다!
+<br />
+<br />
+<br />
+
+> 모달 창 외부 클릭 시 모달 닫게 만드는 Custom Hooks 생성
+
+1. 어디를 클릭하는 지 구분 (모달 창 안 or 밖)
+  - useRef 라는 것을 이용해서 구분할 수 있습니다.
+  - **useRef 란?** 특정 DOM을 선택할 때 사용하는 React Hooks 입니다.
+
+2. 특정 DOM 선택하 기
+  ```javascript
+  function MyComponent() {
+    const myRef = useRef(null);
+
+    return (
+      <div ref={myRef} />
+    )
+  }  
+  ```
+  <br />
+
+  - useRef()를 이용해서 Ref 객체를 만들고, 이 객체를 특정 DOM에 ref 값으로 설정합니다. <br />
+  이렇게 되면 Ref 객체의 .current 값이 특정 DOM을 가리키게 됩니다.
+    ```javascript
+    const ref = useRef();
+
+    <div className="presentation">
+      <div className="wrapper-modal">
+        <div className="modal" ref={ref}>
+    ```
+  <br />
+
+  - **DOM을 직접 선택해야 할 경우들**
+    1. 엘리먼트 크기를 가져와야 할 때
+    2. 스크롤바 위치를 가져와야 할 때
+    3. 엘리먼트에 포커스를 설정 해줘야 할 때 등등등
