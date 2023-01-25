@@ -1331,13 +1331,13 @@ debounce function 은 사용자가 미리 결정된 시간 동 안 타이핑을 
   npm install gh-pages --save-dev
   ```
 
-- 홈페이지 url 작성
+- 홈페이지 url 작성 (homepage 내용 추가)
   ```
   // package.json
   "homepage": "https://{깃허브 유저 이름}.github.io/{저장소 이름}/",
   ```
 
-- 배포를 위한 script 추가
+- 배포를 위한 script 추가 (predeploy, deploy 추가)
   ```
   // package.json
   "scripts": {
