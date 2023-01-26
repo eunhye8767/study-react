@@ -1365,3 +1365,50 @@ debounce function 은 사용자가 미리 결정된 시간 동 안 타이핑을 
   ```
   npm run deploy
   ```
+
+  <br />
+  <br />
+  <br />
+
+## 6. React TDD 기본
+- [#6 React TDD 기본](https://github.com/eunhye8767/study-react/blob/44d410cf2defa9b9240281b9707fa40fba117036/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%236%20React%20TDD%20%E1%84%80%E1%85%B5%E1%84%87%E1%85%A9%E1%86%AB.pdf)
+
+<br />
+
+> 테스트 주도 개발(Test Driven Development)이란 무엇인가?
+
+- 실제 코드를 작성하기 전에 테스트 코드를 먼저 작성합니다.
+  1. 원하고자 하는 기능의 테스트 코드 작성 
+  2. 테스트 실행 > Fail
+  3. 테스트 코드에 맞는 실제 코드 작성
+  4. 테스트 실행 > Pass
+
+- TDD를 하면 좋은 점
+  1. TDD를 하므로 인해 많은 기능을 테스트하기에 소스 코드에 안정감이 부여된다.
+  2. 실제 개발하면서 많은 시간이 소요되는 부분은 디버깅 부분이기에 TDD를 사용하면 디버깅 시간이 줄어들고 실제 개발 시간도 줄어듭니다.
+  3. 소스 코드 하나 하나를 더욱 신중하게 짤 수 있기 때문에 깨끗한 코드가 나올 확률이 높습니다.
+
+  <br />
+  <br />
+
+> React Testing Library 란?
+
+- [공식문서 바로가기](https://testing-library.com/docs/react-testing-library/intro/)
+- React Testing Library는 React 구성 요소 작업을 위한 API를 추가하여 DOM Testing Library 위에 구축됩니다.
+- DOM Testing Library란 Dom 노드(Node)를 테스트하기 위한 매우 가벼운 솔루션입니다.
+- **Create React App으로 생성된 프로젝트는 즉시 React Testing Library를 지원**합니다. <br />그렇지 않은 경우 다음과 같이 npm을 통 해 추가할 수 있습니다.
+  ```
+  npm install --save-dev @testing-library/react
+  ```
+- **React Testing Library == 리액트 컴포넌트를 테스트하는 가벼운 솔루션!**
+
+<br />
+<br />
+
+> Jest 란?
+- FaceBook에 의해서 만들어진 테스팅 프레임 워크입니다.
+- 최소한의 설정으로 동작하며 Test Case 를 만들어서 어플리케이션 코드가 잘 돌아가는지 확인해줍니다.
+- **단위 (Unit) 테스트를 위해서 이용**합니다.
+- **Create React App으로 생성된 프로젝트**는 따로 설치하지 않아도 된다.
+
+
