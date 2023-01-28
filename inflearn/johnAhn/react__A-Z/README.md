@@ -1411,4 +1411,37 @@ debounce function 은 사용자가 미리 결정된 시간 동 안 타이핑을 
 - **단위 (Unit) 테스트를 위해서 이용**합니다.
 - **Create React App으로 생성된 프로젝트**는 따로 설치하지 않아도 된다.
 
+<br />
+<br />
+
+> React Testing Library 주요 API
+
+1. React Testing Library 실행에 앞서 테스트할 폴더를 생성
+  - 테스트할 폴더 (폴더명 작명) : react-testing-app
+  - 특정 폴더 내에서 설치할 경우 `./` 경로로 적용
+  ```
+  npx create-react-app react-testing-app
+  ```
+
+2. `react-testing-app` 폴더 생성 완료 후, `npm test` 명령어를 실행한다.<br />
+  ![6-3](./imgs/6-3.png);<br />
+
+3. `npm test`를 실행하면 아래와 같이 터미널에서 보여지는 것을 확인할 수 있다.
+  ![6-4](./imgs/6-4.png);<br />
+
+4. `a` 키를 누르면 테스트가 모든 테스트가 진행되는 것을 볼 수 있다.<br />현재 진행중인 테스트를 종료할 땐 `q` 키를 누른다.<br />
+  ![6-1](./imgs/6-1.png);<br />
+  ![6-2](./imgs/6-2.png);<br />
+  <br />
+
+5. **"render" 함수**
+  - DOM에 컴포넌트를 랜더링하는 함수 인자로 랜더링할 React 컴포넌트가 들어감.
+  - Return은 RTL에서 제공하는 쿼리 함수와 기타 유틸리티 함수를 담고 있는 객체를<br />리턴(Destructuring 문법으로 원하는 쿼리 함수만 얻어올 수 있다.)<br /><br />====> **소스 코드가 복잡해지면 비추천!!! screen 객체를 사용**하기<br />왜냐면 사용해야 할 쿼리가 많아질수록 코드가 복잡해질 수 있음.
+    ```javascript
+    const linkElement = screen.getByText(/learn react/i);
+
+    // 비추천
+    const { getByText } = render(<App />);
+    const linkElement = getByText(/learn react/i);
+    ```
 
