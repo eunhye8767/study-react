@@ -1467,3 +1467,13 @@ debounce function 은 사용자가 미리 결정된 시간 동 안 타이핑을 
 <br />
 <br />
 
+> Prettier 설치 및 설정
+
+테스팅할 때 matcher를 알맞게 쓰는지 확신이 들지 않을 때가 있으며,<br />코드의 형식이나 자바스크립트 문법 등을 올바르게 쓰지 못할 때가 있습니다.<br />그러한 부분을 도와주는 모듈을 설치해주는 시간을 갖겠습니다.<br />
+
+![6-7](./imgs/6-7.png)<br />
+
+- **Prettier는**<br />코드 형식을 맞추는데 사용합니다.<br />테스팅을 위해서 특화된 것은 아니지만 ESLint와 함께 자주 사용하기에  Prettier도 설치해보겠습니다.<br />
+  ![6-8](./imgs/6-8.png)<br />
+
+- vscode 익스텐션 설치 => Prettier - Code formatter<br />(mac, vscode 익스텐션 - 단축키 : `shift + option + f`)
