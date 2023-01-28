@@ -1477,3 +1477,80 @@ debounce function 은 사용자가 미리 결정된 시간 동 안 타이핑을 
   ![6-8](./imgs/6-8.png)<br />
 
 - vscode 익스텐션 설치 => Prettier - Code formatter<br />(mac, vscode 익스텐션 - 단축키 : `shift + option + f`)
+
+<br />
+<br />
+
+> ESLint 설치 및 설정하기
+
+![6-9](./imgs/6-9.png)<br />
+![6-10](./imgs/6-10.png)<br />
+
+<br />
+
+1. 프로젝트 root 폴더 기준, `.eslintrc.json` 파일을 생성한다.
+2. `package.json`에서 `eslintConfig` 전체를 지운다. (잘라내기)
+  ```javascript
+  // package.json
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  ```
+
+3. `.eslintrc.json`에 아래와 같이 붙여 넣는다.
+  ```javascript
+  {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  }
+  ```
+
+4. 이제는 Testing을 도와주는 ESlint를 설치해보겠습니다.
+5. ESLint Testing Plugins 설치
+  - Plugins 란 ?<Br />eslint에서 기본으로 제공하지 않는 다양한 규칙을 플러그인을 통해 사용할 수 있습니다.<br />예를 들어서 react에 관련된 린트설정을 위해서는 `eslint-plugin-react`를 사용하면 되며,<br />react hooks에 관련된 규칙을 적용시켜주려면 `eslint-plugin-react-hooks`를 사용하면 됩니다.
+  <br />
+
+  - testing-library render로 Dom 그리는 부분<br />jest-dom expect-matcher로 테스트
+  ```
+  npm install eslint-plugin-testing-library eslint-plugin-jest-dom
+  ```
+
+6. 내부 설정해주기
+  - plugins 항목 : 플러그인 추가 추가할 때, eslint-plugin- 부분 생략가능
+  - extends 항목 : 플러그인을 추가 한 후에 **규칙을 정해줘야 사용**가능합니다.<br />그래서 extends 항목에 사용하고자 하는 규칙을 설정합니다.<br />vue, angular, react 중에 react 를 위한 규칙 recommended는 추천이 되는 걸 사용. **만약 규칙을 변경하고자 할 때는 rule 항목 추가.**
+  ```javascript
+  // .eslintrc.json
+  {
+    "plugins" : [
+      "testing-library",
+      "jest-dom"
+    ],
+    "extends" : [
+      "plugin:testing-library/react",
+      "plugin:jest-dom/recommended"
+    ]
+  }
+  ```
+
+7. lint가 잘 작동하는지 확인
+  ```javascript
+  const lintTest = screen.getByRole('button', {
+    name: 'lintTest',
+  })
+
+  expect(lintTest.textContent).toBe('lintTest');
+  ```
+
+  ![6-11](./imgs/6-11.png)<br />
+  ![6-12](./imgs/6-12.png)<br />
+  ![6-13](./imgs/6-13.png)<br />
+
+  - 해당 문법이 맞긴 하지만, `eslint`에서 해결방안을 제시. 즉 lint가 잘 작동하는 것을 알 수 있다.
+
+<br />
+<br />
