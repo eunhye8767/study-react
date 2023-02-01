@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import App from './App';
 
 test('the counter starts at 0', () => {
@@ -19,4 +19,26 @@ test('plus button has correct text', () => {
   render(<App />);
   const buttonElement = screen.getByTestId("plus-button");
   expect(buttonElement).toHaveTextContent("+");
+})
+
+test('when the + button is pressed, the counter change to 1', () => { 
+  render(<App />);
+  const buttonElement = screen.getByTestId("plus-button");
+
+  // click plus button
+  fireEvent.click(buttonElement);
+  // 카운터가 0에서 +1로 되서 1이 된다.
+  const counterElement = screen.getByTestId("counter");
+  expect(counterElement).toHaveTextContent(1);
+})
+
+test('when the - button is pressed, the counter change to 1', () => { 
+  render(<App />);
+  const buttonElement = screen.getByTestId("minus-button");
+
+  // click plus button
+  fireEvent.click(buttonElement);
+  // 카운터가 2에서 -1로 되서 1이 된다.
+  const counterElement = screen.getByTestId("counter");
+  expect(counterElement).toHaveTextContent(1);
 })
