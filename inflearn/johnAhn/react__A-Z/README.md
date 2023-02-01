@@ -1569,3 +1569,7 @@ debounce function 은 사용자가 미리 결정된 시간 동 안 타이핑을 
 - 유저가 발생시키는 액션(이벤트)에 대한 테스트를 해야 하는 경우 사용합니다. (적은 이벤트 경우)
 - 대부분의 경우, `@testing-library/user-event.` 사용한다.
 
+> testing-library/jest-dom
+- https://github.com/testing-library/jest-dom
+- ex. toHaveStyle 
+
