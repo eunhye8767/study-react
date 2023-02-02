@@ -1573,3 +1573,61 @@ debounce function 은 사용자가 미리 결정된 시간 동 안 타이핑을 
 - https://github.com/testing-library/jest-dom
 - ex. toHaveStyle 
 
+<br />
+<br />
+<br />
+
+## 8. Next.js와 TypeScript
+- [#8 Nextjs and Typescript-1.pdf 바로가기](https://github.com/eunhye8767/study-react/blob/9b1c59e104d156f4ad4c0d1cee3144227a9b18c1/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%238%20Nextjs%20and%20Typescript-1.pdf)
+- [#8 Nextjs and Typescript-2.pdf 바로가기](https://github.com/eunhye8767/study-react/blob/9b1c59e104d156f4ad4c0d1cee3144227a9b18c1/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%238%20Nextjs%20and%20Typescript-2.pdf)
+
+<br />
+<br />
+
+#### 8-1. Next JS
+> NextJS 란?
+
+React의 SSR(server side rendering)을 쉽게 구현할 수 있게 도와 주는 간단한 프레임워크입니다. (리액트는 라이브러리)<br />
+<br />
+
+리액트로 개발할 때 SPA(single Page Application)을 이용하며 <br />
+CSR(Client Side Rendering)을 하기 때문에 좋은 점도 있지만 단점도 있는데 그 부분이 바로 검색엔진 최적화(SEO) 부분입니다. <br />
+Client Side Rendering을 하면 첫페이지에서 빈 html을 가져와서 JS파일을 해석하여 <br />
+화면을 구성 하기 때문에 포털 검색에 거의 노출 될 일이 없습니다.
+<br />
+
+하지만 **Next.js에서는 Pre-Rendering을 통해서 페이지를 미리 렌더링 하며**<br />
+**완성된 HTML을 가져오기 때문에 사용자와 검색 엔진 크롤러에게 바로 렌더링 된 페이지를 전달할 수 있게 됩니다.**<br />
+리액트에서도 SSR을 지원하기면 구현하기에 굉장히 복잡하기 때문에 Next.js를 통해서 이 문제를 해결해주게 됩니다.<br />
+<br />
+<br />
+
+> Server Side Rendering
+
+![8-1](./imgs/8-1.png)<br />
+<br />
+
+- 클라이언트 대신 서버에서 페이지를 준비하는 원리입니다.
+- 원래 리액트에서는 클라이언트 사이드 렌더링하기 때문에 서버에 영향을 미치지 않고,<br /> 
+서버에서 클라이언트로 응답해서 보낸 html도 거의 비어있습니다.
+  - 이 방식은 서버에서 데이터를 가져올 때 지연 시간 발생으로 UX 측면에서 좋지 않을 수 있습니다.
+  - 검색 엔진에 검색 시 웹크롤링이 동작할 때 내용을 제대로 가져와 읽을 수 없기에 검색엔진 최적화에 문제가 된다.
+- **Next.js에서는 서버 사이드 렌더링을 이용하므로 사용자와 검색 엔진 크롤러에게 <br />바로 렌더링 된 페이지를 전달 할 수 있어서 검색엔진 최적화에 좋은 영향을 줍니다.**
+
+<br />
+<br />
+
+> 설치 방법
+- next js 설치
+```
+npx create-next-app@latest
+
+yarn create next-app
+```
+
+- typescript, next js 설치
+```
+npx create-next-app@latest --typescript
+
+yarn create next-app --typescript
+```
