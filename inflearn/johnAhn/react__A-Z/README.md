@@ -1755,6 +1755,40 @@ Nextjs에서 데이터를 가져오는 방법은 여러가지가 있습니다. <
     서버가 모든 요청에 대한 결과를 계산하고, 추가 구성없이 CDN에 의해 결과를 캐시할 수 없기 때문에 <br />
     첫번째 바이트까지의 시간은 getStaticProps보다 느립니다.
  
-
+<br />
 <br />
 
+> TypeScript 란?
+
+- https://www.tutorialspoint.com/typescript/typescript_overview.htm
+
+- **TypeScript 가 나오게 된 배경**<br />
+JavaScript는 원래 클라이언트측 언어로 도입되었습니다. <br />
+그런데 Node.js의 개발로 인해서 JavaScript를 클라이언트측 뿐만이 아닌 서버측 기술로도 활용되게 만들었습니다. <br />
+그러나 JavaScript 코드가 커질수록 소스 코드가 더 복잡해져서 코드를 유지 관리하고 재사용하기가 어려워졌습니다. <br />
+더욱이 Type 검사 및 컴파일 시 오류 검사의 기능을 수용하지 못하기 때문에 <br />
+JavaScript가 본격적인 서버측 기술로 엔터프라이즈 수준에서 성공하지 못합니다. <br />
+이 간극을 메우기 위해 TypeScript가 제시되었습니다.
+<br />
+
+- **TypeScript 란 ?**<br />
+타입스크립트는 자바스크립트에 타입을 부여한 언어입니다. <br />
+자바스크립트의 확장된 언어라고 볼 수 있습니다. 타입스크립트는 자바스크립트와 달리 브라우저에서 실행 하려면 파일을 한번 변환해주어야 합니다. <br />
+이 변환 과정을 우리는 컴파일(complile) 이라고 부릅니다.
+<br />
+
+- **Type System**
+  - 개발 환경에서 에러를 잡는 걸 도와줍니다.
+  - type annotations를 사용해서 코드를 분석할 수 있습니다. 
+  - 오직 개발 환경에서만 활성화 됩니다.
+  - 타입 스크립트와 성능 향상과는 관계가 없습니다.
+  <br />
+
+- **TypeScript 사용하는 이유 ?**
+  - TypeScript는 JavaScript 코드를 단순화하여 더 쉽게 읽고 디버그할 수 있도록 합니다.
+  - TypeScript는 오픈 소스입니다.
+  - TypeScript는 정적 검사와 같은 JavaScript IDE 및 사례를 위한 매우 생산적인 개발 도구를 제공합니다.
+  - TypeScript를 사용하면 코드를 더 쉽게 읽고 이해할 수 있습니다.
+  - TypeScript를 사용하면 일반 JavaScript보다 크게 개선할 수 있습니다.
+  - TypeScript는 ES6(ECMAScript 6)의 모든 이점과 더 많은 생산성을 제공합니다.
+  - TypeScript는 코드 유형 검사를 통해 JavaScript를 작성할 때 개발자가 일반적으로 겪는 고통스러운 버그를 피하는 데 도움이 될 수 있습니다.
