@@ -1640,3 +1640,121 @@ yarn create next-app --typescript
 NextJS는 모든 페이지를 pre-render 합니다. <br />
 이 pre-render한다는 의미는 **모든 페이지를 위한 HTML을 Client사이드에서 자바스크립트로 처리하기 전, "사전에" 생성한다는 것**입니다.<br />
 이렇게 하기 때문에 SEO 검색엔진 최적화가 좋아집니다.
+
+<br />
+<br />
+
+> Data Fetching
+
+Nextjs에서 데이터를 가져오는 방법은 여러가지가 있습니다. <br />
+그래서 애플리케이션의 사용 용도에 따라서 다른 방법을 사용해주면 됩니다.<br />
+보통 리액트에서는 데이터를 가져올 때 useEffect안에서 가져옵니다. <br />
+하지만 Nextjs에서는 다른 방법을 사용해서 가져오는데 하나씩 봐보겠습니다.
+
+<br />
+
+**▶︎ 아래 관련 설명은 pdf 파일 내 예제를 보고 이해하자! ◀︎**
+
+<br />
+
+- **getStaticProps** : <br />Static Generation으로 **빌드(build)할 때 데이터를** 불러옵니다.(미리 만들어줌)
+  -  getStaticProps 함수를 async로 export 하면, getStaticProps에서 리턴되는 props를 가지고 페이지를 pre-render 합니다.<br /> 
+  build time에 페이지를 렌더링 합니다.
+  ```javascript
+  export async function getStaticProps(context) {
+    return {
+      // will be passed to the page component as props
+      props: {}, 
+    }
+  }
+  ```
+
+  - **getStaticProps를 사용해야 할 때**
+    1. 페이지를 렌더링하는 데 필요한 데이터는 사용자의 요청보다 먼저 build 시간에 필요한 데이터를 가져올 때
+    2. 데이터는 Headless CMS에서 데이터를 가져올 때.
+    3. 데이터를 공개적으로 캐시할 수 있을 때(사용자별 아님).
+    4. 페이지는 미리 렌더링되어야 하고(SEO의 경우) 매우 빨라할 때.(getStaticProps는 성능을 위해 CDN에서 캐시할 수 있는 HTML 및 JSON 파일을 생성합니다.)
+    <br />
+
+- **getStaticPaths** : <br />Static Generation으로 **데이터에 기반하여 pre-render시 특정한 동적 라우팅 구현**(pages/post/[id].js)
+  - 동적 라우팅이 필요할 때 getStaticPaths로 경로 리스트를 정의하고, HTML에 build 시간에 렌더됩니다.
+  - Nextjs는 pre-render에서 정적으로 getStaticPaths 에서 호출하는 경로들을 가져옵니다.
+  ```javascript
+  export async function getStaticPaths() {
+    return {
+      path: [
+        { params: { ... }}
+      ],
+      // false or 'blocking'
+      fallback: true
+    }
+  }
+  ```
+
+  - **paths**
+    - 어떠한 경로가 pre-render 될지를 결정합니다.
+    - 만약 pages/posts/[id].js 이라는 이름의 동적 라우팅을 사용하는 페이지가 있다면 아래와 같이 됩니다.
+      ```javascript
+      return {
+        paths: [
+          { params: { id: '1' } },
+          { params: { id: '2' } }
+        ],
+        fallback: ...
+      }
+      ```
+    - 빌드하는 동안 /posts/1과 /posts/2를 생성하게 됩니다.
+
+  - **params**
+    - 페이지 이름이 `pages/posts/[postId]/[commentId]`라면 , params은 `postId`와 `commentId`입니다.
+    - 만약 페이지 이름이 `pages/[...slug]` 와 같이 모든 경로를 사용한다면, params는 slug 가 담긴 배열이어야한다.<br />
+    `['postId', 'commentId']`
+
+  - **fallback**
+    - `false` = getStaticPaths로 리턴되지 않는 것은 모두 404 페이지가 뜹니다.
+    - `true` = getStaticPaths로 리턴되지 않는 것은 404로 뜨지 않고, fallback 페이지가 뜨게 됩니다.
+      ```javascript
+      // If the page is not yet generated, this will be displyed
+      // initially until getStaticProps() finishes running
+      if (router.isFallback) {
+        return <div>Loading...</div>
+      }
+      ```
+  <br />
+
+- **getServerSideProps** : <br />**Server Side Rendering으로 요청이 있을 때** 데이터를 불러옵니다.
+  - getServerSideProps 함수를 async로 export 하면, Next는 각 요청마다 리턴되는 데이터를 getServerSideProps로 pre-render합니다.
+  ```javascript
+  export async function getServerSideProps(context) {
+    return {
+      // whill be passed to the page component as props.
+      props: {}, 
+    }
+  }
+  ```
+
+  - **getServerSideProps를 사용해야 할 때**
+    ```javascript
+    function Page( {data} ) {
+      // Render data...
+    }
+
+    // This gets called on every request
+    export async function getServerSideProps() {
+      // Fetch data from external API
+      const res = await fetch(`https://..../data`)
+      const data = await res.json()
+
+      // Pass data to the page via props
+      return { props: { data }}
+    }
+
+    export default Page
+    ```
+    - 요청할 때 데이터를 가져와야하는 페이지를 미리 렌더해야 할 때 사용합니다. <Br />
+    서버가 모든 요청에 대한 결과를 계산하고, 추가 구성없이 CDN에 의해 결과를 캐시할 수 없기 때문에 <br />
+    첫번째 바이트까지의 시간은 getStaticProps보다 느립니다.
+ 
+
+<br />
+
