@@ -2041,3 +2041,58 @@ TypeScript 유형은 다음과 같이 분류됩니다.
     empId = true; // Compiler Error
     ```
   - https://www.tutorialsteacher.com/typescript/typescript-union
+
+<br />
+<br />
+
+> type annotation, type inference
+
+- type annotation :<br />**개발자가 타입을 타입스크립트에게 직접** 말해주는 것.
+  ```typescript
+  // number 타입 지정
+  const rate: number = 5;
+  ```
+
+- type inference :<Br />**타입스크립트가 알아서 타입을** 추론하는 것.
+  ```typescript
+  // 변수 선언과 동시에 초기화할 경우 타입을 알아서 추론한다.
+  const rate = 5;
+  ```
+<br />
+<br />
+
+> 타입을 추론하지 못해서 타입 annotation을 꼭 해줘야하는 경우
+
+- **any 타입을 리턴하는 경우**
+  ```javascript
+  const json = '{"x": 4, "y": 7}';
+  const coordinates = JSON.Parse(json);
+  console.log(coordinates);
+  ```
+  coordinates에 hover해보면 `const coordinates: any` 라고 뜨는 것을 볼 수 있습니다.<br />
+  `JSON.parse` 는 `json`을 파싱해줍니다.<br />
+  인풋으로 들어가는 `json`을 확인하면 대충 어떤 타입이 리턴될지 개발자는 예상할 수 있지만, 타입스크립트는 여기까지 지원하지 않습니다.<br />
+  리턴 타입이 일정하지 않으므로 `any를` 리턴한다고 추론해버립니다.<br />
+  그러므로 이 경우에는 **type annotation(타입 애노테이션)을 해주어야** 합니다.
+  <Br />
+
+- **변수 선언을 먼저하고 나중에 초기화하는 경우**
+  변수 선언과 동시에 초기화하면 타입을 추론하지만, 선언을 먼저하고 나중에 값을 초기 화할 때에는 추론하지 못합니다.
+  ```javascript
+  let greeting;
+  greeting = 'hello' // let greeting: any
+  ```
+  <br />
+
+- **변수에 대입될 값이 일정치 못하는 경우**
+  여러 타입이 지정되어야 할 때에는 `| (or statement)` 로 여러 타입을 애노테이션 해줍니다.
+  ```typescript
+  let num = [-7, -2, 10];
+  let numAboveZero: boolean | number = false;
+
+  for(let i = 0; i < num.length; i++) {
+    if (num[i] > 0) {
+      numAboveZero = num[i]
+    }
+  }
+  ```
