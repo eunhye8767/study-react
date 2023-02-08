@@ -1799,6 +1799,7 @@ JavaScript가 본격적인 서버측 기술로 엔터프라이즈 수준에서 �
 #### 8-2. Next.js와 TypeScript로 앱 만들기
 - [TypeScript JS - KR 바로가기](https://typescript-kr.github.io/)
 - [TypeScript v4.5.4 테스트 작성](https://www.typescriptlang.org/play?ts=4.5.4#code/PTAEHUFMBsGMHsC2lQBd5oBYoCoE8AHSAZVgCcBLA1UABWgEM8BzM+AVwDsATAGiwoBnUENANQAd0gAjQRVSQAUCEmYKsTKGYUAbpGF4OY0BoadYKdJMoL+gzAzIoz3UNEiPOofEVKVqAHSKymAAmkYI7NCuqGqcANag8ABmIjQUXrFOKBJMggBcISGgoAC0oACCbvCwDKgU8JkY7p7ehCTkVDQS2E6gnPCxGcwmZqDSTgzxxWWVoASMFmgYkAAeRJTInN3ymj4d-jSCeNsMq-wuoPaOltigAKoASgAywhK7SbGQZIIz5VWCFzSeCrZagNYbChbHaxUDcCjJZLfSDbExIAgUdxkUBIursJzCFJtXydajBBCcQQ0MwAUVWDEQC0gADVHBQGNJ3KAALygABEAAkYNAMOB4GRonzFBTBPB3AERcwABS0+mM9ysygc9wASmCKhwzQ8ZC8iHFzmB7BoXzcZmY7AYzEg-Fg0HUiQ58D0Ii8fLpDKZgj5SWxfPADlQAHJhAA5SASPlBFQAeS+ZHegmdWkgR1QjgUrmkeFATjNOmGWH0KAQiGhwkuNok4uiIgMHGxCyYrA4PCCJWCJRl1LI2PyoAA2lTKJxmPxOOxENJvgBdcfLnklcfjyOAITrI-wAIzL5dAA)
+- 실행 명령어 : `npm run dev`
 <br />
 <br />
 
