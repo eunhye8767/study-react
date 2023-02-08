@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import Link from 'next/link'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import homeStyles from '@/styles/Home.module.css'
@@ -31,7 +32,9 @@ export default function Home({allPostsData}: {
           {
             allPostsData.map(({id, title, date}) => 
               <li className={homeStyles.listItem} key={id}>
-                <a href="">{title}</a>
+                <Link href={`/posts/${id}`} legacyBehavior>
+                  <a>{title}</a>
+                </Link>
                 <br />
                 <small className={homeStyles.lightText}>{date}</small>
               </li>
