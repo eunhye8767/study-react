@@ -2180,3 +2180,13 @@ Next.js에는 페이지 개념을 기반으로 구축된 파일 시스템 기반
 
   export default Post
   ```
+
+  <br />
+  <br />
+
+  > 포스트 데이터를 가져와서 보여주기(remark)
+
+  - `lib/post.ts`에서 `remark` 사용하기 위해 설치한다.
+    ```
+    npm install remark remark-html --save
+    ```
