@@ -11,7 +11,7 @@ const Post = ({postData}:{postData: {
   contentHtml: string
 }}) => {
   return (
-    <div>
+    <div className={homeStyles.container}>
       <Head><title>{postData.title}</title></Head>
       <article>
         <h1 className={homeStyles.headingXl}>{postData.title}</h1>

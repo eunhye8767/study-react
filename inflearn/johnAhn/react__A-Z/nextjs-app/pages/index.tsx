@@ -16,7 +16,7 @@ export default function Home({allPostsData}: {
   }[]
 }) {
   return (
-    <>
+    <div className={homeStyles.container}>
       <Head>
         <title>LEH</title>
       </Head>
@@ -42,7 +42,7 @@ export default function Home({allPostsData}: {
           }
         </ul>
       </section>
-    </>
+    </div>
   )
 }
 
