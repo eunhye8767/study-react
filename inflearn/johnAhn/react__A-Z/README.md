@@ -2184,9 +2184,219 @@ Next.js에는 페이지 개념을 기반으로 구축된 파일 시스템 기반
   <br />
   <br />
 
-  > 포스트 데이터를 가져와서 보여주기(remark)
+> 포스트 데이터를 가져와서 보여주기(remark)
 
-  - `lib/post.ts`에서 `remark` 사용하기 위해 설치한다.
+- `lib/post.ts`에서 `remark` 사용하기 위해 설치한다.
+  ```
+  npm install remark remark-html --save
+  ```
+
+  <br />
+  <br />
+  <br />
+
+#### 8-3. NextJS 13
+
+1. NextJS 13 설치.
+  ```javascript
+  // 현재 폴더 기준
+  npx create-next-app@latest --ts ./
+
+  // nextjs13-app 처럼 폴더 이름 넣기
+  npx create-next-app@latest --ts nextjs13-app
+  ```
+  ```javascript
+  // 터미널에서 실행할 땐
+  npm run dev
+  ```
+
+2. 데이터베이스를 구성을 빠르게 도와주는 **PocketBase**이용하기.
+  - 백엔드 서비스를 위한 포켓베이스 이용하기
+  - [PocketBase 바로가기](https://pocketbase.io/docs)
+  - 환경에 맞게 해당 파일을 다운로드 한다.
+
+3. 다운로드한 폴더 내 `pocketbase` 파일은 프로젝트 루트폴더에 넣는다.
+
+4. `pocketbase`는 현 프로젝트 기준, 터미널에서 아래 명령어를 실행한다.
     ```
-    npm install remark remark-html --save
+    ./pocketbase serve
     ```
+  
+5. 위 명령어를 실행하게 되면 터미널에서 아래와 같은 정보를 볼 수 있다.
+    ```
+    > Server started at: http://127.0.0.1:8090
+    - REST API: http://127.0.0.1:8090/api/
+    - Admin UI: http://127.0.0.1:8090/_/
+    ```
+
+6. `Admin UI: http://127.0.0.1:8090/_/`
+  - `New collection` : 테이블 생성 > `New field` > ex. `NAME: title` 입력.
+  - `NAME*` -  해당 이름값 적용 (ex. posts)<br />
+    ![8-3-6](./imgs/8-3-6.png)<br />
+    <br />
+  
+  - `API Rules` 탭 클릭, 자물쇠 아이콘 `Set custom rule` => 자물쇠 아이콘 `Set Admins only`<br />(Admin에서만 변경되게 설정)
+    ![8-3-6-2](./imgs/8-3-6-2.png)<br />
+    ![8-3-6-3](./imgs/8-3-6-3.png)<br />
+
+7. `pages` 폴더를 삭제 한다. (현 기준 베타버전)
+
+8. `app` 폴더 생성 => 현 기준, 13버전 설치 시 자동 생성됨.
+  - File System Routing
+    |---|---|---|
+    |home/|abc.com/home|plain path|
+    |[slug]/|abc.com/{slug}|dynamic path|
+    |(group)|abc.com|just for grouping (경로에 포함되지 않음)|
+    
+    <br />
+    ![8-3-8-1](./imgs/8-3-8-1.png)<br />
+    ![8-3-8-2](./imgs/8-3-8-2.png)<br />
+    
+    - `page.js` === `index.js`로 이해하면 된다.
+    - `(marking), (shop)` => 경로에 아무 관게 없음. 그룹으로 묶어야 할 경우 `()`으로 표시.
+    - `layout.js` => 기본 layout을 위한 파일로 예약된 이름.<br />
+      ![8-3-8-3](./imgs/8-3-8-3.png)<br />
+
+9. React 18 이전에는 React를 사용하여 애플리케이션을 렌더링하는 기본 방법은 전적으로 클라이언트에서였습니다. <Br />
+**=> React 18 이후 서버 컴포넌트 사용 가능**<br />
+<br />
+
+Next.js는 HTML을 생성하고 React에 의해 rehydrate 되도록 클라이언트에 전송함으로써<br />
+애플리케이션을 페이지로 나누고 서버에서 미리 렌더링하는 더 쉬운 방법을 제공했습니다.<br />
+그러나 이로 인해 초기 HTML을 대화식(interactive)으로 만들기 위해 클라이언트에 추가 Javascript가 필요했습니다.<br />
+**=> 서버에서 미리 렌덩링하기 위해 사용했던 SSR도 문제가 있었습니다.**
+<br />
+
+이제 서버 및 클라이언트 Component를 사용하여 React는 클라이언트와 서버에서 렌더링 할 수 있으므로<br />
+구성 요소 수준에서 렌더링 환경을 선택할 수 있습니다.<br />
+기본적으로 App 디렉토리는 서버 구성 요소를 사용하므로 서버에서 구성요소를 쉽게 렌더링 하고<br />
+클라이언트에 전송되는 JavaScript의 양을 줄일 수 있습니다.<br />
+그러나 App 내에서 클라이언트 구성 요소를 사용하고 클라이언트에서 렌더링할 수 있는 옵션이 있습니다.
+**=> Server Component, Client Component 같이 사용 가능**
+<br />
+
+![8-3-9-1](./imgs/8-3-9-1.png)<br />
+<br />
+
+10. `pocketbase`에 등록된 정보를 가져올 때
+  - [nextjs 공식문서 바로가기](https://nextjs.org/docs/getting-started)
+  - **현 기준에 따라 nextjs 자체가 베타버전으로 다를 수 있음.**
+  ```javascript
+  // posts/page.tsx 참고용
+
+  async function getPosts() {
+    // pocketbase serve 실행 시 REST API 기본주소 확인 가능 (터미널)
+    const res = await fetch('http://127.0.0.1:8090/api/collections/posts/records');
+    const data = await res.json();
+    return data?.items as any[];
+  }
+  ```
+
+  ![8-3-10-1](./imgs/8-3-10-1.png)<br />
+  ![8-3-10-2](./imgs/8-3-10-2.png)<br />
+  <br />
+
+11. 캐시가 안 되게 하고 모든 리퀘스트마다 다시 가져오게 할 떄
+  ```javascript
+  const res = await fetch('http://127.0.0.1:8090/api/collections/posts/records');
+  ```
+  <br />
+
+  - `{ cache: 'no-store'}` => `getServerSideProps`와 유사.
+  - 요청할 때마다 새로운 데이터 정보 출력.
+  ```javascript
+  async function getPosts() {
+    const res = await fetch('http://127.0.0.1:8090/api/collections/posts/records');
+  }
+  ```
+
+12. 타이틀을 클릭했을 때 이동하는 서브페이지 생성.
+  - `/posts/[id]/pages.tsx` => `[id]` 다이나믹한 아이디 폴더 생성.
+  - `<Link href={/posts/${id}}>` => posts/id로 연결되기 때문에 폴더 이름을 `[id]`로 해준다.
+
+13. Revalidate Data
+  ```javascript
+  async function getPost(postId: string) {
+    const res = await fetch(`http://127.0.0.1:8090/api/collections/posts/records/${postID}`, {
+      next: {revalidate: 10}
+    })
+  }
+  ```
+  - `next: { revalidate: 10 }`
+  - 캐시된 데이터를 일정 시간 간격응로 재검증하려면 `fetch()`에서 `next.revalidate` 옵션을 사용할 수 있다.<br />(기본 단위 : 초)
+  - ISR(Incremental static regeneration)
+
+14. generateStaticParams
+  - generateStaticParams 함수는 해**당 레이아웃 또는 페이지가 생성되기 전에 빌드 시간에 실행**됩니다.
+  - `Revalidation(ISR)` 중에는 다시 호출되지 않습니다.
+
+  ```javascript
+  // (ex) app/blog/[slug]/page.js
+
+  export async function generateStaticParams() {
+    const posts = await getPosts();
+
+    return posts.map((post) => {
+      slug: post.slug,
+    })
+  }
+  ```
+
+15. `loading.tsx` & `error.tsx`
+  - `loading.tsx` : `feed` 폴더 안에 `loading.tsx` 파일을 생성하면 `feed`를 불러올 때마다 `loading`을 실행한다.<br />
+    ![8-3-15-1](./imgs/8-3-15-1.png)<br />
+
+  - `error.tsx` : 해당 영역에만 error 표시를 할 수 있다.
+    - https://beta.nextjs.org/docs/routing/error-handling
+    ```javascript
+    // error 예제코드
+    'use client'; // Error components must be Client components
+
+    import { useEffect } from 'react';
+
+    export default function Error({
+      error,
+      reset,
+    }: {
+      error: Error;
+      reset: () => void;
+    }) {
+      useEffect(() => {
+        // Log the error to an error reporting service
+        console.error(error);
+      }, [error]);
+
+      return (
+        <div>
+          <h2>Something went wrong!</h2>
+          <button
+            onClick={
+              // Attempt to recover by trying to re-render the segment
+              () => reset()
+            }
+          >
+            Try again
+          </button>
+        </div>
+      );
+    }
+    ```
+
+16. 데이터 생성 컴포넌트 생성
+  - 클라이언트 컴포넌트를 생성한다. (useState, onClick 등을 사용할 땐 클라이언트 컴포넌트)
+  - `[id]` 폴더 안에 `CreatePost.tsx` 파일을 생성.
+  - 생성한 후에, 제일 상단 위에 `'use Client';` 를 기재.
+
+17. `refresh()`
+  ```javascript
+  // next/navigation에서 가져와야 한다.
+  import { useRouter } from "next/navigation";
+
+  const router = useRouter();
+  setTitle('');
+  // Refresh the current route and fetch new data from the server
+  router.refresh()
+  ```
+  - `refresh()`를 호출하면 현재 경로가 서버에서 업데이트된 할일 목록을 새로고침하고 가져옵니다.
+  - 이는 브라우저 기록에 영향을 미치지 않지만 루트 레이아웃에서 아래로 데이터를 새로 고칩니다.
+  - `refresh()`를 사용할 때 React 및 브라우저 상태를 모두 포함하여 클라이언트 측 상태가 손실되지 않습니다.<br />**=> full page refresh를 안 해도 됩니다.**
