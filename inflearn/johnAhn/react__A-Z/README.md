@@ -2598,3 +2598,88 @@ React는 클릭이 발생했음을 기록하고 대신 더 긴급하기 때문�
 
 <br />
 <br />
+
+#### 9-4. Transition (startTransition)
+- https://github.com/reactwg/react-18/discussions/41
+- https://github.com/reactwg/react-18/discussions/65
+
+> startTransition
+- React 18에서는 업데이트 중에도 앱의 응답성을 유지하는 데 도움이 되는 새로운 API를 도입합니다. 
+- 이 새로운 API를 사용하면 특정 업데이트를 "Transition"으로 표시하여 사용자 상호 작용을 크게 개선할 수 있습니다. 
+- React를 사용하면 상태 전환 중에 시각적 피드백을 제공하고 전환이 발생하는 동안 브라우저의 응답성을 유지할 수 있습니다.
+- **이 기능은 리액트에서 어떠한 업데이트가 Urgent 하며 어떠한게 그러하지 않은지 알려줍니다. 그래서 상태 업데이트를 하는데 우선순위를 주게 됩니다.**<br />
+  ![9-4-1](./imgs/9-4-1.png)<br />
+  <br />
+
+- 대표적으로 검색 기능을 구현할 때 검색하는 Input 은 이벤트에 따라서 리렌더링이 해당화면에 업데이트 되어야합니다. <br />
+하지만 그 아래 검색 결과도 이에 따라 업데이트가 되는데 <br />
+검색 결과 리스트가 많지 않더라도 내부적으로 검색 결과를 가져오는데 많은 작업을 진행할 수 있기에 <br />
+검색창에 타이핑을 하는것에 따라 바로 바로 검색 결과도 업데이트를 하면 성능에 문제가 생길 수 있습니다.<br />
+그러하기에 이 부분은 검색창과 결과창 두 부분으로 나눌 수 있으며, 유저가 타이핑 하는 것에 따라 <br />
+즉각 반영되기를 기대하는 검색창, 그리고 검색 창보다는 UI 업데이트가 느린 것에 <br />
+자연 스럽게 받아들여져야 하는 결과 창으로 나눌수 있습니다.<br />
+  - **Urgent Updates 검색창 :** <br />
+  버튼 클릭, 키보드 입력과 같이 직관적으로 보았을 때 업데이트가 즉각적으로 일어나는 것을 기대하는 상태 값들을 대상으로 합니 다.
+  - **Transition Updates 결과창 :** <br />
+  사용자가 상태 값의 변화에 따른 모든 업데이트가 뷰에 즉각적으로 일어나는 것을 기대하지 않습니다.
+  ```javascript
+  // Urgent : Show what was typed
+  setInputValue(input);
+
+  // Not urgent : Show the results
+  setSearchQuery(input);
+  ```
+  <br />
+  <br />
+
+> 어떻게 이러한 문제점을 개선할 수 있나요?
+
+- 새로운 `startTransition API`는 업데이트를 "Transition"으로 표시할 수 있는 기능을 제공하여 이 문제를 해결합니다.
+- 이 API로 리액트에게 상태 업데이트하는데 우선 순위를 정해주는 것입니다.<BR />
+  ![9-4-2](./imgs/9-4-2.png)<br />
+  <br />
+
+- `startTransition`에 래핑된 업데이트는 긴급하지 않은 것으로 처리되며 **클릭이나 키 누름과 같은 더 긴급한 업데이트가 들어오는 경우 중단**됩니다.
+- 전환이 사용자에 의해 중단되면(예: 여러 문자를 연속으로 입력) React는 다음을 throw합니다.<br />
+완료되지 않은 오래된 렌더링 작업을 제거 하고 최신 업데이트만 렌더링합니다.
+- `Transition`을 사용하면 UI가 크게 변경되더라도 대부분의 상호 작용을 빠르게 유지할 수 있습니다.<br />또한 더 이상 관련이 없는 콘텐츠를 렌더링하는 데 시간을 낭비하지 않아도 됩니다.
+
+<br />
+<br />
+
+> Transition이 보류 중인 동안 어떻게 해야 합니까?
+
+- 검색 창에 타이핑을 했을 때 `startTransition API`로 인해 <br />
+결과 창에는 UI 업데이트 우선순위가 밀려서 업데이트 보류가 일어날 때는 아래와 같이 `isPending이` `true`로 되기에<br />
+`isPending`이 `true`일 시에 Spinner 같은 컴포넌트를 보여주면 됩니다.
+  ```javascript
+  import { useTransition } form 'react';
+  const [isPending, startTransition] = useTransition();
+
+  { isPending && <Spinner />}
+  ```
+<br />
+<br />
+
+> 리액트 18 이전에는 어떻게 이러한 문제를 처리했나요?
+
+#### startTransition이 없을 때
+- State를 두 개로 나눠서 따로 처리를 해주거나 <br />
+=> state가 두 개니 업데이트 처리 방법을 다르게 해 줌
+- debounce를 이용해서 처리하거나 etTimeout을 이용해서 처리했습니다.<br />
+=> debounce 를 이용하거나 setTimeout 을 이용하는 것은 <br />
+결국 모든 이벤트가 Schedule 되어 있고 뒤로 밀리는 것이기 때문에 <br />
+**이벤트가 끝나도 계속 결과를 표출하게 됩니**다.
+  ```javascript
+  onChange={(e, nextValue) => {
+    // Update slider
+    setValue(nextValue);
+
+    setTimeout(() => {
+      // Update results
+      onChange(nextValue);
+    }, 0)
+  }}
+  ```
+<br />
+<br />
