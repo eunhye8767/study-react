@@ -2683,3 +2683,19 @@ React는 클릭이 발생했음을 기록하고 대신 더 긴급하기 때문�
   ```
 <br />
 <br />
+
+> React Version 18로 업그레이드 하기
+
+#### 리액트 버전 18로 업그레이드 하는 방법 
+- react와 react-dom을 npm 으로 부터 설치하기
+  ```
+  npm install react react-dom
+  ```
+
+- ReactDOM.render ====> ReactDOM.createRoot 변경하기<br />
+  ![9-4-3](./imgs/9-4-3.png)<br />
+  <br />
+  <br />
+
+
+
