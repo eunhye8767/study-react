@@ -2405,6 +2405,63 @@ Next.js는 HTML을 생성하고 React에 의해 rehydrate 되도록 클라이언
   <br />
   <br />
 
-  ## 9. 리액트 Version 18
-  - [#9 React Version 18-1.pdf](https://github.com/eunhye8767/study-react/blob/fc571506a5d58b6f9a84113acc3c3b3f5040ae81/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%239%20React%20Version%2018-1.pdf){:target="_blank"}
-  - [#9 React Version 18-2.pdf](https://github.com/eunhye8767/study-react/blob/fc571506a5d58b6f9a84113acc3c3b3f5040ae81/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%239%20React%20Version%2018-2.pdf){:target="_blank"}
+## 9. 리액트 Version 18
+  - [#9 React Version 18-1.pdf](https://github.com/eunhye8767/study-react/blob/fc571506a5d58b6f9a84113acc3c3b3f5040ae81/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%239%20React%20Version%2018-1.pdf)
+  - [#9 React Version 18-2.pdf](https://github.com/eunhye8767/study-react/blob/fc571506a5d58b6f9a84113acc3c3b3f5040ae81/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%239%20React%20Version%2018-2.pdf)
+  <br />
+  <br />
+
+#### 9-1. Automatic batching
+```javascript
+// 케이스1
+function handleClick() {
+  // setState를 아무리 많이 호출해도 리렌더링은 단 한번만 발생.
+  setCount(c =>> c + 1);
+  setFlag(f => !f);     
+}
+
+// 케이스2
+function handleClick() {
+  /**
+   * 리액트 17버전에서는 api 호출에 콜백함수, timeout 함수에서
+   * 리렌더링을 각각 해주었다.
+   * 여러번의 리렌더링은 성능상에 좋지 않다.
+  */
+  fetchSomething().then(() => {
+    setCount(c =>> c + 1); // 리렌더링1
+    setFlag(f => !f);      // 리렌더링2
+  })
+
+  setTimeout(() => {
+    setCount(c =>> c + 1); // 리렌더링1
+    setFlag(f => !f);      // 리렌더링2
+  })
+}
+```
+- 리액트18 버전에서는 위와 같은 api 호출에 콜백함수, timeout 함수에서도 리렌더링이 1번만 될 수 있게 업데이트 되었다. (성능상에 좋음.)
+- 상황에 따라 **batch 처리하지 않으려면 어떻게 합니까?**
+  - 일반적으로 일괄 처리는 안전하지만 일부 코드는 상태 변경 직후 DOM에서 무언가를 읽는데 의존할 수 있습니다.<br />이러한 사용 사례의 경우 `ReactDOM.flushSync()`를 사용하여 일괄 처리를 옵트아웃할 수니다.
+    ```javascript
+    import { flushSync } from "react-dom";
+
+    function handleClick() {
+      // 리액트가 바로 dom 업데이트를 합니다. (re-render)
+      flushSync(() => {
+        setCount(count + 1);
+      })
+      
+      // 리액트가 바로 dom 업데이트를 합니다. (re-render)
+      flushSync(() => {
+        setClicked(true);
+      })
+    }
+    ```
+    <br />
+
+- **리액트 18 버전에서 Automatic batching**
+  - 더 나은 성능을 위한 더 적은 리-렌더링을 합니다.
+  - 이벤트 핸들러 밖에서도 작동.
+  - 필요할 때는 제외할 수 있습니다.
+<br />
+<br />
+
