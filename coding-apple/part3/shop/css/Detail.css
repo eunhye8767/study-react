@@ -1,0 +1,50 @@
+.wow-enter {
+  opacity: 0;
+}
+
+.wow-enter-active {
+  opacity: 1;
+  -webkit-transition: all 500ms;
+  transition: all 500ms;
+}
+
+.my-alert, .my-alert2 {
+  background: #eee;
+  padding: 20px;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+.my-alert p, .my-alert2 p {
+  margin-bottom: 0;
+}
+
+.my-alert2 {
+  background: #ffe591;
+}
+
+.viewbox {
+  width: 100%;
+  max-width: 450px;
+  padding: 20px 0;
+  background: #eee;
+  margin: 100px auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.viewbox .item {
+  width: 100px;
+  margin: 0 10px;
+  padding: 10px;
+  background: #fff;
+}

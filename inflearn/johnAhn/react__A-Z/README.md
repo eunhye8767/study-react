@@ -2400,3 +2400,11 @@ Next.js는 HTML을 생성하고 React에 의해 rehydrate 되도록 클라이언
   - `refresh()`를 호출하면 현재 경로가 서버에서 업데이트된 할일 목록을 새로고침하고 가져옵니다.
   - 이는 브라우저 기록에 영향을 미치지 않지만 루트 레이아웃에서 아래로 데이터를 새로 고칩니다.
   - `refresh()`를 사용할 때 React 및 브라우저 상태를 모두 포함하여 클라이언트 측 상태가 손실되지 않습니다.<br />**=> full page refresh를 안 해도 됩니다.**
+
+  <br />
+  <br />
+  <br />
+
+  ## 9. 리액트 Version 18
+  - [#9 React Version 18-1.pdf](https://github.com/eunhye8767/study-react/blob/fc571506a5d58b6f9a84113acc3c3b3f5040ae81/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%239%20React%20Version%2018-1.pdf){:target="_blank"}
+  - [#9 React Version 18-2.pdf](https://github.com/eunhye8767/study-react/blob/fc571506a5d58b6f9a84113acc3c3b3f5040ae81/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%239%20React%20Version%2018-2.pdf){:target="_blank"}
