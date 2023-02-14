@@ -2838,3 +2838,33 @@ const store = createStore(counter);
 import rootReducer from "./reducers";
 const store = createStore(rootReducer);
 ```
+
+<br />
+<br />
+
+#### 10-3. Redux Provider
+> Provider란?
+
+- `<Provider>` 구성 요소는 Redux Store 저장소에 액세스해야 하는 모든 중첩 구성 요소에서 Redux Store 저장소를 사용할 수 있도록 합니다.
+- React Redux 앱의 모든 React 구성 요소는 저장소에 연결할 수 있으므로 대부분의 응용 프로그램은 전체 앱의 구성 요소 트리가 내부에 있는 최상위 수준에서 `<Provider>`를 렌더링합니다.
+- 그런 다음 Hooks 및 연결 API는 React의 컨텍스트 메커니즘을 통해 제공된 저장소 인스턴스에 액세스할 수 있습니다.
+
+<br />
+<br />
+
+> Provider를 렌더링
+
+- React Redux 앱의 모든 React 구성 요소는 저장소에 연결할 수 있으므로 <br />
+대부분의 응용 프로그램은 전체 앱의 구성 요소 트리가 내부에 있는 최상위 수준에서 `<Provider>`를 렌더링합니다.
+- `Provider`를 사용하려면 `npm install react-redux --save` 설치
+```javascript
+const store = createStore(rootReducer)
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </React.StrictMode>
+)
+```

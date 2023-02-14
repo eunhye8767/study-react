@@ -10,28 +10,33 @@ import reportWebVitals from "./reportWebVitals";
  */
 import { createStore } from "redux";
 import rootReducer from "./reducers";
+import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 const store = createStore(rootReducer);
 
-// 테스트로 적용이 잘 되었는 지 확인
-store.dispatch({
-  type: "ADD_TODO",
-  text: "Use Redux"
-})
-console.log('store getState,', store.getState())
+// <!-- 테스트로 적용이 잘 되었는 지 확인
+// store.dispatch({
+//   type: "ADD_TODO",
+//   text: "Use Redux",
+// });
+// console.log("store getState,", store.getState());
+// -->
 
-const render = () => root.render(
-  <React.StrictMode>
-    <App
-      value={store.getState()}
-      onIncrement={() => store.dispatch({ type: "INCREMENT" })}
-      onDecrement={() => store.dispatch({ type: "DECREMENT" })}
-    />
-  </React.StrictMode>
-);
+const render = () =>
+  root.render(
+    <React.StrictMode>
+      <Provider store={store}>
+        <App
+          value={store.getState()}
+          onIncrement={() => store.dispatch({ type: "INCREMENT" })}
+          onDecrement={() => store.dispatch({ type: "DECREMENT" })}
+        />
+      </Provider>
+    </React.StrictMode>
+  );
 
 render();
 store.subscribe(render);
