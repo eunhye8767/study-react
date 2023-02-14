@@ -9,12 +9,20 @@ import reportWebVitals from "./reportWebVitals";
  * 현재 createStore는 밑줄이 그어져있다.
  */
 import { createStore } from "redux";
-import counter from "./reducers";
+import rootReducer from "./reducers";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-const store = createStore(counter);
+const store = createStore(rootReducer);
+
+// 테스트로 적용이 잘 되었는 지 확인
+store.dispatch({
+  type: "ADD_TODO",
+  text: "Use Redux"
+})
+console.log('store getState,', store.getState())
+
 const render = () => root.render(
   <React.StrictMode>
     <App

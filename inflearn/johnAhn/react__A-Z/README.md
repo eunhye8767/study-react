@@ -2747,5 +2747,94 @@ Redux is a predictable state container for JavaScript apps.<br />
   - 이들을 하나로 모으는 객체 저장소는 애플리케이션의 전체 상태 트리를 보유합니다.
   - 내부 상태를 변경하는 유일한 방법은 해당 상태에 대한 Action을 전달하는 것입니다.
   - Redux Store는 클래스가 아닙니다. 몇 가지 Methods가 있는 객체일 뿐입니다.
-  - `<Provider />` is the higher-order component provided by React Redux that lets
-you bind Redux to React
+  - `<Provider />` is the higher-order component provided by React Redux that lets you bind Redux to React
+
+<br />
+<br />
+
+#### 10-2. combineReducers
+counter 앱에 Todo 앱을 추가한다.
+
+<br />
+<br />
+
+> root reducer와 sub reducer
+
+현재까지 counter 리듀서만 있는데 하나를 더 추가해주려면<br />
+Root 리듀서를 만들어서 그 아래 counter와 todos라는 서브(sub) 리듀서를 넣어주면 됩니다.<br />
+Root 리듀서를 만들 때 사용하는 것이 **combineReducers** 입니다.<br />
+![10-2-1](./imgs/10-2-1.png)<br />
+<br />
+
+  - `reducers/index.tsx`
+    ```javascript
+    import { combineReducers } from "redux";
+    import todos from "./todos";
+    import counter from "./counter";
+
+    const rootReducer = combineReducers({
+      todos,
+      counter
+    })
+
+    export default rootReducer;
+    ```
+
+  - `reducers/todos.tsx`
+    ```javascript
+    enum ActionType {
+      ADD_TODO = "ADD_TODO",
+      DELETE_TODO = "DELETE_TODO"
+    }
+
+    interface Action {
+      type: ActionType;
+      text: string;
+    }
+
+    const todos = (state = [], action: Action) => {
+      switch (action.type) {
+        case "ADD_TODO":
+          return [...state, action.text]
+        default:
+          return state;
+      }
+    }
+
+    export default todos;
+    ```
+    
+  - `reducers/counter.tsx`
+    ```javascript
+    interface Action {
+      type: string
+    }
+
+    const counter = (state = 0, action: Action) => {
+      switch (action.type) {
+        case "INCREMENT":
+          return state + 1;
+        case "DECREMENT":
+          return state - 1;
+        default:
+          return state
+      }
+    }
+
+    export default counter;
+    ```
+<br />
+<br />
+
+
+> createStore에 루트 리듀서로 대체
+
+```javascript
+// as-is
+import counter from "./reducers";
+const store = createStore(counter);
+
+// to be
+import rootReducer from "./reducers";
+const store = createStore(rootReducer);
+```
