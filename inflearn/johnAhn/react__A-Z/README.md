@@ -2868,3 +2868,45 @@ ReactDOM.render(
   </React.StrictMode>
 )
 ```
+<br />
+<br />
+
+#### 10-4. useSelector & useDispatch
+
+**provider로 둘러 쌓인 컴포넌트에서 store접근**<br />
+리액트에 Hooks가 있듯이 리덕스에도 Hooks가 있는데 그게 바로 `useSelector`와 `useDispatch`입니다.<br />
+이 두 개를 이용해서 provider로 둘러싸인 컴포넌트에서 store에 접근 가능합니다.<br />
+<br />
+
+> useSelector
+
+```javascript
+// App.tsx
+import { useSelector } from "react-redux";
+import { RootState } from "./reducers";
+
+const todos: string[] = useSelector((state: RootState) => state.todos);
+const counter = useSelector((state: RootState) => state.counter);
+
+// reducers/index.tsx
+// 하단 내용 추가 (리덕스 공홈에 명시된 방법.)
+export type RootState = ReturnType<typeof rootReducer>;
+```
+
+- `useSelector` Hooks를 이용해서 스토어의 값을 가져올 수 있습니다.
+
+<br />
+<br />
+
+> useDispatch
+
+```javascript
+// App.tsx 참고
+import { useDispatch } from "react-redux";
+
+const dispatch = useDispatch();
+
+dispatch({ type: "ADD_TODO", text: todoValue });
+```
+
+- store에 있는 dispatch 함수에 접근하는 hooks입니다.
