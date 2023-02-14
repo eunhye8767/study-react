@@ -2696,6 +2696,56 @@ React는 클릭이 발생했음을 기록하고 대신 더 긴급하기 때문�
   ![9-4-3](./imgs/9-4-3.png)<br />
   <br />
   <br />
+  <br />
 
+## 10. 리덕스
+- [#10 Redux-1.pdf](https://github.com/eunhye8767/study-react/blob/4020ed3e3fdb1aa9253ff92f980cf10b689cfe28/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%2310%20Redux-1.pdf)
+- [#10 Redux-2.pdf](https://github.com/eunhye8767/study-react/blob/4020ed3e3fdb1aa9253ff92f980cf10b689cfe28/inflearn/johnAhn/react__A-Z/%EC%88%98%EC%97%85%EC%9E%90%EB%A3%8C/%EA%B0%95%EC%9D%98%EB%8F%84%ED%91%9C%EC%9E%90%EB%A3%8C-PDF/%2310%20Redux-2.pdf)
 
+#### 10-1. 리덕스란?
+Redux is a predictable state container for JavaScript apps.<br />
+자바스크립트 애플리케이션을 위한 **상태 관리 라이브러리** 입니다.<br />
+[* Redux 공식 홈페이지 바로가기](https://redux.js.org/)<br />
+<br />
 
+![10-1-1](./imgs/10-1-1.png)<br />
+![10-1-2](./imgs/10-1-2.png)<br />
+<br />
+
+> Redux 데이터 Flow(strict unidirectional data flow)
+
+![10-1-3](./imgs/10-1-3.png)<br />
+![10-1-4](./imgs/10-1-4.gif)<br />
+
+- **ACTION**
+  ```javascript
+  { type: 'LIKE_ARTICLE', articleId: 42 }
+  { type: 'FETCH_USER_SUCCESS', RESPONSE: { id: 3, name: 'Mary' }}
+  { type: 'ADD_TODO', text: 'Read the Redux docs.' }
+  ```
+  - Action은 간단한 JavaScript 객체입니다. 
+  - 여기에는 우리가 수행하는 작업의 유형을 지정하는 `'type'` 속성이 있으며 <br />
+  선택적으로 redux 저장소에 일부 데이터를 보내는 데 사용되는 `'payload'` 속성을 가질 수도 있습니다.
+  - a plain object describing what happened
+  <br />
+
+- **REDUCER**
+  ```javascript
+  // 이전 State과 action object를 받은 후에 next state을 return 한다!
+  (previousState, action) => nextState
+  ```
+  - 리듀서는 애플리케이션 **상태의 변경 사항을 결정하고 업데이트된 상태를 반환**하는 함수입니다.
+  - 그들은 인수로 조치를 취하고 store 내부의 상태를 업데이트합니다.
+  - a function describing how the application's state changes
+  - **Reducer는 pure function이기에 reducer 내부에서 하지 말아야 할것들 !!!**
+    - Mutate its arguments
+    - Perform side effects like API calls and routing transitions
+    - Call non-pure functions, e.g. `Date.now()` or `Meth.random()`
+  <br />
+
+- **Redux Store**
+  - 이들을 하나로 모으는 객체 저장소는 애플리케이션의 전체 상태 트리를 보유합니다.
+  - 내부 상태를 변경하는 유일한 방법은 해당 상태에 대한 Action을 전달하는 것입니다.
+  - Redux Store는 클래스가 아닙니다. 몇 가지 Methods가 있는 객체일 뿐입니다.
+  - `<Provider />` is the higher-order component provided by React Redux that lets
+you bind Redux to React
