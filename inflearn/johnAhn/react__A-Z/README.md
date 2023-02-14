@@ -3140,3 +3140,26 @@ const posts: Post[] = useSelector((state: RootState) => state.posts)
 - 실제 프로젝트를 진행할 땐, actions 폴더를 따로 분리하여 관리한다.
 <br />
 <br />
+
+> modern ES2015 형태로 변경
+
+- as-is
+  ```javascript
+  export const fetchPosts = (): any => {
+    return async function fetchPostsThumk(dispatch: any, getState: any) {
+      const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
+      dispatch({ type: "FETCH_POSTS", payload: response.data})
+    }
+  }
+  ```
+
+- **to be : ES2015형태**
+  ```javascript
+  ```
+
+<br />
+<br />
+
+**결론**<br />
+이렇게 리덕스 던크를 사용함으로써 액션 생성자가 그저 하나의 액션 객체를 생성할 뿐 아니라 <br />
+그 내부 안에서 여러 가지 작업도 할 수 있게 만들어 줍니다.
