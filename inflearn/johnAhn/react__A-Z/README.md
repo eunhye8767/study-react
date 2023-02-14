@@ -3132,3 +3132,11 @@ const posts: Post[] = useSelector((state: RootState) => state.posts)
   {posts.map((post, index) => <li key={index}>{post.title}</li>)}
 </ul>
 ```
+<br />
+<br />
+
+> actions 들은 actions 폴더로 따로 분리
+
+- 실제 프로젝트를 진행할 땐, actions 폴더를 따로 분리하여 관리한다.
+<br />
+<br />
