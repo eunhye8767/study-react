@@ -8,14 +8,23 @@ import reportWebVitals from "./reportWebVitals";
  * redux에선 리덕스툴팁 방식을 권장하기 때문에
  * 현재 createStore는 밑줄이 그어져있다.
  */
-import { createStore } from "redux";
+import { applyMiddleware, createStore } from "redux";
 import rootReducer from "./reducers";
 import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
-const store = createStore(rootReducer);
+
+const loggerMiddlware = (store: any) => (next: any) => (action: any) => {
+  console.log("store", store);
+  console.log("action", action);
+  next(action);
+}
+
+const middleware = applyMiddleware(loggerMiddlware);
+
+const store = createStore(rootReducer, middleware);
 
 // <!-- 테스트로 적용이 잘 되었는 지 확인
 // store.dispatch({

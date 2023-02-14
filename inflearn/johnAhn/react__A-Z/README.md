@@ -2910,3 +2910,85 @@ dispatch({ type: "ADD_TODO", text: todoValue });
 ```
 
 - store에 있는 dispatch 함수에 접근하는 hooks입니다.
+
+<br />
+<br />
+
+#### 10-5. 리덕스 미들웨어
+
+![10-5-1](./imgs/10-5-1.gif)<br />
+<br />
+
+- Redux 미들웨어는 **액션을 dispatch 전달하고 리듀서에 도달하는 순간 사이에 사전에 지정된 작업을 실행할 수 있게** 해주는 중간자입니다.
+- 로깅(= 로그), 충돌 보고, 비동기 API와 통신, 라우팅 등을 위해 Redux 미들웨어를 사용합니다.
+
+<br />
+<br />
+
+**리덕스 로깅 미들웨어 생성하기**<br />
+- 리덕스를 이용할 때 나오는 로그를 찍어주는 미들웨어를 생성하겠습니다.
+- [참조: Redux Middleware](https://www.freecodecamp.org/news/what-is-redux-middleware-and-how-to-create-one-from-scratch/)
+
+<br />
+<br />
+
+> 로깅 미들웨어 함수 생성
+- 함수 1
+  ```javascript
+  const loggerMiddlware = (store: any) => (next: any) => (action: any) => {
+    // code
+  }
+  ```
+
+- 함수 2
+  ```javascript
+  const loggerMiddlware = function (store: any) {
+    return function (next: any) {
+      return function (action: any) {
+        // code
+      }
+    }
+  }
+  ```
+
+- 함수1를 풀어서 표현하면 함수2와 같다.
+<br />
+<br />
+
+> 미들웨어 함수를 applyMiddleware 함수에 넣어주기
+
+```javascript
+import { applyMiddleware } from "redux";
+
+const loggerMiddlware = (store: any) => (next: any) => (action: any) => {
+  console.log("store", store);
+  console.log("action", action);
+  next(action);
+}
+
+const middleware = applyMiddleware(loggerMiddlware);
+```
+
+- `applyMiddleware`는 하나 혹은 더 많은 미들웨어를 받은 후에 함수를 리턴하는 함수입니다.
+- `next()` : 바로 다음 것으로 이동시켜준다.<br />
+  ![10-5-2](./imgs/10-5-2.png)<br />
+  <br />
+  <br />
+
+> createStore에서 미들웨어 넣어주기
+
+```javascript
+const middleware = applyMiddleware(loggerMiddlware);
+const store = createStore(rootReducer, middleware);
+```
+
+- store를 등록할 때, 만들어둔 `middleware`도 같이 실행시켜 준다.<br />
+  ![10-5-3](./imgs/10-5-3.png)<br />
+  <Br />
+
+```javascript
+const middleware = applyMiddleware(loggerMiddlware, secondMiddleware, thirdMiddleware);
+```
+- applyMiddleware 함수에서 언급한 모든 미들웨어는 차례로 실행됩니다.
+<br />
+<br />
