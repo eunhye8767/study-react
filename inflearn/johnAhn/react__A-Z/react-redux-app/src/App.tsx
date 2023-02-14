@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "./reducers";
 import "./App.css";
+import axios from "axios";
 
 type Props = {
   value: any;
@@ -9,10 +10,17 @@ type Props = {
   onDecrement: () => void;
 };
 
+interface Post {
+  userId: number;
+  id: number;
+  title: string;
+}
+
 function App({ value, onIncrement, onDecrement }: Props) {
   const dispatch = useDispatch();
   const todos: string[] = useSelector((state: RootState) => state.todos);
   const counter = useSelector((state: RootState) => state.counter);
+  const posts: Post[] = useSelector((state: RootState) => state.posts);
 
   const [todoValue, setTodoValue] = useState("");
 
@@ -25,6 +33,17 @@ function App({ value, onIncrement, onDecrement }: Props) {
     dispatch({ type: "ADD_TODO", text: todoValue });
     setTodoValue("");
   };
+
+  useEffect(() => {
+    dispatch(fetchPosts());
+  }, [dispatch])
+
+  const fetchPosts = (): any => {
+    return async function fetchPostsThumk(dispatch: any, getState: any) {
+      const response = await axios.get("https://jsonplaceholder.typicode.com/posts");
+      dispatch({ type: "FETCH_POSTS", payload: response.data})
+    }
+  }
 
   return (
     <div className="App">
@@ -40,6 +59,9 @@ function App({ value, onIncrement, onDecrement }: Props) {
         <input type="text" value={todoValue} onChange={handleChange} />
         <input type="submit" />
       </form>
+      <ul>
+        {posts.map((post, index) => <li key={index}>{post.title}</li>)}
+      </ul>
     </div>
   );
 }

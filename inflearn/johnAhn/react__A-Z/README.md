@@ -2992,3 +2992,143 @@ const middleware = applyMiddleware(loggerMiddlware, secondMiddleware, thirdMiddl
 - applyMiddleware 함수에서 언급한 모든 미들웨어는 차례로 실행됩니다.
 <br />
 <br />
+
+#### 10-6. Redux Thunk
+
+**리덕스 Thunk란?**<br />
+리덕스를 사용하는 앱에서 비동기 작업을 할 때 많이 사용하는 방법이 `redux-thunk`입니다.<br />
+이것도 앞서 만들어본 logger 미들웨어 처럼 **리덕스 미들웨어**이며, 리덕스를 개발한 Dan Abramov가 만들었습니다.
+<br />
+<br />
+
+**Thunk 용어는?**<br />
+"thunk"라는 단어는 "일부 지연된 작업을 수행하는 코드 조각"을 의미하는 프로그래밍 용어입니다.<br />
+지금 일부 논리(logic)를 실행하는 대신 **나중에 작업을 수행하는 데 사용할 수 있는 함수 본문이나 코드를 작성**할 수 있습니다.
+```javascript
+// calculation of 1 + 2 is immediate
+// x === 3
+let x = 1 + 2;
+
+// calculation of 1 + 2 is delayed
+// foo can be called later to perform the calculation
+// foo is a thunk!  (foo => thunk)
+let foo = () => 1 + 2
+```
+<br />
+<br />
+
+> 비동기 작업을 해야 할 때는...???
+
+- 여러 경우가 있지만 서버에 요청을 보내서 데이터를 가져올 때 주로 비동기 요청을 보냅니다.
+- 비동기로 `https://jsonplaceholder.typicode.com`에 요청을 보내면 Dummy 데이터를 받을 수 있습니다.
+- 이 더미 데이터로 포스트를 만들어 보겠습니다.
+<br />
+
+1. Axios 모듈 설치 : API request를 위한 모듈
+  ```
+  npm install axios --save
+  ```
+
+2. posts 리듀서 생성
+  - `reducers/posts.tsx` 파일 생성.
+    ```javascript
+    enum ActionType {
+      FETCH_POSTS = "FETCH_POSTS",
+      DELETE_POSTS = "DELETE_POSTS"
+    }
+
+    interface Post {
+      userId: number;
+      id: number;
+      title: string;
+    }
+
+    interface Action {
+      type: ActionType;
+      payload: Post[];
+    }
+
+    const posts = (state = [], action: Action) => {
+      switch (action.type) {
+        case "FETCH_POSTS":
+          return [...state, ...action.payload]
+        default:
+          return state;
+      }
+    }
+
+    export default posts;
+    ```
+
+  - `reducers/index.tsx`
+    ```javascript
+    import { combineReducers } from "redux";
+    import todos from "./todos";
+    import counter from "./counter";
+    
+    // 새로 만든 posts 추기
+    import posts from "./posts";
+
+    const rootReducer = combineReducers({
+      todos,
+      counter,
+      posts
+    })
+
+    export default rootReducer;
+
+    // 리덕스 공홈에 명시된 방법.
+    export type RootState = ReturnType<typeof rootReducer>;
+    ```
+<br />
+<br />
+
+> posts 데이터를 위한 요청 보내기
+
+![10-6-1](./imgs/10-6-1.png)<br />
+<br />
+
+**에러가 나는 이유는?**<br />
+원래 Actions은 객체여야 하는데 현재는 함수를 Dispatch 하고 있습니다.<br />
+그러기 때문에 나는 에러입니다. <br />
+**그래서 함수를 dispatch 할 수 있게 해주는 Redux-Thunk 미들웨어를 설치해서 사용**해보겠습니다.
+
+<br />
+<br />
+
+> redux-thunk 설치 및 적용
+
+- redux-thunk 설치
+  ```
+  npm install redux-thunk --save
+  ```
+
+- redux-thunk 적용
+  ```javascript
+  import thunk from "redux-thunk";
+  const middleware = applyMiddleware(thunk, loggerMiddlware);
+  ```
+
+  ![10-6-2](./imgs/10-6-2.jpeg)<br >
+  <br />
+  
+  [*참조 : redux-thunk](https://ncoughlin.com/posts/react-redux-asnychronous-actions-thunk/)
+
+<br />
+<br />
+
+> posts 데이터 화면에 표출
+
+```javascript
+interface Post {
+  userId: number;
+  id: number;
+  title: string;
+}
+
+const posts: Post[] = useSelector((state: RootState) => state.posts)
+
+<ul>
+  {posts.map((post, index) => <li key={index}>{post.title}</li>)}
+</ul>
+```
