@@ -18,3 +18,92 @@ const handleChange = () => {
 - `console.log(number)` <br />
 => 바뀐 useState 값이 나오는 것이 아닌 이전 `number` 값이 나온다.<br />
 => 리-렌더링 후 바뀌기 때문에 바뀌기 전 `number` 값이 나오는 것이다.
+
+<br />
+<br />
+<br />
+
+#### 2. json-server
+- 리액트에서 사용하는 (가짜)데이터 베이스 패키지
+- [npm, json-server](https://www.npmjs.com/package/json-server)
+  - `json-server command not found` 에러 발생 시 전역으로 설치
+  ```
+  // 글로벌용(전역)
+  npm install -g json-server
+
+  // 해당 프로젝트에만 설치 (-g 빼고 설치)
+  npm i json-server
+  ```
+
+- 루트폴더에 `db.json` 파일 생성.
+  ```javascript
+  // 예시
+  {
+    "posts": [
+      { "id": 1, "title": "json-server", "author": "typicode" }
+    ],
+    "comments": [
+      { "id": 1, "body": "some comment", "postId": 1 }
+    ],
+    "profile": { "name": "typicode" }
+  }
+  ```
+
+- 새로 만든 `db.json`을 `json-server`로 실행.
+  ```
+  json-server --watch db.json
+
+  // 포트 번호 적용할 때
+  json-server --watch db.json --port 3001
+  ```
+
+- 터미널에서 아래 URL 주소 확인 가능. => /posts 부분이 db.json 파일.
+  ```
+  Resources
+  http://localhost:3000/posts
+
+  Home
+  http://localhost:3000
+  ```
+<br />
+<br />
+<br />
+
+#### 3. DB에 데이터 저장
+- DB에 데이터 저장하기에 앞서 `axios`를 설치.
+  - [npm, axios](https://www.npmjs.com/package/axios)
+  ```
+  npm i axios
+  ```
+- `json-server`
+  ```
+  Plural routes
+  GET    /posts        
+  GET    /posts/1   
+  POST   /posts  
+  PUT    /posts/1      (아이디가 1인 posts를 전체 업데이트 시)
+  PATCH  /posts/1      (아이디가 1인 posts를 부분 업데이트 시)
+  DELETE /posts/1
+  ```
+
+- `axios post` 적용
+  ```javascript
+  import axios from "axios";
+
+  const onSubmit = () => {
+    axios.post("http://localhost:3000/posts", {
+      title,
+      body
+    })
+  }
+  ```
+
+- `axios post`를 통해 보내게 되면 브라우저, 네트워크 탭에서 보낸 것을 확인할 수 있다. (터미널에서도 확인 가능)<br />
+  ![3-1](./imgs/3-1.png)
+
+- `db.json` 파일에 보낸 데이터가 등록된 것을 확인 할 수 있다.<br />
+  ![3-2](./imgs/3-2.png)
+
+<br />
+<br />
+<br />
