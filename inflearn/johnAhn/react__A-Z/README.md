@@ -3163,3 +3163,42 @@ const posts: Post[] = useSelector((state: RootState) => state.posts)
 **결론**<br />
 이렇게 리덕스 던크를 사용함으로써 액션 생성자가 그저 하나의 액션 객체를 생성할 뿐 아니라 <br />
 그 내부 안에서 여러 가지 작업도 할 수 있게 만들어 줍니다.
+
+<br />
+<br />
+
+> 리덕스 익스텐션 추가하기
+
+**리덕스 익스텐션이란**<br />
+- `Redux-Devtools`는 **Redux 앱을 위한 디버깅 플랫폼을 제공**합니다.<br />
+이를 통해 시간 여행 디버깅 및 라이브 편집을 수행할 수 있습니다.
+- 공식 문서의 일부 기능은 다음과 같습니다.
+  - 모든 상태 및 작업 페이로드를 검사할 수 있습니다.
+  - 작업을 "취소"하여 시간을 되돌릴 수 있습니다.
+  - 참조 : https://github.com/reduxjs/redux-devtools/tree/main/extension#installation
+- **설치 방법**
+  1. [익스텐션 설치하기](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd/related?hl=en)
+  2. 패키지 설치하기
+    ```
+    npm install redux-devtools-extension --save
+    ```
+    ```javascript
+    import { createStore, applyMiddleware } from 'redux';
+    import { composeWithDevTools } from 'redux-devtools-extension';
+
+    const store = createStore(
+      reducer,
+      composeWithDevTools(
+        applyMiddleware(...middleware)
+        // other store enhancers if any
+      )
+    )
+    ```
+- **리덕스 툴킷에서는**
+  - devTools를 위한 파라미터가 있는데 기본적으로 사용을 할수있게 설정되어 있습니다.
+  - 참조 : https://redux-toolkit.js.org/api/configureStore#parameters<br />
+  ![10-6-3](./imgs/10-6-3.png)<br />
+<br />
+<br />
+
+<!-- #### 10-7. Redux Toolkit -->
