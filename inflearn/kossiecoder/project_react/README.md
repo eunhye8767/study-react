@@ -107,3 +107,51 @@ const handleChange = () => {
 <br />
 <br />
 <br />
+
+#### 4. db 실행 명령어 스크립트에 넣기
+- `package.json` 파일에 db를 실행시켜주는 명령어 코드를 추가 한다.
+  ```javascript
+  // package.json
+  "scripts": {
+    "start": "react-scripts start",
+    "db": "json-server --watch db.json --port 3001",
+  ```
+- `db`를 실행시키고자 할 땐, `npm run db`
+
+<br />
+<br />
+<br />
+
+#### 5. React Router
+- [react router (공홈)](https://reactrouter.com/en/main)
+- 라우터(React Router) 설치
+  ```
+  npm install react-router-dom
+  ```
+- 라우터 기본 구조
+  ```javascript
+  import {
+    BrowserRouter as Router, // BrowserRouter => Router로 사용
+    Switch,
+    Route,
+    Link
+  } from "react-router-dom"
+
+  function App() {
+    return (
+      <Router>
+        <div>
+          <Link to="/">Home</Link>
+          <Link to="/blogs">Blogs</Link>
+        </div>
+        
+        <Switch>
+          <Route path="/" exact>Home page</Route>
+          <Route path="/blogs">Blogs page</Route>
+        </Switch>
+      </Router>
+    )
+  }
+  ```
+  - `<Route path="/" exact>` : `path="/"` 처럼 주소(경로)가 "/"일 때만 해당 컴포넌트 출력.
+  - `<Route path="/">` :  `path="/"`처럼 주소(경로)에 들어갈 때 해당 컴포넌트 출력.
