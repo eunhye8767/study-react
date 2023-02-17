@@ -4,8 +4,11 @@ import {
   Route,
 } from "react-router-dom";
 
-import BlogForm from "./components/BlogForm";
 import NavBar from "./components/NavBar";
+import HomePage from "./pages/HomePage";
+import CreatePage from "./pages/CreatePage";
+import ListPage from "./pages/ListPage";
+import EditPage from "./pages/EditPage";
 
 function App() {
   return (
@@ -14,9 +17,17 @@ function App() {
 
       <div className="container">
         <Switch>
-          <Route path="/" exact>Home page</Route>
-          <Route path="/blogs">
-            <BlogForm />
+          <Route path="/" exact>
+            <HomePage />
+          </Route>
+          <Route path="/blogs" exact>
+            <ListPage />
+          </Route>
+          <Route path="/blogs/create" exact>
+            <CreatePage />
+          </Route>
+          <Route path="/blogs/edit" exact>
+            <EditPage />
           </Route>
         </Switch>
       </div>
