@@ -1,8 +1,8 @@
-import PropTypes, { string } from "prop-types";
+import PropTypes from "prop-types";
 
-const Card = ({ title, children }) => {
+const Card = ({ title, onclick, children }) => {
   return (
-    <div className="card mb-3">
+    <div className="card mb-3 cursor-pointer" onClick={onclick}>
       <div className="card-body">
         <div className="d-flex justify-content-between">
           <div>{title}</div>
@@ -21,11 +21,13 @@ const Card = ({ title, children }) => {
 Card.propType = {
   title: PropTypes.string.isRequired,
   children: PropTypes.element,
+  onclick: PropTypes.func,
 }
 
 // 기본값 적용
 Card.defaultProps = {
-  children: null
+  children: null,
+  onclick: () => {},
 }
 
 export default Card;

@@ -369,3 +369,11 @@ export default Card;
     children: null
   }
   ```
+
+<br />
+<br />
+<br />
+
+#### 9. useHistory
+- router v5 => `useHistory` <br />router v6 => `useNavigate`
+- [참고 사이트](https://kangdanne.tistory.com/167)
