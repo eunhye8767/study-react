@@ -15,7 +15,7 @@ const BlogForm = () => {
 
   return (
     <div>
-      <h1 className="mt-3 mb-3">Create a blog post</h1>
+      <h1 className="mb-3">Create a blog post</h1>
       <div className="mb-3">
         <label className="form-label">Title</label>
         <input
