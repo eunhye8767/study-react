@@ -220,4 +220,75 @@ const handleChange = () => {
   <br />
   <br />
 
-  
+#### 7. props children
+- **기본 타입**
+  - `pages/ListPage.js`
+    ```javascript
+    return (
+      <div>
+        <h1>Blogs</h1>
+        {posts.map((post) => {
+          return (
+            <Card key={post.id} title={post.title}>
+              <div className="d-flex justify-content-between">
+                <div>{post.title}</div>
+                <div>buttons</div>
+              </div>
+            </Card>
+          );
+        })}
+      </div>
+    );
+    ```
+
+  - `components/Card.js`
+    - `<div className="d-flex justify-content-between">` 영역이 `children`으로 들어가게 된다.
+    ```javascript
+    const Card = ({title, children}) => {
+      return (
+        <div className="card mb-3">
+          <div className="card-body">{children}</div>
+        </div>
+      );
+    };
+
+    export default Card;
+    ```
+
+- **children 있을 때? 없을 때? 구분지어 적용**
+  - `pages/ListPage.js`
+    ```javascript
+    return (
+      <div>
+        <h1>Blogs</h1>
+        {posts.map((post) => {
+          return (
+            <Card key={post.id} title={post.title}>
+              <button>버튼</button>
+            </Card>
+          );
+        })}
+      </div>
+    );
+    ```
+
+  - `components/Card.js`
+    - `<div className="d-flex justify-content-between">` 영역이 `children`으로 들어가게 된다.
+    ```javascript
+    const Card = ({ title, children }) => {
+      return (
+        <div className="card mb-3">
+          <div className="card-body">
+            <div className="d-flex justify-content-between">
+              <div>{title}</div>
+              {children && <div>{children}</div>}
+            </div>
+          </div>
+        </div>
+      );
+    };
+    ```
+
+<br />
+<br />
+<br />
