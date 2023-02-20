@@ -155,3 +155,63 @@ const handleChange = () => {
   ```
   - `<Route path="/" exact>` : `path="/"` 처럼 주소(경로)가 "/"일 때만 해당 컴포넌트 출력.
   - `<Route path="/">` :  `path="/"`처럼 주소(경로)에 들어갈 때 해당 컴포넌트 출력.
+
+  <br />
+  <br />
+  <br />
+
+#### 6. NavLink
+- `NavLink`를 이용하여 `active` 효과를 줄 수 있다.
+- [react router - navlink 공홈](https://reactrouter.com/en/main/components/nav-link)
+  ```javascript
+  import * as React from "react";
+  import { NavLink } from "react-router-dom";
+
+  function NavList() {
+    let activeStyle = {
+      textDecoration: "underline",
+    };
+
+    let activeClassName = "underline";
+
+    return (
+      <nav>
+        <ul>
+          <li>
+            <NavLink
+              to="messages"
+              style={({ isActive }) =>
+                isActive ? activeStyle : undefined
+              }
+            >
+              Messages
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="tasks"
+              className={({ isActive }) =>
+                isActive ? activeClassName : undefined
+              }
+            >
+              Tasks
+            </NavLink>
+          </li>
+  ```
+
+- [v5 router](https://v5.reactrouter.com/web/api/NavLink/exact-bool)
+  - **exact: bool** : 정확한 주소일 때. ex) /profile/edit 일 때 activeClass 적용 불가.
+    ```html
+    <NavLink exact to="/profile">
+      Profile
+    </NavLink>
+    ```
+
+  - **strict: bool** : 엄격한
+    ```html
+    <NavLink strict to="/events/">
+      Events
+    </NavLink>
+    ```
+
+  - exact, strice 모드 외에 다른 모드도 있다. <br />상황에 따라 맞는 모드를 적용하면 될 듯 하다. (가이드 참고, 버전에 따라 다를 수 있음.)
