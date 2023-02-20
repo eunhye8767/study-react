@@ -292,3 +292,80 @@ const handleChange = () => {
 <br />
 <br />
 <br />
+
+#### 8. prop-types
+- props 별로 타입을 정해놓으면 그거에 맞는 정보를 알맞게 가져올 수 있다.
+- [npmjs, prop-types 자세히보기](https://www.npmjs.com/package/prop-types)
+  <br />
+
+```javascript
+// Card.js
+import PropTypes, { string } from "prop-types";
+
+const Card = ({ title, children }) => {
+  return (
+    <div className="card mb-3">
+      <div className="card-body">
+        <div className="d-flex justify-content-between">
+          <div>{title}</div>
+          {children && <div>{children}</div>}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+Card.propType = {
+  title: PropTypes.string,
+}
+
+// 필수 항목
+Card.propType = {
+  title: PropTypes.string.isRequired,
+}
+
+// 기본값 적용
+Card.defaultProps = {
+  title: "Title"
+}
+
+export default Card;
+```
+
+- **props types**
+   - `import PropTypes from "prop-types";` 에서 `import { string } from "prop-types";`으로 <br />import 할 경우, `title: string,`으로 적용이 가능하다.
+  ```javascript
+  Card.propType = {
+    title: PropTypes.string,
+  }
+  ```
+
+- **props를 보내주지 않았을 때, 기본으로 특정 값을 보여지게 적용할 때**
+  ```javascript
+  Card.defaultProps = {
+    title: "Title"
+  }
+  ```
+
+- **특정 props를 필수 항목으로 적용해야 할 때** : `isRequired`를 적용한다.
+  ```javascript
+  Card.propType = {
+    title: PropTypes.string.isRequired,
+  }
+  ```
+
+- **children props type 정할 때**
+  - 본 프로젝트에서는 리액트 엘리먼트로 적용하며, 기본값은 null
+  - 만약, children에 "hi" 처럼 텍스트로 적용할 경우 에러가 발생하게 된다. (앨리먼트가 아니기 때문에!)
+  ```javascript
+  // 필수 항목
+  Card.propType = {
+    title: PropTypes.string.isRequired,
+    children: PropTypes.element,
+  }
+
+  // 기본값 적용
+  Card.defaultProps = {
+    children: null
+  }
+  ```

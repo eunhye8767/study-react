@@ -1,3 +1,5 @@
+import PropTypes, { string } from "prop-types";
+
 const Card = ({ title, children }) => {
   return (
     <div className="card mb-3">
@@ -10,5 +12,20 @@ const Card = ({ title, children }) => {
     </div>
   );
 };
+
+// Card.propType = {
+//   title: PropTypes.string,
+// }
+
+// 필수 항목
+Card.propType = {
+  title: PropTypes.string.isRequired,
+  children: PropTypes.element,
+}
+
+// 기본값 적용
+Card.defaultProps = {
+  children: null
+}
 
 export default Card;
