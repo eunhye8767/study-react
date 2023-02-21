@@ -377,3 +377,19 @@ export default Card;
 #### 9. useHistory
 - router v5 => `useHistory` <br />router v6 => `useNavigate`
 - [참고 사이트](https://kangdanne.tistory.com/167)
+
+<br />
+<br />
+<br />
+
+#### 10. 이벤트 버블링
+- 부모로 이벤트가 올라가는 현상을 막아줄 땐
+  ```javascript
+  const click = (e) => {
+    e.stopPropagation();
+  }
+  ```
+<br />
+<br />
+<br />
+

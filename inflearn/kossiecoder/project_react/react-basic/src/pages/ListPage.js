@@ -12,6 +12,10 @@ const ListPage = () => {
     axios.get("http://localhost:3001/posts").then((res) => setPosts(res.data));
   };
 
+  const handleDelete = (e) => {
+    e.stopPropagation();
+  }
+
   useEffect(() => {
     getPosts();
   }, []);
@@ -32,7 +36,16 @@ const ListPage = () => {
             key={post.id}
             title={post.title}
             onclick={() => history.push("/blogs/edit")}
-          />
+          >
+            <div>
+              <button
+                className="btn btn-danger btn-sm"
+                onClick={handleDelete}
+              >
+                Delete
+              </button>
+            </div>
+          </Card>
         );
       })}
     </div>

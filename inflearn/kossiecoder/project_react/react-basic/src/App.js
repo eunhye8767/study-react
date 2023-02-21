@@ -14,9 +14,14 @@ function App() {
 
       <div className="container mt-3">
         <Switch>
-          {
-            routes.map((route) => <Route path={route.path} exact component={route.component} key={route.path} />)
-          }
+          {routes.map((route) => (
+            <Route
+              path={route.path}
+              exact
+              component={route.component}
+              key={route.path}
+            />
+          ))}
         </Switch>
       </div>
     </Router>
@@ -24,4 +29,3 @@ function App() {
 }
 
 export default App;
- 
