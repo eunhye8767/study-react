@@ -1,17 +1,23 @@
 import { useState } from "react";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const BlogForm = () => {
+  const history = useHistory();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
 
   const onSubmit = () => {
-    axios.post("http://localhost:3001/posts", {
-      // 보낼 데이터 영역
-      title,
-      body
-    })
-  }
+    axios
+      .post("http://localhost:3001/posts", {
+        // 보낼 데이터 영역
+        title,
+        body,
+      })
+      .then(() => {
+        history.push("/blogs");
+      });
+  };
 
   return (
     <div>
@@ -24,7 +30,7 @@ const BlogForm = () => {
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
-      
+
       <div className="mb-3">
         <label className="form-label">Body</label>
         <textarea
@@ -35,9 +41,11 @@ const BlogForm = () => {
         />
       </div>
 
-      <button className="btn btn-primary" onClick={onSubmit}>Post</button>
+      <button className="btn btn-primary" onClick={onSubmit}>
+        Post
+      </button>
     </div>
-  )
-}
+  );
+};
 
-export default BlogForm
+export default BlogForm;
