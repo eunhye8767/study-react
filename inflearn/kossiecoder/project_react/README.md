@@ -34,6 +34,18 @@ const handleChange = () => {
   // 해당 프로젝트에만 설치 (-g 빼고 설치)
   npm i json-server
   ```
+  - https://github.com/typicode/json-server#routes
+    - **GET** : 가져올 때
+    - **POST** : 보낼 때
+    - **DELETE** : 지울 때
+    ```
+    GET    /posts
+    GET    /posts/1
+    POST   /posts
+    PUT    /posts/1
+    PATCH  /posts/1
+    DELETE /posts/1
+    ```
 
 - 루트폴더에 `db.json` 파일 생성.
   ```javascript
@@ -393,3 +405,18 @@ export default Card;
 <br />
 <br />
 
+#### 11. filter 함수
+```javascript
+const arr = [1,2,3];
+const result1 = arr.filter((value) => {
+  return value !== 1;
+})
+
+console.log(result1) // [2,3]
+
+const result2 = arr.filter((value) => {
+  return value < 3;
+})
+
+console.log(result2) // [1,2]
+```

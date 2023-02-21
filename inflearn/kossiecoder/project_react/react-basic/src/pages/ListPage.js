@@ -12,9 +12,14 @@ const ListPage = () => {
     axios.get("http://localhost:3001/posts").then((res) => setPosts(res.data));
   };
 
-  const handleDelete = (e) => {
+  const handleDelete = (e, id) => {
     e.stopPropagation();
-  }
+
+    // 삭제
+    axios.delete(`http://localhost:3001/posts/${id}`).then(() => {
+      setPosts((prev) => prev.filter((post) => post.id !== id));
+    });
+  };
 
   useEffect(() => {
     getPosts();
@@ -40,7 +45,7 @@ const ListPage = () => {
             <div>
               <button
                 className="btn btn-danger btn-sm"
-                onClick={handleDelete}
+                onClick={(e) => handleDelete(e, post.id)}
               >
                 Delete
               </button>
