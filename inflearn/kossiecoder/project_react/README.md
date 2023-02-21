@@ -420,3 +420,9 @@ const result2 = arr.filter((value) => {
 
 console.log(result2) // [1,2]
 ```
+
+<br />
+<br />
+<br />
+
+#### 12. Loading Spinner
