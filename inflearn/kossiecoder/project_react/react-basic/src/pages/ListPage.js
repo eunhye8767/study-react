@@ -45,7 +45,7 @@ const ListPage = () => {
         <Card
           key={post.id}
           title={post.title}
-          onclick={() => history.push("/blogs/edit")}
+          onclick={() => history.push(`/blogs/${post.id}`)}
         >
           <div>
             <button
