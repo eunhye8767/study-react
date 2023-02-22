@@ -13,6 +13,7 @@ const BlogForm = () => {
         // 보낼 데이터 영역
         title,
         body,
+        createdAt: Date.now()
       })
       .then(() => {
         history.push("/blogs");

@@ -452,4 +452,36 @@ console.log(result2) // [1,2]
   }
 
   export default ShowPage
-```
+  ```
+
+<br />
+<br />
+<br />
+
+#### 13. 블로그 생성된 시간 추가
+- 블로그 글을 작성할 때 `BlogForm.js` 파일에 현재 시간을 넘겨준다. <br />`Date.now()` 함수를 이용한다.
+  ```javascript
+  const onSubmit = () => {
+    axios
+      .post("http://localhost:3001/posts", {
+        // 보낼 데이터 영역
+        title,
+        body,
+        createdAt: Date.now()
+      })
+      .then(() => {
+        history.push("/blogs");
+      });
+  };
+  ```
+
+- `1677065410005` 처럼 숫자가 쭉 나열되서 나오는 것을 확인할 수 있다.
+
+- 해당 숫자를 날짜로 변환해주는 함수를 만들어 준다.
+  ```javascript
+  const printDate = (timestamp) => {
+    return new Date(timestamp).toLocaleString();
+  }
+
+  printDate(post.createdAt)
+  ```

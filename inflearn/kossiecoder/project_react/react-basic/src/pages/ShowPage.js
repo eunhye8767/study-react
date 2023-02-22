@@ -15,6 +15,10 @@ const ShowPage = () => {
     });
   };
 
+  const printDate = (timestamp) => {
+    return new Date(timestamp).toLocaleString();
+  }
+
   useEffect(() => {
     getPosts(id);
   }, [id]);
@@ -26,6 +30,10 @@ const ShowPage = () => {
   return (
     <div>
       <h1>{post.title}</h1>
+      <small className="text-muted">
+        Created At : {printDate(post.createdAt)}
+      </small>
+      <hr />
       <p>{post.body}</p>
     </div>
   );
