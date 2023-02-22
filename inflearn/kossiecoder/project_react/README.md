@@ -425,4 +425,31 @@ console.log(result2) // [1,2]
 <br />
 <br />
 
-#### 12. Loading Spinner
+#### 12. useParams
+- `useParams()`을 이용하여 현 페이지 내 파라미터 값을 가져올 수 있다.
+  ```javascript
+  // routes.js
+  {
+    path: '/blogs/:id',
+    component: ShowPage
+  }
+  ```
+  ```javascript
+  // ShowPage.js
+  import React from 'react'
+  import { useParams } from 'react-router-dom'
+
+  const ShowPage = () => {
+    // routes에서 id로 적용해서 동일하게 id를 넣어주면 된다.
+    const { id } = useParams();
+
+    console.log(id);
+    return (
+      <div>
+        show page
+      </div>
+    )
+  }
+
+  export default ShowPage
+```
