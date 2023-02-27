@@ -11,23 +11,42 @@ const BlogForm = ({ editing }) => {
   const [body, setBody] = useState("");
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/posts/${id}`).then(res => {
+    axios.get(`http://localhost:3001/posts/${id}`).then((res) => {
       setTitle(res.data.title);
       setBody(res.data.body);
-    })
-  }, [id])
+    });
+  }, [id]);
 
   const onSubmit = () => {
-    axios
-      .post("http://localhost:3001/posts", {
-        // 보낼 데이터 영역
-        title,
-        body,
-        createdAt: Date.now(),
-      })
-      .then(() => {
-        history.push("/blogs");
-      });
+    /**
+     *  editing 일 떄? 아닐 때?
+     *
+     *    ㄴ PATCH  /posts/1      (아이디가 1인 posts를 부분 업데이트 시)
+     *    ㄴ PATCH를 이용하여 수정 데이터를 보낸다.
+     */
+
+    if (editing) {
+      axios
+        .patch(`http://localhost:3001/posts/${id}`, {
+          // 보낼 데이터 영역
+          title,
+          body,
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    } else {
+      axios
+        .post("http://localhost:3001/posts", {
+          // 보낼 데이터 영역
+          title,
+          body,
+          createdAt: Date.now(),
+        })
+        .then(() => {
+          history.push("/blogs");
+        });
+    }
   };
 
   return (
