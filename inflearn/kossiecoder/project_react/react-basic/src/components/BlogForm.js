@@ -60,6 +60,14 @@ const BlogForm = ({ editing }) => {
     }
   };
 
+  const goBack = () => {
+    if (editing) {
+      history.push(`/blogs/${id}`);
+    } else {
+      history.push("/blogs");
+    }
+  };
+
   return (
     <div>
       <h1 className="mb-3">{editing ? "Edit" : "Create"} a blog post</h1>
@@ -88,6 +96,9 @@ const BlogForm = ({ editing }) => {
         disabled={editing && !isEdited()}
       >
         {editing ? "Edit" : "Post"}
+      </button>
+      <button className="btn btn-danger ms-2" onClick={goBack}>
+        Cancel
       </button>
     </div>
   );
