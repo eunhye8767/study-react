@@ -11,6 +11,8 @@ const BlogForm = ({ editing }) => {
   const [originalTitle, setOriginalTitle] = useState("");
   const [body, setBody] = useState("");
   const [originalBody, setOriginalBody] = useState("");
+  const [publish, setPublish] = useState(false);
+  const [originalPublish, setOriginalPublish] = useState(false);
 
   useEffect(() => {
     if (editing) {
@@ -19,13 +21,19 @@ const BlogForm = ({ editing }) => {
         setOriginalTitle(res.data.title);
         setBody(res.data.body);
         setOriginalBody(res.data.body);
+        setPublish(res.data.publish);
+        setOriginalPublish(res.data.publish);
       });
     }
   }, [id, editing]);
 
   // editin에서 title, body 부분이 바뀌지 않았을 때  비활성화모드
   const isEdited = () => {
-    return title !== originalTitle || body !== originalBody;
+    return (
+      title !== originalTitle ||
+      body !== originalBody ||
+      publish !== originalPublish
+    );
   };
 
   const onSubmit = () => {
@@ -42,6 +50,7 @@ const BlogForm = ({ editing }) => {
           // 보낼 데이터 영역
           title,
           body,
+          publish,
         })
         .then(() => {
           history.push(`/blogs/${id}`);
@@ -52,6 +61,7 @@ const BlogForm = ({ editing }) => {
           // 보낼 데이터 영역
           title,
           body,
+          publish,
           createdAt: Date.now(),
         })
         .then(() => {
@@ -66,6 +76,11 @@ const BlogForm = ({ editing }) => {
     } else {
       history.push("/blogs");
     }
+  };
+
+  const onChangePublish = (e) => {
+    // console.log(e.target.checked);
+    setPublish(e.target.checked);
   };
 
   return (
@@ -88,6 +103,18 @@ const BlogForm = ({ editing }) => {
           onChange={(e) => setBody(e.target.value)}
           rows="10"
         />
+      </div>
+
+      <div className="form-check mb-3">
+        <input
+          type="checkbox"
+          className="form-check-input"
+          checked={publish}
+          onChange={onChangePublish}
+        />
+        <label htmlFor="" className="form-check-label">
+          publish
+        </label>
       </div>
 
       <button

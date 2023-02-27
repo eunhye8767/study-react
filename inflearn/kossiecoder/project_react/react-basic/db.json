@@ -10,13 +10,21 @@
       "title": "새로 글 쓰기 하기",
       "body": "새롭게 글을 다시 써봅시다 ㅋㅋ",
       "createdAt": 1677468253176,
-      "id": 4
+      "id": 4,
+      "publish": true
     },
     {
       "title": "수정이 잘 되는 지 한 번 볼까?",
       "body": "하하 수정이 잘 되었는 지 한 번 볼까?\n되었을 까? 유후\n\n일단 되네? ㅋㅋㅋㅋㅋ",
       "createdAt": 1677468940336,
       "id": 5
+    },
+    {
+      "title": "publish 체크 유무",
+      "body": "publish 체크 안했어요 ㅋㅋㅋ",
+      "publish": false,
+      "createdAt": 1677477313224,
+      "id": 6
     }
   ]
 }
