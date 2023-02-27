@@ -8,14 +8,25 @@ const BlogForm = ({ editing }) => {
   const { id } = useParams();
 
   const [title, setTitle] = useState("");
+  const [originalTitle, setOriginalTitle] = useState("");
   const [body, setBody] = useState("");
+  const [originalBody, setOriginalBody] = useState("");
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/posts/${id}`).then((res) => {
-      setTitle(res.data.title);
-      setBody(res.data.body);
-    });
-  }, [id]);
+    if (editing) {
+      axios.get(`http://localhost:3001/posts/${id}`).then((res) => {
+        setTitle(res.data.title);
+        setOriginalTitle(res.data.title);
+        setBody(res.data.body);
+        setOriginalBody(res.data.body);
+      });
+    }
+  }, [id, editing]);
+
+  // editin에서 title, body 부분이 바뀌지 않았을 때  비활성화모드
+  const isEdited = () => {
+    return title !== originalTitle || body !== originalBody;
+  };
 
   const onSubmit = () => {
     /**
@@ -32,8 +43,8 @@ const BlogForm = ({ editing }) => {
           title,
           body,
         })
-        .then((res) => {
-          console.log(res);
+        .then(() => {
+          history.push(`/blogs/${id}`);
         });
     } else {
       axios
@@ -71,7 +82,11 @@ const BlogForm = ({ editing }) => {
         />
       </div>
 
-      <button className="btn btn-primary" onClick={onSubmit}>
+      <button
+        className="btn btn-primary"
+        onClick={onSubmit}
+        disabled={editing && !isEdited()}
+      >
         {editing ? "Edit" : "Post"}
       </button>
     </div>
