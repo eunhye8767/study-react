@@ -25,6 +25,13 @@
       "publish": false,
       "createdAt": 1677477313224,
       "id": 6
+    },
+    {
+      "title": "글을 남겨봅시다",
+      "body": "하하글을 남겨봅시다 \nㅋㅋㅋ",
+      "publish": true,
+      "createdAt": 1677898842402,
+      "id": 7
     }
   ]
 }
