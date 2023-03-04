@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 
 import Card from "../components/Card";
 import LoadingSpinner from "../components/LoadingSpinner";
+import Pagination from "./Pagination";
 
 const BlogList = ({ isAdmin }) => {
   const [posts, setPosts] = useState([]);
@@ -27,20 +28,9 @@ const BlogList = ({ isAdmin }) => {
       setPosts((prev) => prev.filter((post) => post.id !== id));
     });
   };
-
-  useEffect(() => {
-    getPosts();
-  }, []);
-
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
-  if (posts.length === 0) {
-    return <div>No Blog posts found!</div>;
-  }
-
-  return posts
+  
+  const renderBlogList = () => {
+    return posts
     .filter((post) => {
       return isAdmin || post.publish;
     })
@@ -64,6 +54,26 @@ const BlogList = ({ isAdmin }) => {
         </Card>
       );
     });
+  }
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  if (loading) {
+    return <LoadingSpinner />;
+  }
+
+  if (posts.length === 0) {
+    return <div>No Blog posts found!</div>;
+  }
+
+  return (
+    <div>
+      {renderBlogList()}
+      <Pagination />
+    </div>
+  )
 };
 
 BlogList.propTypes = {
