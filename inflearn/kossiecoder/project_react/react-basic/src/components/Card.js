@@ -3,11 +3,9 @@ import PropTypes from "prop-types";
 const Card = ({ title, onclick, children }) => {
   return (
     <div className="card mb-3 cursor-pointer" onClick={onclick}>
-      <div className="card-body">
-        <div className="d-flex justify-content-between">
-          <div>{title}</div>
-          {children && <div>{children}</div>}
-        </div>
+      <div className="card-body d-flex align-content-center">
+        <div className="flex-grow-1">{title}</div>
+        {children && <div>{children}</div>}
       </div>
     </div>
   );
