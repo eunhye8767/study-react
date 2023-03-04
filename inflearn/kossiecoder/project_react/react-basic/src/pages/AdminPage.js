@@ -13,7 +13,7 @@ const AdminPage = () => {
         </div>
       </div>
 
-      <BlogList />
+      <BlogList isAdmin={true} />
     </div>
   );
 };
