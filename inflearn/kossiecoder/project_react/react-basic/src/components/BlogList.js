@@ -13,8 +13,8 @@ const BlogList = ({ isAdmin }) => {
 
   const history = useHistory();
 
-  const getPosts = async () => {
-    axios.get("http://localhost:3001/posts").then((res) => {
+  const getPosts = async (page = 1) => {
+    axios.get(`http://localhost:3001/posts?_page=${page}&_limit=5&_sort=id&_order=desc`).then((res) => {
       setPosts(res.data);
       setLoading(false);
     });

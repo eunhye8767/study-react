@@ -485,3 +485,52 @@ console.log(result2) // [1,2]
 
   printDate(post.createdAt)
   ```
+
+<br />
+<br />
+<br />
+
+#### 14. Pagination
+
+1. json-server => Paginate 
+  - [json-server 공홈](https://www.npmjs.com/package/json-server)에서 `Paginate` 가이드에 따라 적용한다.
+
+  - Use _page and optionally _limit to paginate returned data.<br />  In the Link header you'll get first, prev, next and last links.<br />(limit 값이 없을 땐, 기본 10으로 적용이 된다.)
+    ```javascript
+    GET /posts?_page=7
+
+    // 10 items are returned by default
+    GET /posts?_page=7&_limit=20
+    ```
+
+  - 한 페이지당 5개씩 보여지기 하기 위해 아래와 같이 적용한다.<br />(페이지 번호는 변동으로 변수로 적용한다. 변수 디폴트 값은 1로 적용)
+    ```javascript
+    const getPosts = async (page = 1) => {
+      axios.get(`http://localhost:3001/posts?_page=${page}&_limit=5`).then((res) => {
+        setPosts(res.data);
+        setLoading(false);
+      });
+    };
+    ```
+
+  - 데이터를 출력해줄 때 내림차순으로 보여지게 하고 싶다면, `Sort`를 이용한다.
+    - Add _sort and _order (ascending order by default)
+      ```javascript
+      GET /posts?_sort=views&_order=asc
+      GET /posts/1/comments?_sort=votes&_order=asc
+      ```
+    - For multiple fields, use the following format:<br />`views` 또는 `user, views`처럼 정렬 기준의 해당 key 값을 적용한다.
+      ```javascript
+      GET /posts?_sort=user,views&_order=desc,asc
+      ```
+    - 오름차순 : `&_order=asc` / 내림차순 : `&_order=desc`
+
+    - `id` 값 기준, 내림차순으로 적용하고 싶을 때
+      ```javascript
+      const getPosts = async (page = 1) => {
+        axios.get(`http://localhost:3001/posts?_page=${page}&_limit=5&_sort=id&_order=desc`).then((res) => {
+          setPosts(res.data);
+          setLoading(false);
+        });
+      };
+      ```
