@@ -513,6 +513,7 @@ console.log(result2) // [1,2]
     };
     ```
 
+2. json-server => Sort
   - 데이터를 출력해줄 때 내림차순으로 보여지게 하고 싶다면, `Sort`를 이용한다.
     - Add _sort and _order (ascending order by default)
       ```javascript
@@ -534,3 +535,30 @@ console.log(result2) // [1,2]
         });
       };
       ```
+
+3. get 주소가 너무 길어졌을 때, `params`를 이용하여 간결하게 한다.
+  - `params` 적용 전
+    ```javascript
+    const getPosts = async (page = 1) => {
+        axios.get(`http://localhost:3001/posts?_page=${page}&_limit=5&_sort=id&_order=desc`).then((res) => {
+          setPosts(res.data);
+          setLoading(false);
+        });
+      };
+    ```
+  - `params` 적용 후
+    ```javascript
+    const getPosts = async (page = 1) => {
+      axios.get(`http://localhost:3001/posts`, {
+        params: {
+          _page: page,
+          _limit: 5,
+          _sort: "id",
+          _order: "desc"
+        }
+      }).then((res) => {
+        setPosts(res.data);
+        setLoading(false);
+      });
+    };
+    ```
