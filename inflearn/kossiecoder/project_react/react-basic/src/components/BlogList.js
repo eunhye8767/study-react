@@ -16,7 +16,7 @@ const BlogList = ({ isAdmin }) => {
   const [numberOfPosts, setNumberOfPosts] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
 
-  let limit = 5;
+  let limit = 1;
 
   useEffect(() => {
     // 올림함수 (Math.ceil())를 이용하여 전달
