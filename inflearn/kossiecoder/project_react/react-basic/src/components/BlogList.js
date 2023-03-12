@@ -14,17 +14,19 @@ const BlogList = ({ isAdmin }) => {
   const history = useHistory();
 
   const getPosts = async (page = 1) => {
-    axios.get(`http://localhost:3001/posts`, {
-      params: {
-        _page: page,
-        _limit: 5,
-        _sort: "id",
-        _order: "desc"
-      }
-    }).then((res) => {
-      setPosts(res.data);
-      setLoading(false);
-    });
+    axios
+      .get(`http://localhost:3001/posts`, {
+        params: {
+          _page: page,
+          _limit: 5,
+          _sort: "id",
+          _order: "desc",
+        },
+      })
+      .then((res) => {
+        setPosts(res.data);
+        setLoading(false);
+      });
   };
 
   const handleDelete = (e, id) => {
@@ -35,13 +37,9 @@ const BlogList = ({ isAdmin }) => {
       setPosts((prev) => prev.filter((post) => post.id !== id));
     });
   };
-  
+
   const renderBlogList = () => {
-    return posts
-    .filter((post) => {
-      return isAdmin || post.publish;
-    })
-    .map((post) => {
+    return posts.map((post) => {
       return (
         <Card
           key={post.id}
@@ -61,7 +59,7 @@ const BlogList = ({ isAdmin }) => {
         </Card>
       );
     });
-  }
+  };
 
   useEffect(() => {
     getPosts();
@@ -80,7 +78,7 @@ const BlogList = ({ isAdmin }) => {
       {renderBlogList()}
       <Pagination />
     </div>
-  )
+  );
 };
 
 BlogList.propTypes = {
