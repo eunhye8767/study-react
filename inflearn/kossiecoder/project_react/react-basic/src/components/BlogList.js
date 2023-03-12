@@ -1,7 +1,7 @@
 import axios from "axios";
 import { bool } from "prop-types";
 import { useEffect, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
 import Card from "../components/Card";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -9,6 +9,9 @@ import Pagination from "./Pagination";
 
 const BlogList = ({ isAdmin }) => {
   const history = useHistory();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const pageParams = params.get("page");
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,11 +24,19 @@ const BlogList = ({ isAdmin }) => {
   useEffect(() => {
     // 올림함수 (Math.ceil())를 이용하여 전달
     setNumberOfPages(Math.ceil(numberOfPosts / limit));
-  }, [numberOfPosts])
+  }, [numberOfPosts]);
+
+  useEffect(() => {
+    setCurrentPage(parseInt(pageParams) || 1);
+    getPosts(parseInt(pageParams));
+  }, [pageParams]);
+
+  const onClickPageButton = (page) => {
+    history.push(`${location.pathname}?page=${page}`);
+    getPosts(page);
+  };
 
   const getPosts = async (page = 1) => {
-    setCurrentPage(page);
-
     let params = {
       _page: page,
       _limit: limit,
@@ -38,7 +49,7 @@ const BlogList = ({ isAdmin }) => {
     }
 
     axios.get(`http://localhost:3001/posts`, { params }).then((res) => {
-      setNumberOfPosts(res.headers['x-total-count']);
+      setNumberOfPosts(res.headers["x-total-count"]);
       setPosts(res.data);
       setLoading(false);
     });
@@ -76,10 +87,6 @@ const BlogList = ({ isAdmin }) => {
     });
   };
 
-  useEffect(() => {
-    getPosts();
-  }, []);
-
   if (loading) {
     return <LoadingSpinner />;
   }
@@ -91,11 +98,13 @@ const BlogList = ({ isAdmin }) => {
   return (
     <div>
       {renderBlogList()}
-      {numberOfPages > 1 && <Pagination
-        currentPage={currentPage}
-        numberOfPages={numberOfPages}
-        onClick={getPosts}
-      />}
+      {numberOfPages > 1 && (
+        <Pagination
+          currentPage={currentPage}
+          numberOfPages={numberOfPages}
+          onClick={onClickPageButton}
+        />
+      )}
     </div>
   );
 };

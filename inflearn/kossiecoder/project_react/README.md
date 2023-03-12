@@ -614,10 +614,24 @@ console.log(result2) // [1,2]
 
 6. getPosts로 데이터를 보낼 때, 총 보낸 데이터의 갯수를 알 수 있다.
    ![14-6](./imgs/14-6.png)<br />
-   
+
   - `res.headers['x-total-count']` => 총 가져온 데이터의 갯수
     ```javascript
     axios.get(`http://localhost:3001/posts`, { params }).then((res) => {
       console.log(res.headers['x-total-count']);
     });
+    ```
+
+7. `history`와 `useLocation`을 이용하여 리스트 출력
+  - 브라우저 주소에 있는 데이터 정보인 page 번호를 기준으로 데이터 나열.
+  - useLocation을 이용하여 주소창의 정보를 가져온다.<br />
+    ![14-7](./imgs/14-7.png)
+    ```javascript
+    const location = useLocation();
+    
+    // location.search => `?page=3`
+    const params = new URLSearchParams(location.search);
+
+    // params.get('page') => 3
+    console.log(params.get('page'));
     ```
