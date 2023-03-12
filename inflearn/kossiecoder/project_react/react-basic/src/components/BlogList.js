@@ -1,6 +1,6 @@
 import axios from "axios";
 import { bool } from "prop-types";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 import Card from "../components/Card";
@@ -19,7 +19,7 @@ const BlogList = ({ isAdmin }) => {
   const [numberOfPosts, setNumberOfPosts] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
 
-  let limit = 1;
+  let limit = 3;
 
   useEffect(() => {
     // 올림함수 (Math.ceil())를 이용하여 전달
@@ -36,7 +36,7 @@ const BlogList = ({ isAdmin }) => {
     getPosts(page);
   };
 
-  const getPosts = async (page = 1) => {
+  const getPosts = useCallback((page = 1) => {
     let params = {
       _page: page,
       _limit: limit,
@@ -53,7 +53,7 @@ const BlogList = ({ isAdmin }) => {
       setPosts(res.data);
       setLoading(false);
     });
-  };
+  }, [isAdmin]);
 
   const handleDelete = (e, id) => {
     e.stopPropagation();
