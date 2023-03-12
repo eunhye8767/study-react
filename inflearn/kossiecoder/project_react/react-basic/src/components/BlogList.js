@@ -14,19 +14,21 @@ const BlogList = ({ isAdmin }) => {
   const history = useHistory();
 
   const getPosts = async (page = 1) => {
-    axios
-      .get(`http://localhost:3001/posts`, {
-        params: {
-          _page: page,
-          _limit: 5,
-          _sort: "id",
-          _order: "desc",
-        },
-      })
-      .then((res) => {
-        setPosts(res.data);
-        setLoading(false);
-      });
+    let params = {
+      _page: page,
+      _limit: 5,
+      _sort: "id",
+      _order: "desc",
+    };
+
+    if (!isAdmin) {
+      params = { ...params, publish: true };
+    }
+
+    axios.get(`http://localhost:3001/posts`, { params }).then((res) => {
+      setPosts(res.data);
+      setLoading(false);
+    });
   };
 
   const handleDelete = (e, id) => {

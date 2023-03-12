@@ -562,3 +562,40 @@ console.log(result2) // [1,2]
       });
     };
     ```
+
+4. `publiseh`가 `true or false`로 적용되어 있는데, `true`일 때만 갖고 오고자 할 때
+  - `_???` => `json-start`에 있는 파라미터를 갖고올 때 쓰는 방식
+  - `db.json`에 key 값이 `publish`를 써주면 해당 파라미터의 값들을 가져온다.
+    ```javascript
+    axios
+      .get(`http://localhost:3001/posts`, {
+        params: {
+          _page: page,
+          _limit: 5,
+          _sort: "id",
+          _order: "desc",
+          publish: true
+        },
+      })
+    ```
+  - admin 구분에 따라 데이터를 가져오고자 할 땐 스프레드를 이용하여 구분한다.
+    ```javascript
+    const getPosts = async (page = 1) => {
+      let params = {
+        _page: page,
+        _limit: 5,
+        _sort: "id",
+        _order: "desc",
+      };
+
+      // 어드민이 아닐 경우, publish: true를 추가한다.
+      if (!isAdmin) {
+        params = { ...params, publish: true };
+      }
+
+      axios.get(`http://localhost:3001/posts`, { params }).then((res) => {
+        setPosts(res.data);
+        setLoading(false);
+      });
+    };
+    ```
