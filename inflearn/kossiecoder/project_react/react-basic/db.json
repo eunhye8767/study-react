@@ -1,89 +1,123 @@
 {
   "posts": [
     {
-      "title": "날짜 추가 후 글 남기기 수정",
+      "title": "1 날짜 추가 후 글 남기기 수정",
       "body": "날짜 추가는 Date.now\n추가해서 데이터 넘기자 넘기자\n\n수정했어요\n\n수정되었을까나?\n에헤?\n",
       "createdAt": 1677065410005,
       "id": 1
     },
     {
-      "title": "새로 글 쓰기 하기",
+      "title": "2 새로 글 쓰기 하기",
       "body": "새롭게 글을 다시 써봅시다 ㅋㅋ",
       "createdAt": 1677468253176,
       "id": 2,
       "publish": true
     },
     {
-      "title": "수정이 잘 되는 지 한 번 볼까?",
+      "title": "3 수정이 잘 되는 지 한 번 볼까?",
       "body": "하하 수정이 잘 되었는 지 한 번 볼까?\n되었을 까? 유후\n\n일단 되네? ㅋㅋㅋㅋㅋ",
       "createdAt": 1677468940336,
       "id": 3
     },
     {
-      "title": "publish 체크 유무",
+      "title": "4 publish 체크 유무",
       "body": "publish 체크 안했어요 ㅋㅋㅋ",
       "publish": false,
       "createdAt": 1677477313224,
       "id": 4
     },
     {
-      "title": "글을 남겨봅시다",
+      "title": "5 글을 남겨봅시다",
       "body": "하하글을 남겨봅시다 \nㅋㅋㅋ",
       "publish": true,
       "createdAt": 1677898842402,
       "id": 5
     },
     {
-      "title": "날짜 추가 후 글 남기기 수정",
+      "title": "6 날짜 추가 후 글 남기기 수정",
       "body": "날짜 추가는 Date.now\n추가해서 데이터 넘기자 넘기자\n\n수정했어요\n\n수정되었을까나?\n에헤?\n",
       "createdAt": 1677065410005,
       "id": 6
     },
     {
-      "title": "새로 글 쓰기 하기",
+      "title": "7 새로 글 쓰기 하기",
       "body": "새롭게 글을 다시 써봅시다 ㅋㅋ",
       "createdAt": 1677468253176,
       "id": 7,
       "publish": true
     },
     {
-      "title": "수정이 잘 되는 지 한 번 볼까?",
+      "title": "8 수정이 잘 되는 지 한 번 볼까?",
       "body": "하하 수정이 잘 되었는 지 한 번 볼까?\n되었을 까? 유후\n\n일단 되네? ㅋㅋㅋㅋㅋ",
       "createdAt": 1677468940336,
       "id": 8
     },
     {
-      "title": "publish 체크 유무",
+      "title": "9 publish 체크 유무",
       "body": "publish 체크 안했어요 ㅋㅋㅋ",
       "publish": false,
       "createdAt": 1677477313224,
       "id": 9
     },
     {
-      "title": "글을 남겨봅시다",
+      "title": "10 글을 남겨봅시다",
       "body": "하하글을 남겨봅시다 \nㅋㅋㅋ",
       "publish": true,
       "createdAt": 1677898842402,
       "id": 10
     },
     {
-      "title": "날짜 추가 후 글 남기기 수정",
+      "title": "11 날짜 추가 후 글 남기기 수정",
       "body": "날짜 추가는 Date.now\n추가해서 데이터 넘기자 넘기자\n\n수정했어요\n\n수정되었을까나?\n에헤?\n",
       "createdAt": 1677065410005,
       "id": 11
     },
     {
-      "title": "새로 글 쓰기 하기",
+      "title": "12 새로 글 쓰기 하기",
       "body": "새롭게 글을 다시 써봅시다 ㅋㅋ",
       "createdAt": 1677468253176,
       "id": 12,
       "publish": true
     },
     {
-      "title": "수정이 잘 되는 지 한 번 볼까?",
+      "title": "13 수정이 잘 되는 지 한 번 볼까?",
       "body": "하하 수정이 잘 되었는 지 한 번 볼까?\n되었을 까? 유후\n\n일단 되네? ㅋㅋㅋㅋㅋ",
       "createdAt": 1677468940336,
       "id": 13
+    },
+    {
+      "title": "14 publish 체크 유무",
+      "body": "publish 체크 안했어요 ㅋㅋㅋ",
+      "publish": false,
+      "createdAt": 1677477313224,
+      "id": 14
+    },
+    {
+      "title": "15 글을 남겨봅시다",
+      "body": "하하글을 남겨봅시다 \nㅋㅋㅋ",
+      "publish": true,
+      "createdAt": 1677898842402,
+      "id": 15
+    },
+    {
+      "title": "16 날짜 추가 후 글 남기기 수정",
+      "body": "날짜 추가는 Date.now\n추가해서 데이터 넘기자 넘기자\n\n수정했어요\n\n수정되었을까나?\n에헤?\n",
+      "createdAt": 1677065410005,
+      "id": 16
+    },
+    {
+      "title": "17 새로 글 쓰기 하기",
+      "body": "새롭게 글을 다시 써봅시다 ㅋㅋ",
+      "createdAt": 1677468253176,
+      "id": 17,
+      "publish": true
+    },
+    {
+      "title": "18 수정이 잘 되는 지 한 번 볼까?",
+      "body": "하하 수정이 잘 되었는 지 한 번 볼까?\n되었을 까? 유후\n\n일단 되네? ㅋㅋㅋㅋㅋ",
+      "createdAt": 1677468940336,
+      "id": 18,
+      "publish": true
     }
   ]
 }

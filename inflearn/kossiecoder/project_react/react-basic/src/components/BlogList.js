@@ -8,12 +8,15 @@ import LoadingSpinner from "../components/LoadingSpinner";
 import Pagination from "./Pagination";
 
 const BlogList = ({ isAdmin }) => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   const history = useHistory();
 
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+
   const getPosts = async (page = 1) => {
+    setCurrentPage(page);
+
     let params = {
       _page: page,
       _limit: 5,
@@ -78,7 +81,11 @@ const BlogList = ({ isAdmin }) => {
   return (
     <div>
       {renderBlogList()}
-      <Pagination currentPage={2} numberOfPages={5} />
+      <Pagination
+        currentPage={currentPage}
+        numberOfPages={5}
+        onClick={getPosts}
+      />
     </div>
   );
 };

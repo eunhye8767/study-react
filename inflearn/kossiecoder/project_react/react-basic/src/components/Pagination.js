@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 
-const Pagination = ({ currentPage, numberOfPages }) => {
+const Pagination = ({ currentPage, numberOfPages, onClick }) => {
   return (
     <nav aria-label="Page navigation example">
       <ul className="pagination justify-content-center">
@@ -8,15 +8,25 @@ const Pagination = ({ currentPage, numberOfPages }) => {
           <a className="page-link">Previous</a>
         </li>
 
-        {Array(numberOfPages).fill(1).map((val, idx) => val + idx).map(pageNumber => {
-          return (
-            <li className={`page-item ${currentPage === pageNumber ? "active" : ""}`}>
-              <a className="page-link" href="#">
-                {pageNumber}
-              </a>
-            </li>    
-          )
-        })}
+        {Array(numberOfPages)
+          .fill(1)
+          .map((val, idx) => val + idx)
+          .map((pageNumber) => {
+            return (
+              <li
+                className={`page-item ${
+                  currentPage === pageNumber ? "active" : ""
+                }`}
+              >
+                <button
+                  className="page-link cursor-pointer"
+                  onClick={() => onClick(pageNumber)}
+                >
+                  {pageNumber}
+                </button>
+              </li>
+            );
+          })}
 
         {/* <li className={`page-item ${currentPage === 1 ? "active" : ""}`}>
           <a className="page-link" href="#">
@@ -38,6 +48,11 @@ const Pagination = ({ currentPage, numberOfPages }) => {
             Next
           </a>
         </li> */}
+        <li className="page-item">
+          <a className="page-link" href="#">
+            Next
+          </a>
+        </li>
       </ul>
     </nav>
   );
@@ -45,7 +60,8 @@ const Pagination = ({ currentPage, numberOfPages }) => {
 
 Pagination.propTypes = {
   currentPage: propTypes.number,
-  numberOfPages: propTypes.number
+  numberOfPages: propTypes.number.isRequired,
+  onClick: propTypes.func.isRequired,
 };
 
 Pagination.defaultProps = {
