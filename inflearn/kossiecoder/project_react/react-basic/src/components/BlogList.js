@@ -28,7 +28,7 @@ const BlogList = ({ isAdmin }) => {
 
   useEffect(() => {
     setCurrentPage(parseInt(pageParams) || 1);
-    getPosts(parseInt(pageParams));
+    getPosts(parseInt(pageParams) || 1);
   }, [pageParams]);
 
   const onClickPageButton = (page) => {
