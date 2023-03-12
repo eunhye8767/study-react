@@ -611,3 +611,13 @@ console.log(result2) // [1,2]
   // 1로 채워진 배열을 1 ~ 5로 바꿔준다. => [1, 2, 3, 4, 5]
   Array(5).fill(1).map((val, idx) => val + idx)
   ```
+
+6. getPosts로 데이터를 보낼 때, 총 보낸 데이터의 갯수를 알 수 있다.
+   ![14-6](./imgs/14-6.png)<br />
+   
+  - `res.headers['x-total-count']` => 총 가져온 데이터의 갯수
+    ```javascript
+    axios.get(`http://localhost:3001/posts`, { params }).then((res) => {
+      console.log(res.headers['x-total-count']);
+    });
+    ```

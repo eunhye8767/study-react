@@ -13,13 +13,22 @@ const BlogList = ({ isAdmin }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [numberOfPosts, setNumberOfPosts] = useState(0);
+  const [numberOfPages, setNumberOfPages] = useState(0);
+
+  let limit = 5;
+
+  useEffect(() => {
+    // 올림함수 (Math.ceil())를 이용하여 전달
+    setNumberOfPages(Math.ceil(numberOfPosts / limit));
+  }, [numberOfPosts])
 
   const getPosts = async (page = 1) => {
     setCurrentPage(page);
 
     let params = {
       _page: page,
-      _limit: 5,
+      _limit: limit,
       _sort: "id",
       _order: "desc",
     };
@@ -29,6 +38,7 @@ const BlogList = ({ isAdmin }) => {
     }
 
     axios.get(`http://localhost:3001/posts`, { params }).then((res) => {
+      setNumberOfPosts(res.headers['x-total-count']);
       setPosts(res.data);
       setLoading(false);
     });
@@ -81,11 +91,11 @@ const BlogList = ({ isAdmin }) => {
   return (
     <div>
       {renderBlogList()}
-      <Pagination
+      {numberOfPages > 1 && <Pagination
         currentPage={currentPage}
-        numberOfPages={5}
+        numberOfPages={numberOfPages}
         onClick={getPosts}
-      />
+      />}
     </div>
   );
 };
