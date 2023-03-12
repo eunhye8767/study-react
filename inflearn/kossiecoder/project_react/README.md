@@ -599,3 +599,15 @@ console.log(result2) // [1,2]
       });
     };
     ```
+
+5. 정해진 숫자 `5`를 기준으로 배열을 만들고자 할 때
+  ```javascript
+  // 빈 배열을 만들어 준다 => [empty, empty, empty, empty, empty]
+  Array(5)
+
+  // 빈배열을 1로 채워준다. => [1, 1, 1, 1, 1]
+  Array(5).fill(1)
+
+  // 1로 채워진 배열을 1 ~ 5로 바꿔준다. => [1, 2, 3, 4, 5]
+  Array(5).fill(1).map((val, idx) => val + idx)
+  ```

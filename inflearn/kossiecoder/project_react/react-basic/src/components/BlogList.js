@@ -78,7 +78,7 @@ const BlogList = ({ isAdmin }) => {
   return (
     <div>
       {renderBlogList()}
-      <Pagination />
+      <Pagination currentPage={2} numberOfPages={5} />
     </div>
   );
 };
