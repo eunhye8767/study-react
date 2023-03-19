@@ -28,14 +28,28 @@ const BlogList = ({ isAdmin }) => {
   }, [numberOfPosts]);
 
   useEffect(() => {
+    const getPosts = (page = 1) => {
+      let params = {
+        _page: page,
+        _limit: limit,
+        _sort: "id",
+        _order: "desc"
+      };
+
+      if (!isAdmin) {
+        params = { ...params, publish: true };
+      }
+
+      axios.get(`http://localhost:3001/posts`, { params }).then((res) => {
+        setNumberOfPosts(res.headers["x-total-count"]);
+        setPosts(res.data);
+        setLoading(false);
+      });
+    };
+
     setCurrentPage(parseInt(pageParams) || 1);
     getPosts(parseInt(pageParams) || 1);
-  }, [pageParams]);
-
-  const onClickPageButton = (page) => {
-    history.push(`${location.pathname}?page=${page}`);
-    getPosts(page);
-  };
+  }, []);
 
   const getPosts = useCallback(
     (page = 1) => {
@@ -92,9 +106,20 @@ const BlogList = ({ isAdmin }) => {
     });
   };
 
-  const onSearch = () => {
-    // 1페이지부터 가져오기
-    getPosts(1);
+  const onClickPageButton = (page) => {
+    history.push(`${location.pathname}?page=${page}`);
+    setCurrentPage(page);
+    getPosts(page);
+  };
+
+  // 엔터를 눌렀을 때 검색
+  const onSearch = (e) => {
+    if (e.key === "Enter") {
+      history.push(`${location.pathname}?page=1`);
+      setCurrentPage(1);
+      // 1페이지부터 가져오기
+      getPosts(1);
+    }
   };
 
   if (loading) {
