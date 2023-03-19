@@ -29,31 +29,7 @@ const BlogList = ({ isAdmin }) => {
 
   useEffect(() => {
     setCurrentPage(parseInt(pageParams) || 1);
-
-    /**
-     * getPosts 함수명이 동일하기 떄문에
-     * useEffect에선 함수명을 제거하고 1번만 실행하게 코드 수정
-     * (()=>{},()) 1번만 실행하는 함수로 만들고
-     * 그 안에 pagaParams가 있으면 해당 번호를 .. 없으면 1이 적용되게 인자로 적용한다.
-    */
-    ((page = 1) => {
-      let params = {
-        _page: page,
-        _limit: limit,
-        _sort: "id",
-        _order: "desc"
-      };
-
-      if (!isAdmin) {
-        params = { ...params, publish: true };
-      }
-
-      axios.get(`http://localhost:3001/posts`, { params }).then((res) => {
-        setNumberOfPosts(res.headers["x-total-count"]);
-        setPosts(res.data);
-        setLoading(false);
-      });
-    })(parseInt(pageParams) || 1);
+    getPosts(parseInt(pageParams) || 1);
   }, []);
 
   const getPosts = useCallback(
