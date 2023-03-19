@@ -1,5 +1,5 @@
 import axios from "axios";
-import { bool } from "prop-types";
+import propsTypes from "prop-types";
 import { useEffect, useState, useCallback } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
@@ -110,7 +110,7 @@ const BlogList = ({ isAdmin }) => {
 };
 
 BlogList.propTypes = {
-  isAdmin: bool,
+  isAdmin: propsTypes.bool,
 };
 
 BlogList.defaultProps = {
