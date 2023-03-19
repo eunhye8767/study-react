@@ -28,6 +28,8 @@ const BlogList = ({ isAdmin }) => {
   }, [numberOfPosts]);
 
   useEffect(() => {
+    setCurrentPage(parseInt(pageParams) || 1);
+
     /**
      * getPosts 함수명이 동일하기 떄문에
      * useEffect에선 함수명을 제거하고 1번만 실행하게 코드 수정
@@ -52,8 +54,6 @@ const BlogList = ({ isAdmin }) => {
         setLoading(false);
       });
     })(parseInt(pageParams) || 1);
-
-    setCurrentPage(parseInt(pageParams) || 1);
   }, []);
 
   const getPosts = useCallback(
