@@ -18,6 +18,7 @@ const BlogList = ({ isAdmin }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [numberOfPosts, setNumberOfPosts] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
+  const [searchText, setSearchText] = useState("");
 
   let limit = 3;
 
@@ -36,24 +37,28 @@ const BlogList = ({ isAdmin }) => {
     getPosts(page);
   };
 
-  const getPosts = useCallback((page = 1) => {
-    let params = {
-      _page: page,
-      _limit: limit,
-      _sort: "id",
-      _order: "desc",
-    };
+  const getPosts = useCallback(
+    (page = 1) => {
+      let params = {
+        _page: page,
+        _limit: limit,
+        _sort: "id",
+        _order: "desc",
+        title_like: searchText,
+      };
 
-    if (!isAdmin) {
-      params = { ...params, publish: true };
-    }
+      if (!isAdmin) {
+        params = { ...params, publish: true };
+      }
 
-    axios.get(`http://localhost:3001/posts`, { params }).then((res) => {
-      setNumberOfPosts(res.headers["x-total-count"]);
-      setPosts(res.data);
-      setLoading(false);
-    });
-  }, [isAdmin]);
+      axios.get(`http://localhost:3001/posts`, { params }).then((res) => {
+        setNumberOfPosts(res.headers["x-total-count"]);
+        setPosts(res.data);
+        setLoading(false);
+      });
+    },
+    [isAdmin, searchText]
+  );
 
   const handleDelete = (e, id) => {
     e.stopPropagation();
@@ -87,23 +92,41 @@ const BlogList = ({ isAdmin }) => {
     });
   };
 
+  const onSearch = () => {
+    // 1페이지부터 가져오기
+    getPosts(1);
+  };
+
   if (loading) {
     return <LoadingSpinner />;
   }
 
-  if (posts.length === 0) {
-    return <div>No Blog posts found!</div>;
-  }
-
   return (
     <div>
-      {renderBlogList()}
-      {numberOfPages > 1 && (
-        <Pagination
-          currentPage={currentPage}
-          numberOfPages={numberOfPages}
-          onClick={onClickPageButton}
-        />
+      <input
+        type="text"
+        placeholder="Search..."
+        value={searchText}
+        className="form-control"
+        onChange={(e) => {
+          setSearchText(e.target.value);
+        }}
+        onKeyUp={onSearch}
+      />
+      <hr />
+      {posts.length === 0 ? (
+        <div>No Blog posts found!</div>
+      ) : (
+        <>
+          {renderBlogList()}
+          {numberOfPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              numberOfPages={numberOfPages}
+              onClick={onClickPageButton}
+            />
+          )}
+        </>
       )}
     </div>
   );

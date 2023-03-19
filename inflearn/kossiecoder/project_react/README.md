@@ -635,3 +635,28 @@ console.log(result2) // [1,2]
     // params.get('page') => 3
     console.log(params.get('page'));
     ```
+
+8. 일부분만 있더라도 검색되게 하려면?
+  ```javascript
+  const getPosts = useCallback(
+    (page = 1) => {
+      let params = {
+        _page: page,
+        _limit: limit,
+        _sort: "id",
+        _order: "desc",
+        title: searchText
+      };
+  ```
+  - `title`이 아닌 `title_like`로 적용해야 한다.
+  ```javascript
+  const getPosts = useCallback(
+    (page = 1) => {
+      let params = {
+        _page: page,
+        _limit: limit,
+        _sort: "id",
+        _order: "desc",
+        title_like: searchText
+      };
+  ```
