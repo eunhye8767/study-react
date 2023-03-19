@@ -13,6 +13,8 @@ const BlogForm = ({ editing }) => {
   const [originalBody, setOriginalBody] = useState("");
   const [publish, setPublish] = useState(false);
   const [originalPublish, setOriginalPublish] = useState(false);
+  const [titleError, setTitleError] = useState(false);
+  const [bodyError, setBodyError] = useState(false);
 
   useEffect(() => {
     if (editing) {
@@ -36,37 +38,59 @@ const BlogForm = ({ editing }) => {
     );
   };
 
-  const onSubmit = () => {
-    /**
-     *  editing 일 떄? 아닐 때?
-     *
-     *    ㄴ PATCH  /posts/1      (아이디가 1인 posts를 부분 업데이트 시)
-     *    ㄴ PATCH를 이용하여 수정 데이터를 보낸다.
-     */
+  const validateForm = () => {
+    let validated = true;
 
-    if (editing) {
-      axios
-        .patch(`http://localhost:3001/posts/${id}`, {
-          // 보낼 데이터 영역
-          title,
-          body,
-          publish,
-        })
-        .then(() => {
-          history.push(`/blogs/${id}`);
-        });
-    } else {
-      axios
-        .post("http://localhost:3001/posts", {
-          // 보낼 데이터 영역
-          title,
-          body,
-          publish,
-          createdAt: Date.now(),
-        })
-        .then(() => {
-          history.push("/admin");
-        });
+    if (title === "") {
+      setTitleError(true);
+      validated = false;
+    }
+
+    if (body === "") {
+      setBodyError(true);
+      validated = false;
+    }
+
+    return validated;
+  };
+
+  const onSubmit = () => {
+    // error를 리셋 먼저 해준다.
+    setTitleError(false);
+    setBodyError(false);
+
+    if (validateForm()) {
+      /**
+       *  editing 일 떄? 아닐 때?
+       *
+       *    ㄴ PATCH  /posts/1      (아이디가 1인 posts를 부분 업데이트 시)
+       *    ㄴ PATCH를 이용하여 수정 데이터를 보낸다.
+       */
+
+      if (editing) {
+        axios
+          .patch(`http://localhost:3001/posts/${id}`, {
+            // 보낼 데이터 영역
+            title,
+            body,
+            publish,
+          })
+          .then(() => {
+            history.push(`/blogs/${id}`);
+          });
+      } else {
+        axios
+          .post("http://localhost:3001/posts", {
+            // 보낼 데이터 영역
+            title,
+            body,
+            publish,
+            createdAt: Date.now(),
+          })
+          .then(() => {
+            history.push("/admin");
+          });
+      }
     }
   };
 
@@ -89,20 +113,22 @@ const BlogForm = ({ editing }) => {
       <div className="mb-3">
         <label className="form-label">Title</label>
         <input
-          className="form-control"
+          className={`form-control ${titleError ? "border-danger" : ""}`}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+        {titleError && <div className="text-danger">TItle is reauired.</div>}
       </div>
 
       <div className="mb-3">
         <label className="form-label">Body</label>
         <textarea
-          className="form-control"
+          className={`form-control ${bodyError ? "border-danger" : ""}`}
           value={body}
           onChange={(e) => setBody(e.target.value)}
           rows="10"
         />
+        {bodyError && <div className="text-danger">Body is reauired.</div>}
       </div>
 
       <div className="form-check mb-3">

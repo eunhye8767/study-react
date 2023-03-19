@@ -118,6 +118,13 @@
       "createdAt": 1677468940336,
       "id": 18,
       "publish": true
+    },
+    {
+      "title": "유효성 검사, form validation 검사했어요",
+      "body": "form validation 적용했어요 \n어렵네 리액트\n\n하하하 너무 어렵지?\nㅋㅋㅋㅋ\n",
+      "publish": true,
+      "createdAt": 1679197003916,
+      "id": 19
     }
   ]
 }
