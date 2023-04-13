@@ -98,33 +98,6 @@
       "publish": true,
       "createdAt": 1677898842402,
       "id": 15
-    },
-    {
-      "title": "16 날짜 추가 후 글 남기기 수정",
-      "body": "날짜 추가는 Date.now\n추가해서 데이터 넘기자 넘기자\n\n수정했어요\n\n수정되었을까나?\n에헤?\n",
-      "createdAt": 1677065410005,
-      "id": 16
-    },
-    {
-      "title": "17 새로 글 쓰기 하기",
-      "body": "새롭게 글을 다시 써봅시다 ㅋㅋ",
-      "createdAt": 1677468253176,
-      "id": 17,
-      "publish": true
-    },
-    {
-      "title": "18 수정이 잘 되는 지 한 번 볼까?",
-      "body": "하하 수정이 잘 되었는 지 한 번 볼까?\n되었을 까? 유후\n\n일단 되네? ㅋㅋㅋㅋㅋ",
-      "createdAt": 1677468940336,
-      "id": 18,
-      "publish": true
-    },
-    {
-      "title": "유효성 검사, form validation 검사했어요",
-      "body": "form validation 적용했어요 \n어렵네 리액트\n\n하하하 너무 어렵지?\nㅋㅋㅋㅋ\n",
-      "publish": true,
-      "createdAt": 1679197003916,
-      "id": 19
     }
   ]
 }

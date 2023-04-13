@@ -662,16 +662,35 @@ console.log(result2) // [1,2]
   ```
 
 9. Toast 만들기
-- Toast 컴포넌트를 만들고 `propTypes`를 추가한다.<br />Toast는 여러개 생성될 수 있기 때문에 `[{}]` 형태로 만든다.
-  ```javascript
-  /**
-   *  Toast.js
-   *    ㄴ [{}, {}] 형태로 적용하기 위헤선
-   *    ㄴ propTypes의 arrayOf와 shape를 사용하여 적용한다.
-  */
-  Toast.propTypes = {
-    toasts: propTypes.arrayOf(propTypes.shape({
-      text: propTypes.string
-    }))
-  }
-  ```
+  - Toast 컴포넌트를 만들고 `propTypes`를 추가한다.<br />Toast는 여러개 생성될 수 있기 때문에 `[{}]` 형태로 만든다.
+    ```javascript
+    /**
+     *  Toast.js
+    *    ㄴ [{}, {}] 형태로 적용하기 위헤선
+    *    ㄴ propTypes의 arrayOf와 shape를 사용하여 적용한다.
+    */
+    Toast.propTypes = {
+      toasts: propTypes.arrayOf(propTypes.shape({
+        text: propTypes.string
+      }))
+    }
+    ```
+
+  - toast 클릭 시 삭제를 하기 위해 `uuid`를 사용한다.
+    - [npm, uuid 바로가기](https://www.npmjs.com/package/uuid)
+    - 터미널에서 `npm i uuid`
+    - 문서 가이드를 참고하여 `v4` 버전을 사용한다.
+      ```javascript
+      import { v4 as uuidv4 } from 'uuid';
+      uuidv4(); // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
+      ```
+    - `addToast` 함수에서 toast를 넘겨받을 때, `uuid`를 추가 적용한다.
+      ```javascript
+      const addToast = (toast) => {
+        const toastWithId = {
+          ...toast,
+          id: uuidv4()
+        }
+        setToasts(prev => [...prev, toastWithId])
+      }
+      ```
