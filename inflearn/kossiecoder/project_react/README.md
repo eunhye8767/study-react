@@ -660,3 +660,18 @@ console.log(result2) // [1,2]
         title_like: searchText
       };
   ```
+
+9. Toast 만들기
+- Toast 컴포넌트를 만들고 `propTypes`를 추가한다.<br />Toast는 여러개 생성될 수 있기 때문에 `[{}]` 형태로 만든다.
+  ```javascript
+  /**
+   *  Toast.js
+   *    ㄴ [{}, {}] 형태로 적용하기 위헤선
+   *    ㄴ propTypes의 arrayOf와 shape를 사용하여 적용한다.
+  */
+  Toast.propTypes = {
+    toasts: propTypes.arrayOf(propTypes.shape({
+      text: propTypes.string
+    }))
+  }
+  ```
