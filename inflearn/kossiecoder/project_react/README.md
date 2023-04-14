@@ -725,3 +725,44 @@ console.log(result2) // [1,2]
     // 수정 후
     const [, setToastsRerender] = useState(false);
     ```
+
+11. BlogList와 BlogForm에서 반복되는 토스트 중복 함수를 합친다. (==> **Custom Hook**)
+  - src 폴더에 `hooks` 폴더를 생성하고 `toast.js` 파일도 생성한다.
+  - hooks는 앞에 **"use"**를 붙여서 함수명을 만든다.
+  ```javascript
+  import { useState, useRef } from "react";
+  import { v4 as uuidv4 } from "uuid";
+
+  const useToast = () => {
+    const [, setToastsRerender] = useState(false);
+    const toasts = useRef([]);
+
+    // toasts 삭제
+    const deleteToast = (id) => {
+      const filteredToasts = toasts.current.filter((toast) => {
+        return toast.id !== id;
+      });
+
+      toasts.current = filteredToasts;
+      setToastsRerender((prev) => !prev);
+    };
+
+    // toasts 추가
+    const addToast = (toast) => {
+      const id = uuidv4();
+      const toastWithId = { ...toast, id };
+
+      toasts.current = [...toasts.current, toastWithId];
+      setToastsRerender((prev) => !prev);
+
+      setTimeout(() => {
+        deleteToast(id);
+      }, 5000);
+    };
+
+    // 사용하는 것을 return 한다.
+    return [toasts.current, addToast, deleteToast];
+  };
+
+  export default useToast;
+  ```

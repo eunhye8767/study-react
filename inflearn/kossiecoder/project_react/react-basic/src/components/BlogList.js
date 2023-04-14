@@ -1,16 +1,18 @@
 import axios from "axios";
 import propsTypes from "prop-types";
-import { useEffect, useState, useCallback, useRef } from "react";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { useEffect, useState, useCallback } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
 import Card from "../components/Card";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Pagination from "./Pagination";
 
 import Toast from "../components/Toast";
-import { v4 as uuidv4 } from 'uuid';
+import useToast from "../hooks/toast";
 
 const BlogList = ({ isAdmin }) => {
+  const [toasts, addToast, deleteToast] = useToast();
+
   const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -22,9 +24,6 @@ const BlogList = ({ isAdmin }) => {
   const [numberOfPosts, setNumberOfPosts] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [searchText, setSearchText] = useState("");
-
-  const [, setToastsRerender] = useState(false);
-  const toasts = useRef([]);
 
   let limit = 3;
 
@@ -60,29 +59,6 @@ const BlogList = ({ isAdmin }) => {
     },
     [isAdmin, searchText]
   );
-
-  // toasts 삭제
-  const deleteToast = (id) => {
-    const filteredToasts = toasts.current.filter(toast => {
-      return toast.id !== id;
-    })
-
-    toasts.current = filteredToasts;
-    setToastsRerender(prev => !prev);
-  }
-
-  // toasts 추가
-  const addToast = (toast) => {
-    const id = uuidv4();
-    const toastWithId = {...toast, id}
-    
-    toasts.current = [...toasts.current, toastWithId];
-    setToastsRerender(prev => !prev);
-
-    setTimeout(() => {
-      deleteToast(id);
-    }, 5000);
-  }
 
   const handleDelete = (e, id) => {
     e.stopPropagation();
@@ -142,7 +118,7 @@ const BlogList = ({ isAdmin }) => {
 
   return (
     <div>
-      <Toast toasts={toasts.current} deleteToast={deleteToast} />
+      <Toast toasts={toasts} deleteToast={deleteToast} />
       <input
         type="text"
         placeholder="Search..."
