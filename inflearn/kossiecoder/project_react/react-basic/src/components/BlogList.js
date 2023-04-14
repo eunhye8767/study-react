@@ -5,9 +5,9 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 
 import Card from "../components/Card";
 import LoadingSpinner from "../components/LoadingSpinner";
-import Toast from "../components/Toast";
 import Pagination from "./Pagination";
 
+import Toast from "../components/Toast";
 import { v4 as uuidv4 } from 'uuid';
 
 const BlogList = ({ isAdmin }) => {
@@ -59,15 +59,7 @@ const BlogList = ({ isAdmin }) => {
     [isAdmin, searchText]
   );
 
-  // toasts 추가
-  const addToast = (toast) => {
-    const toastWithId = {
-      ...toast,
-      id: uuidv4()
-    }
-    setToasts(prev => [...prev, toastWithId])
-  }
-
+  // toasts 삭제
   const deleteToast = (id) => {
     const filteredToasts = toasts.filter(toast => {
       return toast.id !== id;
@@ -76,6 +68,16 @@ const BlogList = ({ isAdmin }) => {
     setToasts(filteredToasts);
   }
 
+  // toasts 추가
+  const addToast = (toast) => {
+    const id = uuidv4();
+    const toastWithId = {...toast, id}
+    setToasts(prev => [...prev, toastWithId]);
+
+    setTimeout(() => {
+      deleteToast(id);
+    }, 5000);
+  }
 
   const handleDelete = (e, id) => {
     e.stopPropagation();

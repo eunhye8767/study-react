@@ -694,3 +694,16 @@ console.log(result2) // [1,2]
         setToasts(prev => [...prev, toastWithId])
       }
       ```
+  
+  - 클릭 외에 ??초가 지나면 자동으로 닫혀지게 적용한다.<br />`setTimeout()`을 사용하면 된다.
+    ```javascript
+    const addToast = (toast) => {
+      const id = uuidv4();
+      const toastWithId = {...toast, id}
+      setToasts(prev => [...prev, toastWithId]);
+
+      setTimeout(() => {
+        deleteToast(id);
+      }, 5000);
+    }
+    ```

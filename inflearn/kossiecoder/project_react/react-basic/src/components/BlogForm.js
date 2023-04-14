@@ -3,6 +3,9 @@ import axios from "axios";
 import propsTypes from "prop-types";
 import { useHistory, useParams } from "react-router-dom";
 
+import Toast from "../components/Toast";
+import { v4 as uuidv4 } from 'uuid';
+
 const BlogForm = ({ editing }) => {
   const history = useHistory();
   const { id } = useParams();
@@ -15,6 +18,7 @@ const BlogForm = ({ editing }) => {
   const [originalPublish, setOriginalPublish] = useState(false);
   const [titleError, setTitleError] = useState(false);
   const [bodyError, setBodyError] = useState(false);
+  const [toasts, setToasts] = useState([]);
 
   useEffect(() => {
     if (editing) {
@@ -28,6 +32,26 @@ const BlogForm = ({ editing }) => {
       });
     }
   }, [id, editing]);
+
+  // toasts 삭제
+  const deleteToast = (id) => {
+    const filteredToasts = toasts.filter(toast => {
+      return toast.id !== id;
+    })
+
+    setToasts(filteredToasts);
+  }
+
+  // toasts 추가
+  const addToast = (toast) => {
+    const id = uuidv4();
+    const toastWithId = {...toast, id}
+    setToasts(prev => [...prev, toastWithId]);
+
+    setTimeout(() => {
+      deleteToast(id);
+    }, 5000);
+  }
 
   // editin에서 title, body 부분이 바뀌지 않았을 때  비활성화모드
   const isEdited = () => {
@@ -88,6 +112,10 @@ const BlogForm = ({ editing }) => {
             createdAt: Date.now(),
           })
           .then(() => {
+            addToast({
+              type: "success",
+              text: "Successfully created"
+            })
             history.push("/admin");
           });
       }
@@ -109,6 +137,7 @@ const BlogForm = ({ editing }) => {
 
   return (
     <div>
+      <Toast toasts={toasts} deleteToast={deleteToast} />
       <h1 className="mb-3">{editing ? "Edit" : "Create"} a blog post</h1>
       <div className="mb-3">
         <label className="form-label">Title</label>
