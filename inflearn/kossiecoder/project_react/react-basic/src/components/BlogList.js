@@ -1,6 +1,6 @@
 import axios from "axios";
 import propsTypes from "prop-types";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 
 import Card from "../components/Card";
@@ -22,7 +22,9 @@ const BlogList = ({ isAdmin }) => {
   const [numberOfPosts, setNumberOfPosts] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [searchText, setSearchText] = useState("");
-  const [toasts, setToasts] = useState([]);
+
+  const [, setToastsRerender] = useState(false);
+  const toasts = useRef([]);
 
   let limit = 3;
 
@@ -61,18 +63,21 @@ const BlogList = ({ isAdmin }) => {
 
   // toasts 삭제
   const deleteToast = (id) => {
-    const filteredToasts = toasts.filter(toast => {
+    const filteredToasts = toasts.current.filter(toast => {
       return toast.id !== id;
     })
 
-    setToasts(filteredToasts);
+    toasts.current = filteredToasts;
+    setToastsRerender(prev => !prev);
   }
 
   // toasts 추가
   const addToast = (toast) => {
     const id = uuidv4();
     const toastWithId = {...toast, id}
-    setToasts(prev => [...prev, toastWithId]);
+    
+    toasts.current = [...toasts.current, toastWithId];
+    setToastsRerender(prev => !prev);
 
     setTimeout(() => {
       deleteToast(id);
@@ -137,7 +142,7 @@ const BlogList = ({ isAdmin }) => {
 
   return (
     <div>
-      <Toast toasts={toasts} deleteToast={deleteToast} />
+      <Toast toasts={toasts.current} deleteToast={deleteToast} />
       <input
         type="text"
         placeholder="Search..."

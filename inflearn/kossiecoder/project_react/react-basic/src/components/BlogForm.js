@@ -51,6 +51,7 @@ const BlogForm = ({ editing }) => {
   const addToast = (toast) => {
     const id = uuidv4();
     const toastWithId = {...toast, id}
+    
     // setToasts(prev => [...prev, toastWithId]);
     toasts.current = [...toasts.current, toastWithId];
     setToastsRerender(prev => !prev);
