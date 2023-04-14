@@ -707,3 +707,21 @@ console.log(result2) // [1,2]
       }, 5000);
     }
     ```
+
+10. Form에서 글 작성 시 토스트 창 보여지게 하기
+  - `useState`를 이용하여 등록 후 토스트 알림을 보여지게 할 때<br />연달아 클릭 버튼을 여러 번 누르게 되면 토스트 알림이 중복으로 노출되는 상황이 발생하게 된다.
+  - 그래서 `useState`가 아닌 `useRef`를 이용해 본다.
+  - `useState` => 바뀔 때마다 리렌더링이 된다.
+  - `useRef` => 바로 바로 바뀐다 (즉시 변경 / 리렌더링이 되지 않는다).<br />해당 컴포넌트를 가리킬 땐, `.current` 를 사용한다.
+    ```javascript
+    const toasts = useRef([]);
+    toasts.current
+    ```
+  - 리렌더링을 위해 쓰는 `useState`는 아래와 같이 사용해도 된다.
+    ```javascript
+    // 수정 전
+    const [toastsRerender, setToastsRerender] = useState(false);
+    
+    // 수정 후
+    const [, setToastsRerender] = useState(false);
+    ```
