@@ -3,12 +3,7 @@ import axios from "axios";
 import propsTypes from "prop-types";
 import { useHistory, useParams } from "react-router-dom";
 
-import Toast from "../components/Toast";
-import useToast from "../hooks/toast";
-
-const BlogForm = ({ editing }) => {
-  const [toasts, addToast, deleteToast] = useToast();
-
+const BlogForm = ({ editing, addToast }) => {
   const history = useHistory();
   const { id } = useParams();
 
@@ -95,9 +90,9 @@ const BlogForm = ({ editing }) => {
           .then(() => {
             addToast({
               type: "success",
-              text: "Successfully created"
-            })
-            // history.push("/admin");
+              text: "Successfully created",
+            });
+            history.push("/admin");
           });
       }
     }
@@ -118,7 +113,6 @@ const BlogForm = ({ editing }) => {
 
   return (
     <div>
-      <Toast toasts={toasts} deleteToast={deleteToast} />
       <h1 className="mb-3">{editing ? "Edit" : "Create"} a blog post</h1>
       <div className="mb-3">
         <label className="form-label">Title</label>
