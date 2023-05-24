@@ -766,3 +766,51 @@ console.log(result2) // [1,2]
 
   export default useToast;
   ```
+
+  <br />
+  <br />
+  <br />
+
+
+#### 15. Toast
+1. Redux, Recoil => 리액트 state를 관리하는 Tool.
+  - [Redux 공홈](https://ko.redux.js.org/) : https://ko.redux.js.org/
+  - Redux Toolkit 설치 : https://ko.redux.js.org/introduction/getting-started
+    ```
+    # NPM
+    npm install @reduxjs/toolkit react-redux
+
+    # Yarn
+    yarn add @reduxjs/toolkit
+    yarn add react-redux
+    ```
+  - 튜토리얼 : https://redux.js.org/tutorials/quick-start
+
+<br />
+
+2. 적용하는 방법
+  - src 폴더 기준 `store.js` 파일을 생성.
+    ```javascript
+    // store.js
+    import { configureStore } from "@reduxjs/toolkit";
+
+    export const store = configureStore({
+      reducer: {
+        
+      },
+    });
+    ```
+  - `src/index.js`에서 `<App />` 컴포넌트를 `<Provider store={store}>`로 감싼다.
+    ```javascript
+    import { Provider } from "react-redux";
+    import { store } from "./store";
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(
+      <React.StrictMode>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </React.StrictMode>
+    );
+    ```
