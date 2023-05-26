@@ -814,3 +814,48 @@ console.log(result2) // [1,2]
       </React.StrictMode>
     );
     ```
+  - [createSlice](https://redux.js.org/tutorials/quick-start#create-a-redux-state-slice)(공식 문서 참고)를 참고하여 Toast에 적용해 본다.<br />state 등 관련된 코드를 작성해야 해서 `store.js` 파일을 `store` 폴더를 만들어서 그 안으로 이동시킨다.<br />그리고 해당 폴더에서 Redux 파일들을 관리한다.
+  - `hooks/toast.js`에서 사용하는 state를 `store` 폴더에 `toastSlice` 파일을 만들어서 적용한다.
+    ```javascript
+    // store/toastSlice.js
+    import { createSlice } from "@reduxjs/toolkit";
+
+    const initialState = {
+      toasts: [],
+    };
+
+    export const toastSLice = createSlice({
+      name: "toast",
+      initialState,
+      reducers: {
+        // 업데이트 해주는 함수
+        
+      },
+    });
+
+    export default toastSLice.reducer;
+    ```
+    ```javascript
+    // store/store.js
+    import { configureStore } from "@reduxjs/toolkit";
+
+    // export를 reducer로 했기 때문에 toastReducer로 했음.
+    import toastReducer from "./toastSlice";
+
+    export const store = configureStore({
+      reducer: {
+        // 사용할 이름 : 함수
+        toast: toastReducer
+      },
+    });
+    ```
+  - `components/BlogList.js`에서 만든 toast를 사용해 본다.
+    ```javascript
+    import { useSelector } from "react-redux";
+
+    // redux에 저장된 전체 state를 가져온다.
+    const 이름 = useSelector((state) => {
+      // state.storejs에서 적용한 이름(store.js).그 이름안에 초기값 state(toastSlice.js)
+      return state.toast.toasts
+    })
+    ```
