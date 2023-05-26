@@ -7,14 +7,9 @@ import Card from "../components/Card";
 import LoadingSpinner from "../components/LoadingSpinner";
 import Pagination from "./Pagination";
 
-import Toast from "../components/Toast";
 import useToast from "../hooks/toast";
 
-import { useSelector } from "react-redux";
-
 const BlogList = ({ isAdmin }) => {
-  const [toasts, addToast, deleteToast] = useToast();
-
   const history = useHistory();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -27,10 +22,7 @@ const BlogList = ({ isAdmin }) => {
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [searchText, setSearchText] = useState("");
 
-  const toasts1 = useSelector((state) => {
-    return state.toast.toasts
-  })
-
+  const { addToast } = useToast();
   let limit = 3;
 
   useEffect(() => {
@@ -74,7 +66,7 @@ const BlogList = ({ isAdmin }) => {
       setPosts((prev) => prev.filter((post) => post.id !== id));
       addToast({
         text: "Successfully deleted",
-        type: "success"
+        type: "success",
       });
     });
   };
@@ -124,7 +116,6 @@ const BlogList = ({ isAdmin }) => {
 
   return (
     <div>
-      <Toast toasts={toasts} deleteToast={deleteToast} />
       <input
         type="text"
         placeholder="Search..."

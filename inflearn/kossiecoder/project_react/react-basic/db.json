@@ -107,39 +107,25 @@
       "id": 16
     },
     {
-      "title": "17 글을 남겨봅시다",
-      "body": "하하글을 남겨봅시다 \nㅋㅋㅋ",
+      "title": "글 남겨요",
+      "body": "글 남겨요 ㅋㅋ",
       "publish": true,
-      "createdAt": 1677898842402,
+      "createdAt": 1685097508788,
       "id": 17
     },
     {
-      "title": "안녕하세요",
-      "body": "테스트 입니다",
+      "title": "ㅋㅋㅋㅋㅋ",
+      "body": "ㅋㅋㅋㅋ",
       "publish": false,
-      "createdAt": 1684842647940,
+      "createdAt": 1685097515870,
       "id": 18
     },
     {
-      "title": "안녕하세요",
-      "body": "테스트 입니다",
+      "title": "store로 글 남기기",
+      "body": "ㅋㅋㅋ",
       "publish": false,
-      "createdAt": 1684842651286,
+      "createdAt": 1685097768121,
       "id": 19
-    },
-    {
-      "title": "ㅋㅋㅋㅋ",
-      "body": "ㅋㅋㅋㅋ",
-      "publish": false,
-      "createdAt": 1684842721220,
-      "id": 21
-    },
-    {
-      "title": "add Toast",
-      "body": "zz",
-      "publish": false,
-      "createdAt": 1684842735402,
-      "id": 22
     }
   ]
 }

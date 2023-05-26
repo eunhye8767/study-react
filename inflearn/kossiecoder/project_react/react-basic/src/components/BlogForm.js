@@ -3,7 +3,9 @@ import axios from "axios";
 import propsTypes from "prop-types";
 import { useHistory, useParams } from "react-router-dom";
 
-const BlogForm = ({ editing, addToast }) => {
+import useToast from "../hooks/toast";
+
+const BlogForm = ({ editing }) => {
   const history = useHistory();
   const { id } = useParams();
 
@@ -15,6 +17,8 @@ const BlogForm = ({ editing, addToast }) => {
   const [originalPublish, setOriginalPublish] = useState(false);
   const [titleError, setTitleError] = useState(false);
   const [bodyError, setBodyError] = useState(false);
+  
+  const { addToast } = useToast();
 
   useEffect(() => {
     if (editing) {

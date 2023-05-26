@@ -1,18 +1,13 @@
-import { useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { addToast as add, removeToast } from "../store/toastSlice";
+import { useDispatch } from "react-redux";
 
 const useToast = () => {
-  const [, setToastsRerender] = useState(false);
-  const toasts = useRef([]);
+  const dispatch = useDispatch();
 
   // toasts 삭제
   const deleteToast = (id) => {
-    const filteredToasts = toasts.current.filter((toast) => {
-      return toast.id !== id;
-    });
-
-    toasts.current = filteredToasts;
-    setToastsRerender((prev) => !prev);
+    dispatch(removeToast(id));
   };
 
   // toasts 추가
@@ -20,15 +15,16 @@ const useToast = () => {
     const id = uuidv4();
     const toastWithId = { ...toast, id };
 
-    toasts.current = [...toasts.current, toastWithId];
-    setToastsRerender((prev) => !prev);
+    dispatch(add(toastWithId));
 
     setTimeout(() => {
-      deleteToast(id);
+      dispatch(removeToast(id));
     }, 5000);
   };
 
-  return [toasts.current, addToast, deleteToast];
+  // 객체로 변환해서 return 하면 순서에 상관없이 사용이 가능하다.
+  // 배열일 경우, 순서를 지켜서 가져와야 하는 불편함이 있다.
+  return { addToast, deleteToast };
 };
 
 export default useToast;
