@@ -4,7 +4,7 @@ const initialState = {
   toasts: [],
 };
 
-export const toastSLice = createSlice({
+export const toastSlice = createSlice({
   name: "toast",
   initialState,
   reducers: {
@@ -21,6 +21,6 @@ export const toastSLice = createSlice({
   },
 });
 
-export const { addToast, removeToast } = toastSLice.actions;
+export const { addToast, removeToast } = toastSlice.actions;
 
-export default toastSLice.reducer;
+export default toastSlice.reducer;

@@ -864,3 +864,9 @@ console.log(result2) // [1,2]
 3. 실제 사용하는 법
   - [Redux DevTools 구글 확장 프로그램](https://chrome.google.com/webstore/detail/redux-devtools/lmhkpmbekcpmknklioeibfkpmmfibljd/related?hl=ko)<br />: 관리자 모드 - redux에서 확인할 수 있다.<br />
   - `hooks/toast.js`에서 사용하는 `deleteToast`와 `addToast` 함수를 `redux`를 이용해 변경한다.
+<br />
+<br />
+<br />
+<br />
+
+#### 16. Auth
