@@ -27,16 +27,18 @@ const NavBar = () => {
               {isLoggedIn ? "Logout" : "Login"}
             </button>
           </li>
-          <li className="nav-item me-2">
-            <NavLink
-              className="nav-link"
-              activeClassName="active"
-              aria-current="page"
-              to="/admin"
-            >
-              Admin
-            </NavLink>
-          </li>
+          {isLoggedIn && (
+            <li className="nav-item me-2">
+              <NavLink
+                className="nav-link"
+                activeClassName="active"
+                aria-current="page"
+                to="/admin"
+              >
+                Admin
+              </NavLink>
+            </li>
+          )}
           <li className="nav-item">
             <NavLink
               className="nav-link"
