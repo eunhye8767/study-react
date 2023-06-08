@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  isLoggedIn: false
+  isLoggedIn: false,
 };
 
 export const authSlice = createSlice({
@@ -9,10 +9,12 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     login: (state) => {
-      state.isLoggedIn = true
+      localStorage.setItem("isLoggedIn", "yes");
+      state.isLoggedIn = true;
     },
     logout: (state) => {
-      state.isLoggedIn = false
+      localStorage.removeItem("isLoggedIn");
+      state.isLoggedIn = false;
     },
   },
 });

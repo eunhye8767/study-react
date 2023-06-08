@@ -972,3 +972,18 @@ export default useToast;
   ```
 
 2. `*` = 모든 경로를 의미한다. 때문에 제일 하단에 적용.
+
+<br />
+<br />
+<br />
+<br />
+
+#### 17. localStorage를 이용해 로그인 상태 유지
+```javascript
+// 저장
+localStorage.setItem('key', 'value');
+
+// 가져오기
+localStorage.getItem('key');
+// 저장한 key 값을 가져온다.
+```
