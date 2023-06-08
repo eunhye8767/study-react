@@ -21,6 +21,7 @@ const BlogList = ({ isAdmin }) => {
   const [numberOfPosts, setNumberOfPosts] = useState(0);
   const [numberOfPages, setNumberOfPages] = useState(0);
   const [searchText, setSearchText] = useState("");
+  const [error, setError] = useState("");
 
   const { addToast } = useToast();
   let limit = 3;
@@ -49,11 +50,21 @@ const BlogList = ({ isAdmin }) => {
         params = { ...params, publish: true };
       }
 
-      axios.get(`http://localhost:3001/posts`, { params }).then((res) => {
-        setNumberOfPosts(res.headers["x-total-count"]);
-        setPosts(res.data);
-        setLoading(false);
-      });
+      axios
+        .get(`http://localhost:3001/posts`, { params })
+        .then((res) => {
+          setNumberOfPosts(res.headers["x-total-count"]);
+          setPosts(res.data);
+          setLoading(false);
+        })
+        .catch((e) => {
+          setError("Something went wrong in database");
+          addToast({
+            text: "Something went wrong",
+            type: "danger",
+          });
+          setLoading(false);
+        });
     },
     [isAdmin, searchText]
   );
@@ -62,13 +73,21 @@ const BlogList = ({ isAdmin }) => {
     e.stopPropagation();
 
     // 삭제
-    axios.delete(`http://localhost:3001/posts/${id}`).then(() => {
-      setPosts((prev) => prev.filter((post) => post.id !== id));
-      addToast({
-        text: "Successfully deleted",
-        type: "success",
+    axios
+      .delete(`http://localhost:3001/posts/${id}`)
+      .then(() => {
+        setPosts((prev) => prev.filter((post) => post.id !== id));
+        addToast({
+          text: "Successfully deleted",
+          type: "success",
+        });
+      })
+      .catch((e) => {
+        addToast({
+          text: "The Blog could not be deleted.",
+          type: "danger",
+        });
       });
-    });
   };
 
   const renderBlogList = () => {
@@ -112,6 +131,10 @@ const BlogList = ({ isAdmin }) => {
 
   if (loading) {
     return <LoadingSpinner />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (
