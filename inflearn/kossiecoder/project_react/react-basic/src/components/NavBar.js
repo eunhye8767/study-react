@@ -30,8 +30,7 @@ const NavBar = () => {
           {isLoggedIn && (
             <li className="nav-item me-2">
               <NavLink
-                className="nav-link"
-                activeClassName="active"
+                className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}
                 aria-current="page"
                 to="/admin"
               >
@@ -41,8 +40,7 @@ const NavBar = () => {
           )}
           <li className="nav-item">
             <NavLink
-              className="nav-link"
-              activeClassName="active"
+              className={({ isActive }) => "nav-link" + (isActive ? " active" : "")}
               aria-current="page"
               to="/blogs"
             >

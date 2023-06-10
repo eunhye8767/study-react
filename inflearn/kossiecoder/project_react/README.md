@@ -987,3 +987,208 @@ localStorage.setItem('key', 'value');
 localStorage.getItem('key');
 // 저장한 key 값을 가져온다.
 ```
+
+<br />
+<br />
+<br />
+<br />
+
+#### 18. React Router 업그레이드
+1. [react router 공식 홈페이지](https://reactrouter.com/en/main/upgrading/v5)에서 업그레이드 관련 내용이 명시되어 있다.
+2. [react router - introduction](https://reactrouter.com/en/main/upgrading/v5#introduction)
+  ```html
+  In general, the process looks like this:
+
+  1. Upgrade to React v16.8 or greater<br />
+  2. Upgrade to React Router v5.1<br />
+    - Remove &lt;Redirect&gt;s inside &lt;Switch&gt;<br />
+    - Refactor custom &lt;Route&gt;s<br />
+  3. Upgrade to React Router v6
+  ```
+  - 조건 1. 리액트 v16.8이상이어야 한다.
+  - 조건 2. 라우터 v5.1일 경우 (현재 5.3.4 버전으로 패스~)
+  - 조건 3. 라우터 v6로 업그레이드 진행
+<br />
+
+3. [리액트 라우터 최신 버전으로 설치](https://reactrouter.com/en/main/upgrading/v5#upgrade-to-react-router-v6)
+  - 공식 문서에 따라 최신 버전으로 업그레이드 설치 한다.
+    ```
+    $ npm install react-router-dom
+    # or, for a React Native app
+    $ npm install react-router-native
+    ```
+
+  - 설치 시점에 따라 다를 수 있어 버전 6으로 설치하고자 한다면, `@버전숫자`를 적용.
+    ```
+    $ npm install react-router-dom@6
+    ```
+
+  - 위와 같이 하면 버전 6으로 업그레이드 된 것을 확인할 수 있다. (`package.json` 참고)
+
+<br />
+
+4. [switch를 routes로 바꿔라](https://reactrouter.com/en/main/upgrading/v5#upgrade-all-switch-elements-to-routes)
+
+5. `Redirect`를 `Navigate`로 변경
+  - v6에서 `Navigate`에서는 기본이 `push`여서 `replace`를 할 경우, 아래와 같이 적용한다.
+  ```javascript
+  // Change this:
+  <Redirect to="about" />
+  <Redirect to="home" push />
+
+  // to this:
+  <Navigate to="about" replace />
+  <Navigate to="home" />
+  ```
+
+6. [useHistory를 useNavigate로 바꿔라](https://reactrouter.com/en/main/upgrading/v5#use-usenavigate-instead-of-usehistory)
+  - v5
+    ```javascript
+    // This is a React Router v5 app
+    import { useHistory } from "react-router-dom";
+
+    function App() {
+      let history = useHistory();
+      function handleClick() {
+        history.push("/home");
+      }
+      return (
+        <div>
+          <button onClick={handleClick}>go home</button>
+        </div>
+      );
+    }
+    ```
+  - v6
+    ```javascript
+    // This is a React Router v6 app
+    import { useNavigate } from "react-router-dom";
+
+    function App() {
+      let navigate = useNavigate();
+      function handleClick() {
+        navigate("/home");
+      }
+      return (
+        <div>
+          <button onClick={handleClick}>go home</button>
+        </div>
+      );
+    }
+    ```
+    <br />
+
+7. [Routes 구조 변경](https://reactrouter.com/en/main/upgrading/v5#relative-routes-and-links)
+  - v5
+    ```javascript
+    // This is a React Router v5 app
+    import {
+      BrowserRouter,
+      Switch,
+      Route,
+      Link,
+      useRouteMatch,
+    } from "react-router-dom";
+
+    function App() {
+      return (
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/users">
+              <Users />
+            </Route>
+          </Switch>
+        </BrowserRouter>
+      );
+    }
+
+    function Users() {
+      // In v5, nested routes are rendered by the child component, so
+      // you have <Switch> elements all over your app for nested UI.
+      // You build nested routes and links using match.url and match.path.
+      let match = useRouteMatch();
+
+      return (
+        <div>
+          <nav>
+            <Link to={`${match.url}/me`}>My Profile</Link>
+          </nav>
+
+          <Switch>
+            <Route path={`${match.path}/me`}>
+              <OwnUserProfile />
+            </Route>
+            <Route path={`${match.path}/:id`}>
+              <UserProfile />
+            </Route>
+          </Switch>
+        </div>
+      );
+    }
+    ```
+
+  - v6
+    ```javascript
+    // This is a React Router v6 app
+    import {
+      BrowserRouter,
+      Routes,
+      Route,
+      Link,
+    } from "react-router-dom";
+
+    function App() {
+      return (
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="users/*" element={<Users />} />
+          </Routes>
+        </BrowserRouter>
+      );
+    }
+
+    function Users() {
+      return (
+        <div>
+          <nav>
+            <Link to="me">My Profile</Link>
+          </nav>
+
+          <Routes>
+            <Route path=":id" element={<UserProfile />} />
+            <Route path="me" element={<OwnUserProfile />} />
+          </Routes>
+        </div>
+      );
+    }
+    ```
+
+<br />
+
+8. [activeClassName](https://reactrouter.com/en/main/upgrading/v5#remove-activeclassname-and-activestyle-props-from-navlink-)
+  - 이전
+    ```javascript
+    <NavLink
+      to="/messages"
+    - style={{ color: 'blue' }}
+    - activeStyle={{ color: 'green' }}
+    + style={({ isActive }) => ({ color: isActive ? 'green' : 'blue' })}
+    >
+      Messages
+    </NavLink>
+    ```
+  - v6
+    ```javascript
+    <NavLink
+      to="/messages"
+    - className="nav-link"
+    - activeClassName="activated"
+    + className={({ isActive }) => "nav-link" + (isActive ? " activated" : "")}
+    >
+      Messages
+    </NavLink>
+    ```

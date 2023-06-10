@@ -1,7 +1,7 @@
 import axios from "axios";
 import propsTypes from "prop-types";
 import { useEffect, useState, useCallback } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import Card from "../components/Card";
 import LoadingSpinner from "../components/LoadingSpinner";
@@ -10,7 +10,7 @@ import Pagination from "./Pagination";
 import useToast from "../hooks/toast";
 
 const BlogList = ({ isAdmin }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
   const pageParams = params.get("page");
@@ -58,12 +58,12 @@ const BlogList = ({ isAdmin }) => {
           setLoading(false);
         })
         .catch((e) => {
+          setLoading(false);
           setError("Something went wrong in database");
           addToast({
             text: "Something went wrong",
             type: "danger",
           });
-          setLoading(false);
         });
     },
     [isAdmin, searchText]
@@ -97,7 +97,7 @@ const BlogList = ({ isAdmin }) => {
         <Card
           key={post.id}
           title={post.title}
-          onclick={() => history.push(`/blogs/${post.id}`)}
+          onclick={() => navigate(`/blogs/${post.id}`)}
         >
           {isAdmin && (
             <div>
@@ -115,7 +115,7 @@ const BlogList = ({ isAdmin }) => {
   };
 
   const onClickPageButton = (page) => {
-    history.push(`${location.pathname}?page=${page}`);
+    navigate(`${location.pathname}?page=${page}`);
     setCurrentPage(page);
     getPosts(page);
   };
@@ -123,7 +123,7 @@ const BlogList = ({ isAdmin }) => {
   // 엔터를 눌렀을 때 검색
   const onSearch = (e) => {
     if (e.key === "Enter") {
-      history.push(`${location.pathname}?page=1`);
+      navigate(`${location.pathname}?page=1`);
       setCurrentPage(1);
       // 1페이지부터 가져오기
       getPosts(1);

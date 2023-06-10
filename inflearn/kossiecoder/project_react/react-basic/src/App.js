@@ -1,6 +1,6 @@
 import {
   BrowserRouter as Router, // BrowserRouter => Router로 사용
-  Switch,
+  Routes,
   Route,
 } from "react-router-dom";
 
@@ -24,13 +24,13 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem("isLoggedIn")) {
-      dispatch(login())
+      dispatch(login());
     }
-    setLoading(false)
-  }, [])
+    setLoading(false);
+  }, []);
 
   if (loading) {
-    return <LoadingSpinner />
+    return <LoadingSpinner />;
   }
 
   return (
@@ -38,27 +38,23 @@ function App() {
       <NavBar />
       <Toast toasts={toasts} deleteToast={deleteToast} />
       <div className="container mt-3">
-        <Switch>
+        <Routes>
           {routes.map((route) => {
-            if (route.auth) {
-              return (
-                <ProtectedRoute
-                  path={route.path}
-                  component={route.component}
-                  key={route.path}
-                />
-              );
-            }
             return (
               <Route
                 path={route.path}
-                exact
-                component={route.component}
+                element={
+                  route.auth ? (
+                    <ProtectedRoute element={route.element} />
+                  ) : (
+                    route.element
+                  )
+                }
                 key={route.path}
               />
             );
           })}
-        </Switch>
+        </Routes>
       </div>
     </Router>
   );
