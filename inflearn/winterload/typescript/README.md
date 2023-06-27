@@ -91,3 +91,35 @@
       "esm": true
     },
     ```
+    <br />
+
+9. [strictNullChecks 옵션]
+  - 엄격한 `Null` 검사를 뜻한다.
+    ```javascript
+    // tsconfig.json
+    "compilerOptions": {
+      "strictNullChecks": false,
+    }
+    ```
+  - `let numA: number = null` => `number` 타입에 `null` 값을 임시로 허용하겠다는 뜻.
+  - `number` 타입에 엄격하게 `null` 값도 허용할 경우 `"strictNullChecks": false,` 추가하면 된다. (기본값이 `true`이기 때문에)
+  - `strict`는 `strictNullChecks`의 상위 옵션으로 `strict`가  true 면 자동으로 `strictNullChecks: true`이다. 해서 null값만 엄격하게 체크하지 않을 땐 false로 값을 적용하면 되는 것.
+  <br />
+  <br />
+
+### 3. 타입스크립트 기본
+1. [원시타입과 리터럴타입](https://ts.winterlood.com/3cb27a06-78ac-499d-9270-2ebabe8c769c)
+  - **리터럴 타입** : `리터럴 === 값`
+    ```typescript
+    let numA: 12 = 12;
+    numA = 14 // Error
+
+    let strA: "hello" = "hello"
+    strA = "bye" // Error
+    ```
+    - 값 자체를 타입에 지정할 수 있다. 
+<br />
+
+2. [배열과 튜플](https://ts.winterlood.com/43888ee0-9227-4a8d-994e-2336ee78bfcf)
+3. [객체](https://ts.winterlood.com/1c336fb6-1a90-4076-8de1-b23810a65163)
+  
