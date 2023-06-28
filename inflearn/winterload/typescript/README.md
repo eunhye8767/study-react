@@ -122,4 +122,135 @@
 
 2. [배열과 튜플](https://ts.winterlood.com/43888ee0-9227-4a8d-994e-2336ee78bfcf)
 3. [객체](https://ts.winterlood.com/1c336fb6-1a90-4076-8de1-b23810a65163)
+4. [타입 별칭과 인덱스 시그니쳐](https://ts.winterlood.com/156628c8-e779-4ea9-b40b-a77dd083e214)
+  - 빈 배열로 적용해도 오류가 나지 않는다는 점을 명시해야 한다.
+    ```javascript
+    type CountryNumberCodes = {
+      [key: string]: number;
+    };
+
+    let countryNumberCodes: CountryNumberCodes = {};
+    ```
+  - 반드시 포함해야 하는 프로퍼티가 있다면 아래와 같이 명시한다.
+    ```javascript
+    type CountryNumberCodes = {
+      [key: string]: number;
+      Korea: number
+    };
+
+    let countryNumberCodes: CountryNumberCodes = {
+      Korea: 410,
+      UnitedState: 820
+    };
+    ```
+  -  **인덱스 시그니쳐**를 사용하면서 동시에 추가적인 프로퍼티를 또 정의할 때에는 인덱스 시그니쳐의 value 타입과 직접 추가한 프로퍼티의 value 타입이 **호환되거나 일치**해야 합니다. <br />따라서 다음과 같이 서로 호환되지 않는 타입으로 설정하면 오류가 발생합니다.
+    ```javascript
+    type CountryNumberCodes = {
+      [key: string]: number;
+      Korea: string; // 오류
+    };
+    ```
+    <br />
+
+5. [열거형 타입](https://ts.winterlood.com/ed2b0365-72ea-4c3e-b646-7e9e22a472aa)
+  - 타입스크립트에만 있는 `enum 타입`
+  - 여러가지 값들의 각각 이름을 부여해 열거해두고 사용하는 타입
+    ```javascript
+    enum Role {
+      ADMIN, // 0 할당(자동)
+      USER,  // 1 할당(자동)
+      GUEST, // 2 할당(자동)
+    }
+
+    const user1 = {
+      name: "이정환",
+      role: Role.ADMIN, // 0
+    };
+
+    const user2 = {
+      name: "홍길동",
+      role: Role.USER, // 1
+    };
+
+    const user3 = {
+      name: "아무개",
+      role: Role.GUEST, // 2
+    };
+    ```
+
+  - 자동 할당되는 값은 기본적으로 0부터 시작합니다. 만약 이 값을 변경하고 싶다면 다음과 같이 시작하는 위치에 값을 직접 할당해주면 됩니다. <br />그럼 자동으로 그 아래의 멤버들은 1씩 증가된 값으로 할당됩니다.
+    ```javascript
+    enum Role {
+      ADMIN = 10, // 10 할당 
+      USER,       // 11 할당(자동)
+      GUEST,      // 12 할당(자동)
+    }
+
+    const user1 = {
+      name: "이정환",
+      role: Role.ADMIN, // 10
+    };
+
+    const user2 = {
+      name: "홍길동",
+      role: Role.USER, // 11
+    };
+
+    const user3 = {
+      name: "아무개",
+      role: Role.GUEST, // 12
+    };
+    ```
+
+  - `enum(이넘)`은 컴파일되도 사라지지 않고 컴파일 시 객체로 변환이 된다.
+
+6. [any와 unknown](https://ts.winterlood.com/41c52e6a-ad79-4b6e-b87b-909400f161fe)
+  - `any` === 모든 타입.<br />**any는 최대한 사용하지 마세요**
+  - `unknown 타입`은 any 타입과 비슷하지만 보다 안전한 타입입니다.<br />`unknown 타입의 변수`는 다음과 같이 **어떤 타입의 값이든 다 저장할 수 있습**니다.
+    ```javascript
+    let unknownVar: unknown;
+
+    unknownVar = "";
+    unknownVar = 1;
+    unknownVar = () => {};
+    ```
   
+  - **unknown 타입의 값은 어떤 타입의 변수에도 저장할 수 없습니다.**
+    ```javascript
+    let num: number = 10;
+
+    let unknownVar: unknown;
+    unknownVar = "";
+    unknownVar = 1;
+    unknownVar = () => {};
+
+    num = unknownVar; // 오류 !
+    ```
+
+  - **unknown 타입의 값은 어떤 연산에도 참여할 수 없으며, 어떤 메서드도 사용할 수 없습니다.**<br />단, 조건문을 이용해 이 값이 number 타입의 값임을 보장해주면 변경이 가능합니다.
+    ```javascript
+    if (typeof unknownVar === "number") {
+      // 이 조건이 참이된다면 unknownVar는 number 타입으로 볼 수 있음
+      num = unknownVar;
+    }
+    ```
+
+7. [void와 never](https://ts.winterlood.com/2fc094af-7fe4-46d4-8c24-bb0596172b2e)
+  - `void 타입`은 아무런 값도 없음을 의미하는 타입.
+    ```javascript
+    function func1(): string {
+      return "hello"
+    }
+
+    // void => 반환되는 값이 없을 때 === 공허 === 아무것도 없다.
+    function func2(): void {
+      consloe.log("hello")
+    }
+    ```
+
+  - `never 타입`은 불가능을 의미하는 타입. (존재하지 않는)<br />**그 어떠한 값도 저장할 수 없다!!**
+    ```javascript
+    function func3(): never {
+      throw new Error();
+    }
+    ```
