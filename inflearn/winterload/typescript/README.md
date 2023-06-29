@@ -414,8 +414,10 @@
     type Intersection = Dog & Person;
 
     /**
-     * Dog 타입에도 속하고 Person 타입에도 속해야 한다
-     *    ㄴ { name, color, language 
+     * 타입스크립트에서 객체 타입의 교집합은 '집합'을 기준으로 만들어진다.
+     * 따라서 두개의 객체 타입의 교집합은 두 타입에 모두 속하는 요소들만 포함하는 집합으로 만들어진다.
+     *  ㄴ Dog 타입에도 속하고 Person 타입에도 속해야 한다
+     *  ㄴ { name, color, language }
     */
     let intersection1 : Intersection = {
       name: "",
