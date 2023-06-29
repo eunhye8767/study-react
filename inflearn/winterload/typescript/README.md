@@ -1,5 +1,5 @@
 ## section 1
-### 1. Hello TS World!
+### 0. Hello TS World!
 - 폴더를 기준으로 `npm init` -> `package.json` 생성
 - `npm i @types/node` 설치
 - 타입스크립트 컴파일러를 글로벌로 설치 (맥 경우) : `sudo npm install typescript -g`
@@ -10,7 +10,7 @@
 <br />
 <br />
 
-### 2. 타입스크립트 컴파일러 옵션 설정하기
+### 1. 타입스크립트 컴파일러 옵션 설정하기
 - [타입스크립트 컴파일러 옵션 설정하기](https://ts.winterlood.com/e7ec2f43-9d8c-4d30-bb2c-29e1b57f6a39)
 - 컴파일러 옵션은 `package` 단위로 설정할 수 있다. (즉, 프로젝트마다 설정)
 <br />
@@ -104,10 +104,11 @@
   - `let numA: number = null` => `number` 타입에 `null` 값을 임시로 허용하겠다는 뜻.
   - `number` 타입에 엄격하게 `null` 값도 허용할 경우 `"strictNullChecks": false,` 추가하면 된다. (기본값이 `true`이기 때문에)
   - `strict`는 `strictNullChecks`의 상위 옵션으로 `strict`가  true 면 자동으로 `strictNullChecks: true`이다. 해서 null값만 엄격하게 체크하지 않을 땐 false로 값을 적용하면 되는 것.
-  <br />
-  <br />
 
-### 3. 타입스크립트 기본
+<br />
+<br />
+
+### 2. 타입스크립트 기본
 1. [원시타입과 리터럴타입](https://ts.winterlood.com/3cb27a06-78ac-499d-9270-2ebabe8c769c)
   - **리터럴 타입** : `리터럴 === 값`
     ```typescript
@@ -254,3 +255,186 @@
       throw new Error();
     }
     ```
+
+<br />
+<br />
+
+### 3. 타입스크립트 이해하기
+1. [타입스크립트 이해하기](https://ts.winterlood.com/d4e6723a-5590-4a32-8dd0-dd1c3a41162f)
+<br />
+
+2. [타입은 집합이다](https://ts.winterlood.com/9610eed7-2b66-4645-9181-483243a2089a)
+  - 타입 == 동일한 속성, 특징들을 모아둔 집합
+  - `number Type`의 부분 집합, `number literal type`
+    ```javascript
+    // 슈퍼타입 (부모타입)
+    number Type
+
+    // 서브타입(자식타입)
+    number literal Type
+    ```
+<br />
+
+3. [타입 계층도와 함께 기본타입 살펴보기](https://ts.winterlood.com/1d6906f2-b724-43d0-bc61-8ec455e6d8e8)
+  [!타입 계층도 이미지](./%ED%83%80%EC%9E%85%EA%B3%84%EC%B8%B5%EB%8F%84.png)
+  - `Unknown` 타입은 모든 타입의 슈퍼타입.
+    - 업캐스팅으로 모든 값을 `Unknown`에 넣을 수 있다.
+    - `Unknown`을 어떠한 변수에 넣을 수 없다. 다운캐스팅이 안 되서.
+      ```javascript
+      function unknownExam() {
+        let unknownVar: unknown;
+
+        // unknown 변수를 어떠한 값에 넣을 수 없다.
+        // 그 이유는 다운캐스팅이 안 되기 때문!!
+        let num: number = unknownVark;
+      }
+      ```
+      <br />
+
+  - `naver` 타입은 어떠한 변수도 저장될 수 없다! 
+    - `naver`은 공집합. 아무것도 없다.
+    - `any` 타입은 유일하게 `naver` 다운캐스팅 할 수가 없다.
+  - `void` 타입은 `undefined`의 슈퍼 타입니다.
+<br />
+
+4. [객체 타입의 호환성](https://ts.winterlood.com/17ff91fc-3179-4d4c-a7dd-15c3c5781ff3)
+  - 객체 타입 간의 호환성 : 어떤 객체 타입을 다른 객체 타입으로 취급해도 괜찮은 가?
+  - 객체 타입은 프로퍼티를 기준으로 구조적 타입 시스템.
+    - 슈퍼타입 = Animal / 서브타입 = Dog
+    - 프로퍼티 기준으로 Dog 타입의 `breed` 타입이 없기 때문에 슈퍼 타입은 `Animal`이 된다.
+    ```javascript
+    type Animal = {
+      name: string;
+      color: string;
+    }
+
+    type Dog = {
+      name: string;
+      color: string;
+      breed: string;
+    }
+    ```
+    <br />
+
+  - 초과 프로퍼티 검사
+    - **초과 프로퍼티 검사란 변수를 객체 리터럴로 초기화 할 때 발동하는 타입스크립트의 특수한 기능**.
+    - **이 기능은 타입에 정의된 프로퍼티 외의 다른 초과된 프로퍼티를 갖는 객체를 변수에 할당할 수 없도록 막는다.**
+    ```javascript
+    type Book = {
+      name: string;
+      price: number;
+    };
+
+    type ProgrammingBook = {
+      name: string;
+      price: number;
+      skill: string;
+    };
+
+    let book: Book;
+    let programmingBook: ProgrammingBook = {
+      name: "한 입 크기로 잘라먹는 리액트",
+      price: 33000,
+      skill: "reactjs",
+    };
+
+    book = programmingBook;
+
+    // 초과 프로퍼티 검사
+    let book2: Book = { // 오류 발생
+      name: "한 입 크기로 잘라먹는 리액트",
+      price: 33000,
+      skill: "reactjs",
+    };
+    ```
+<br />
+
+5. [대수 타입](https://ts.winterlood.com/44460889-64bd-4d4d-83af-9983f598fd2d)
+  - 대수 타입 : 여러개의 타입을 합성해서 새롭게 만들어낸 타입
+  - 합집합 타입과 교집합 타입이 존재한다.
+    <br />
+
+  - **Union 타입 (합집합)**
+    ```javascript
+    let a: number | string;
+    let b: (number | string)[];
+    ```
+    ```javascript
+    type Dog = {
+      name: string;
+      color: string;
+    }
+
+    type Person = {
+      name: string;
+      language: string;
+    }
+
+    type Union1 = Dog | Person;
+
+    let union1: Union1 = {
+      name: "",
+      color: "",
+    }
+    
+    let union2: Union1 = {
+      name: "",
+      language: "",
+    }
+    
+    let union3: Union1 = {
+      name: "",
+      color: "",
+      language: "",
+    }
+    
+    // Dog or Person 기준, color? language? 값이 없어서 에러 발생!
+    let union4: Union1 = {
+      name: "",
+    }
+    ```
+    <br />
+
+  - **Intersection 타입(교집합 타입)**
+    ```javascript
+    // number와 string 경우, 겹쳐지는 부분이 없기 때문에 naver를 뜻한다.
+    let variable: number & string;
+    ```
+    ```javascript
+    type Dog = {
+      name: string;
+      color: string;
+    }
+
+    type Person = {
+      name: string;
+      language: string;
+    }
+
+    type Intersection = Dog & Person;
+
+    /**
+     * Dog 타입에도 속하고 Person 타입에도 속해야 한다
+     *    ㄴ { name, color, language 
+    */
+    let intersection1 : Intersection = {
+      name: "",
+      color: "",
+      language: "",
+    }
+    ```
+<br />
+
+6. [타입 추론](https://ts.winterlood.com/69607da2-4cca-4b89-b808-f78bb7040c80)
+<br />
+
+7. [타입 단언](https://ts.winterlood.com/71f4a577-4340-4994-956d-a7aa47176ffa)
+<br />
+
+8. [타입 좁히기](https://ts.winterlood.com/92c2035a-49bc-4585-9e3d-43206ce92d59)
+<br />
+
+9. [서로소 유니온 타입](https://ts.winterlood.com/f36a6c2b-66cb-4acc-86d4-38a8bcfb1e17)
+
+<br />
+<br />
