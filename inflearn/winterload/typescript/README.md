@@ -431,12 +431,296 @@
 <br />
 
 7. [타입 단언](https://ts.winterlood.com/71f4a577-4340-4994-956d-a7aa47176ffa)
+  - 타입 단언, as로 표기하면 초과 프로퍼티인 상황에서도 오류를 해결할 수 있다.
+    ```javascript
+    type Person = {
+      name: string;
+      age: string;
+    }
+
+    let person = {} as Person
+
+    // 초과 프로퍼티
+    type Dog = {
+      name: string;
+      color: string;
+    }
+
+    let dog = {
+      name: "돌돌이",
+      color: "brown",
+      breed: "진도",
+    } as Dog
+    ```
+    <br />
+  
+  - 타입 단어의 규칙 : `값 as 단언`
+    ```javascript
+    /**
+     * A as B
+     * A가 B의 슈퍼 타입이거나
+     * A가 B의 서브 타입이어야 함.
+    */
+
+    // A가 B의 슈퍼타입
+    // unknown은 모든 타입의 슈퍼타입
+    let num1 = 10 as unknown;
+
+    // A가 B의 서브타입
+    // never은 모든 타입의 서브타입.
+    let num2 = 10 as never;
+
+    // 오류 발생 (겹치는 값이 없음.)
+    let num3 = 10 as string;
+    ```
+  <br />
+
+  - `const` 선언 === `readonly`
+    ```javascript
+    let cat = {
+      name: "야용이",
+      color: "yellow",
+    } as const;
+
+    cat.name = ""; // 오류발생. 수정할 수 없다.
+    ```
+    <br />
+
+  - `Non Null` 단어
+    ```javascript
+    type Post = {
+      title: string;
+      author?: string;
+    }
+
+    let post: Post = {
+      title: "게시글1",
+      author: "이은혜",
+    }
+
+    // 아래처럼 옵셔널 체이닝을 사용할 경우 undefined 값이 생길 수 있다.
+    // const len: number = post.author?.length;
+
+    // ! 연산이 null 이나 non이 아니다 라고 선언해주는 것이기 때문에 오류 없이 사용 가능.
+    // 단, author 값이 없어서 실행되기 때문에 단언은 조심히 사용하는 것을 추천(권장)
+    const len: number = post.author!.length;
+    ```
 <br />
 
 8. [타입 좁히기](https://ts.winterlood.com/92c2035a-49bc-4585-9e3d-43206ce92d59)
+  ```javascript
+  type Person = {
+    name: string;
+    age: number;
+  }
+
+  function func(value: number | string | Date | null | Person) {
+    if (typeof value === "number") {
+      console.log(value.toFixed())
+    } else if (typeof value === "string") {
+      console.log(value.toUpperCase())
+    } else if (value instanceof Date) {
+      cosole.log(value.getTime())
+    } else if (value && "age" in value) {
+      // 직접 만든 타입일 때 in 연산자 사용.
+      cosole.log(`${value.name}은 ${value.age}살 입니다.`)
+    }
+  }
+  ```
 <br />
 
 9. [서로소 유니온 타입](https://ts.winterlood.com/f36a6c2b-66cb-4acc-86d4-38a8bcfb1e17)
+  - 교집합이 없는 타입들로만 만든 유니온 타입을 말함,
+  - 직관적이지 않은 코드
+    ```javascript
+    type Admin = {
+      name: string;
+      kickCount: number;
+    }
 
+    type Member = {
+      name: string;
+      point: number;
+    }
+
+    type Guest = {
+      name: string;
+      visitCount: number;
+    }
+
+    type User = Admin | Member | Guest;
+
+    // Admin -> {name}님 현재까지 {kickCount}명 강퇴했습니다.
+    // Member -> {name}님 현재까지 {point} 모았습니다.
+    // Guest -> {name}님 현재까지 {visitCount}번 오셨습니다.
+
+    // 이렇게 할 경우, 코드가 직관적이지 않아 불편하다.
+    function login(user: User) {
+      if ("kickCount" in user) {
+        // admin 타입
+        console.log(`${user.name}님 현재까지 ${user.kickCount}명 강퇴했습니다.`)
+      } else if ("point" in user) {
+        // member 타입
+        console.log(`${user.name}님 현재까지 ${user.point} 모았습니다.`)
+      } else {
+        // guest 타입
+        console.log(`${user.name}님 현재까지 ${user.visitCount}번 오셨습니다.`)
+      }
+    }
+    ```
+  - 직관적이게 수정
+    ```javascript
+    type Admin = {
+      tag: "ADMIN";
+      name: string;
+      kickCount: number;
+    }
+
+    type Member = {
+      tag: "MEMBER";
+      name: string;
+      point: number;
+    }
+
+    type Guest = {
+      tag: "GUEST";
+      name: string;
+      visitCount: number;
+    }
+
+    type User = Admin | Member | Guest;
+
+    function login(user: User) {
+      switch (user.tag) {
+        case "ADMIN": {
+          console.log(`${user.name}님 현재까지 ${user.kickCount}명 강퇴했습니다.`)
+          break;
+        }
+        case "MEMBER": {
+          console.log(`${user.name}님 현재까지 ${user.point} 모았습니다.`)
+          break;
+        }
+        case "GUEST": {
+          console.log(`${user.name}님 현재까지 ${user.visitCount}번 오셨습니다.`)
+          break;
+        }
+      }
+    }
+    ```
+    <br />
+
+  - 복습겸 한가지 더 사례(예시) : 비동기 작업의 결과를 처리하는 객체
+    ```javascript
+    type AsyncTask = {
+      // 값이 정해져있을 경우, 해당 값을 적용하는 것을 권장
+      state: "LOADING" | "FAILED" | "SUCCESS";
+      error? : {
+        message: string
+      };
+      response?: {
+        data: string
+      }
+    }
+
+    // 로딩 중 -> 콘솔에 로딩중 출력
+    // 실패 -> 실패 : 에러메시지를 출력
+    // 성공 -> 성공 : 데이터를 출력
+    function processResult(task: AsyncTask) {
+      switch (task.state) {
+        case "LOADING": {
+          console.log("로딩중")
+          break;
+        }
+        case "FAILED": {
+          console.log(`${task.error?.message}`)
+          break;
+        }
+        case "SUCCESS": {
+          console.log(`${task.response!.data}`)
+          break;
+        }
+      }
+    }
+
+    const loading: AsyncTask = {
+      state: "LOADING",
+    }
+
+    const failed: AsyncTask = {
+      state: "FAILED",
+      error: {
+        message: "오류"
+      }
+    }
+
+    const success: AsyncTask = {
+      state: "SUCCESS",
+      response: {
+        data: "데이터~"
+      }
+    }
+    ```
+    <br />
+
+    - 위처럼 할 경우, 옵셔닝 체인징(?) 또는 ! 연산자를 활용해야 하기 때문에 **서로소 유니온 타입 (== 태그 유니온 타입)**을 사용한다.
+    ```javascript
+    type loadingTask = {
+      state: "LOADING";
+    }
+
+    type failedTask = {
+      state: "FAILED";
+      error : {
+        message: string
+      };
+    }
+
+    type successTask = {
+      state: "SUCCESS";
+      response: {
+        data: string
+      }
+    }
+
+    type AsyncTask = loadingTask | failedTask | successTask;
+
+    // 로딩 중 -> 콘솔에 로딩중 출력
+    // 실패 -> 실패 : 에러메시지를 출력
+    // 성공 -> 성공 : 데이터를 출력
+    function processResult(task: AsyncTask) {
+      switch (task.state) {
+        case "LOADING": {
+          console.log("로딩중")
+          break;
+        }
+        case "FAILED": {
+          console.log(`${task.error.message}`)
+          break;
+        }
+        case "SUCCESS": {
+          console.log(`${task.response.data}`)
+          break;
+        }
+      }
+    }
+
+    const loading: AsyncTask = {
+      state: "LOADING",
+    }
+
+    const failed: AsyncTask = {
+      state: "FAILED",
+      error: {
+        message: "오류"
+      }
+    }
+
+    const success: AsyncTask = {
+      state: "SUCCESS",
+      response: {
+        data: "데이터~"
+      }
+    }
+    ```
 <br />
 <br />
