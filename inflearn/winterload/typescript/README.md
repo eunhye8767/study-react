@@ -827,6 +827,104 @@
 <br />
 
 ### 5. 인터페이스
+1. 인터페이스
+  - [인터페이스](https://ts.winterlood.com/205a2c68-50a6-47f7-bd61-61bd47d4287a)
+  - 인터페이스 : 타입의 이름을 지어주는 또 다른 문법 + 객체의 구조를 정의하는데 특화된 문법<br />(상속, 합침 등의 특수한 기능을 제공함)
+    ```javascript
+    interface Person {
+      readonly name: string;
+      age?: number;
+
+      // 이 경우 함수 오버로딩 불가
+      sayHi: () => void;
+
+      // 함수 오버로딩 하고자 할 땐?
+      sayHi(): void;
+      sayHi(a:number, b:number): void
+    }
+    ```
+    <br />
+
+2. 인터페이스 확장하기
+  - [인터페이스 확장하기](https://ts.winterlood.com/80295c08-5698-4944-b4f4-bdab8dac139c)
+    ```javascript
+    interface Animal {
+      name: string;
+      color: string;
+    }
+
+    interface Dog extends Animal {
+      isBark: boolean;
+    }
+    
+    interface Cat extends Animal {
+      name: "야용";  // 원본 타입의 서브타입으로만 정의가 가능하다
+      name: 11;     // 원본 타입 (string)가 맞지않아 이 경우엔 에러 발생!!!
+      isScratch: boolean;
+    }
+
+    // 다중 확장도 가능하다.
+    interface DogCat extends Dog, Cat {}
+
+    const dogCat: DogCat = {
+      name: "",
+      color: "",
+      isBark: true.
+      isScratch: true,
+    }
+    ```
+    <br />
+
+3. 인터페이스 합치기
+  - [인터페이스 합치기](https://ts.winterlood.com/85ed3032-8fdb-4a09-be30-089aff844a15)
+    ```javascript
+    interface Person {
+      name: string
+    }
+
+    interface Person {
+      age: number
+    }
+
+    // 선언 합침 = 선언 머지
+    const person: Person = {
+      name: "",
+      age: 11,
+    }
+    ```
+    ```javascript
+    interface Person {
+      name: string
+    }
+
+    interface Person {
+      name: string;  // 동일한 타입으로만 가능 string === string || number === number
+      age: number
+    }
+
+    // 선언 합침 = 선언 머지
+    const person: Person = {
+      name: "",
+      age: 11,
+    }
+    ```
+  - 인터페이스 선언 합침(또는 머지)는 **모듈 보강**할 때 자주 사용된다
+    ```javascript
+    interface Lib {
+      a: number;
+      b: number;
+    }
+
+    interface Lib {
+      c: string
+    }
+
+    const lib: Lib = {
+      a: 1,
+      b: 2,
+      c: "hello",
+    }
+    ```
 
 <br />
 <br />
