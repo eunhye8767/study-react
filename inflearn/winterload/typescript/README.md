@@ -724,3 +724,109 @@
     ```
 <br />
 <br />
+
+### 4. 함수와 타입
+1. 함수타입
+  - [함수타입](https://ts.winterlood.com/0fe19fd9-39ca-4e40-9aea-fe1cc68403ba)
+<br />
+
+2. 함수 타입 표현식과 호출 시그니처
+  - [함수 타입 표현식과 호출 시그니처](https://ts.winterlood.com/d6b17fad-0a06-4733-89e5-c8fcaf194ed5)
+    ```javascript
+    // 함수 타입 표현식
+    type Operation = (a: number, b: number) => number;
+
+    const add: Operation = (a, b) => a + b;
+    const sub: Operation = (a, b) => a - b;
+    const multiply: Operation = (a, b) => a * b;
+    const divide: Operation = (a, b) => a / b;
+
+    // 호출 시그니처
+    type Operation2 = {
+      (a: number, b: number): number;
+    };
+
+    function func(a: number, b: number): number {
+      return a + b;
+    }
+
+    const add2: Operation2 = (a, b) => a + b;
+    const sub2: Operation2 = (a, b) => a - b;
+    const multiply2: Operation2 = (a, b) => a * b;
+    const divide2: Operation2 = (a, b) => a / b;
+    ```
+  <br />
+
+3. 함수 타입의 호환성
+  - [함수 타입의 호환성](https://ts.winterlood.com/267b10cd-5f23-4689-b2f4-0b7420523a64)
+<br />
+
+4. 함수 오버로딩
+  - [함수 오버로딩](https://ts.winterlood.com/d82be2a7-e9b9-49d0-b7c5-c9073bc4d0ce)
+    ```javascript
+    /**
+     * 함수 오버로딩
+     * 같은 함수를 매개변수의 개수나 타입에 따라
+     * 여러가지 버전으로 만드는 문법
+     * -> 하나의 함수 func
+     * -> 일단 모든 매개변수는 넘버타입
+     * -> Ver1. 매개변수가 1개일 때에는 매개변수에 20을 곱한 값을 출력
+     * -> Ver2. 매개변수가 3개일 때에는 모든 매개변수를 더한 값을 출력
+     */
+
+    // 버전들 -> 오버로드 시그니처
+    function func(a: number): void;
+    function func(a: number, b: number, c: number): void;
+
+    // 실제 구현부 -> 구현 시그니쳐
+    function func(a: number, b?: number, c?: number) {
+      if (typeof b === "number" && typeof c === "number") {
+        console.log(a + b + c);
+      } else {
+        console.log(a * 20);
+      }
+    }
+
+    func(1);
+    func(1,2,3);
+    ```
+  <br />
+
+5. 사용자 정의 타입 가드
+  - [사용자 정의 타입 가드](https://ts.winterlood.com/479ea272-b297-49e4-9d76-958d97b319cb)
+    ```javascript
+    type Dog = {
+      name: string;
+      isBark: boolean;
+    };
+
+    type Cat = {
+      name: string;
+      isScratch: boolean;
+    };
+
+    // Dog 타입인지 확인하는 타입 가드
+    function isDog(animal: Animal): animal is Dog {
+      return (animal as Dog).isBark !== undefined;
+    }
+
+    // Cat 타입인지 확인하는 타입가드
+    function isCat(animal: Animal): animal is Cat {
+      return (animal as Cat).isScratch !== undefined;
+    }
+
+    function warning(animal: Animal) {
+      if (isDog(animal)) {
+        console.log(animal.isBark ? "짖습니다" : "안짖어요");
+      } else {
+        console.log(animal.isScratch ? "할큅니다" : "안할퀴어요");
+      }
+    }
+    ```
+<br />
+<br />
+
+### 5. 인터페이스
+
+<br />
+<br />
