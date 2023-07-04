@@ -928,3 +928,158 @@
 
 <br />
 <br />
+
+### 6. 클래스
+1. 자바스크립트의 클래스 소개
+  - [자바스크립트의 클래스 소개](https://ts.winterlood.com/f9862331-98d2-4afc-a8f7-f9f1d6cf3d43)
+  - [class, MDN](https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Classes)
+  <br />
+
+2. 타입스크립트의 클래스
+  - [타입스크립트의 클래스](https://ts.winterlood.com/2d0cc9fe-8f93-481c-9d5d-a95059febcb3)
+    ```javascript
+    class Employee {
+      // 필드
+      name: string;
+      age: number;
+      position: string;
+
+      // 생성자
+      constructor(name: string, age: number, position: string) {
+        this.name = name;
+        this.age = age;
+        this.position = position;
+      }
+
+      // 메서드
+      work() {
+        console.log("일함")
+      }
+    }
+
+    // Employee 상속
+    class ExecutiveIfficer extends Employee {
+      officeNumber: number;
+
+      constructor(name: string, age: number, position: string, officeNumber: number) {
+        // super() 필수!
+        super(name, age, position);
+        this.officeNumber = officeNumber;
+      }
+    }
+
+    const employeeB = new Employee("이은혜", 37, "퍼블리셔");
+
+    /**
+     * 타입스크립트는 해당 변수의 타입을 Employee로 지정
+     * 때문에 아래와 같이 타입으로 지정하여 사용할 수 있다.
+    */
+    const employeeC :Employee = {
+      name: "",
+      age: 0,
+      position: "",
+      work() {},
+    }
+    ```
+  <br />
+
+3. 접근 제어자
+  - [접근 제어자](https://ts.winterlood.com/428ae2b8-7b91-4635-93fd-6f4103167c9b)
+    ```javascript
+    /**
+     * 접근 제어자 access modifier
+     *   => public private protected
+     *        ㄴ public : class 외부에서도 접근 가능 (기본값)
+     *        ㄴ private : 접근 불가능, class 내부에서만 접근이 가능(= 메서드에서 사용 가능)(파생된 extends에서도 사용 불가능)
+     *        ㄴ protected : class 내부에서만 접근이 가능(파생된 extends에서도 사용이 가능)
+    */
+
+    class Employee {
+      // 필드
+      // public name: string; 
+      // public 기본값, 표기하지 않아도 된다.
+      name: string;
+
+      private age: number;
+      protected position: string;
+
+      // 생성자
+      constructor(name: string, age: number, position: string) {
+        this.name = name;
+        this.age = age;
+        this.position = position;
+      }
+
+      // 메서드
+      work() {
+        console.log(`${this.age}, private는 class 내부에서만 접근이 가능`)
+        console.log(`이렇게 메서드에선 접근(활용)이 가능하다.`)
+        console.log(`파생 클래스(extends)에서도 사용이 불가능 하다.`)
+      }
+    }
+
+    class ExecutiveIfficer extends Employee {
+      officeNumber: number;
+
+      constructor(name: string, age: number, position: string, officeNumber: number) {
+        // super() 필수!
+        super(name, age, position);
+        this.officeNumber = officeNumber;
+      }
+
+      func() {
+        // 오류발생
+        // private => 파생 클래스(extends)에서 사용 불가능.
+        this.name
+
+        // protected => 파생된 extends에서도 사용이 가능
+        this.position
+      }
+    }
+
+
+    const employeeA = new Employee("이은혜", 37, "퍼블리셔");
+
+    // class 외부에서도 접근 가능
+    employeeA.name = "독곤";
+    ```
+
+  - 생성자(`constructor`)에서 `접근 제어자`를 써줄 경우, 필드와 `this.name = name`과 같은 부분은 지워준다<br />그 이유는 자동으로 생성되기 때문이다.
+    ```javascript
+    class Employee {
+      // 필드
+
+      // 생성자
+      constructor(public name: string, private age: number, protected position: string) {}
+    }
+    ```
+  <br />
+
+4. 인터페이스와 클래스
+  - [인터페이스와 클래스](https://ts.winterlood.com/7d20a0b1-0d69-47aa-864f-136dc96e0259)
+    ```javascript
+    interface CharacterInterface {
+      // interface는 기본적으로 public 이다.
+      name: string;
+      moveSpeed: number;
+      move(): void;
+    }
+
+    // implements = 직역, 구현한다.
+    class Character implements CharacterInterface {
+      // public 외에 추가사항이 있을 경우 아래와 같이 작성.
+      constructor(public name: string, public moveSpeed: number, private extra: string) {}
+
+      moveSpeed(): void {
+        consloe.log(`${this.moveSpeed} 속도로 이동!`);
+      }
+    }
+
+    /**
+     * interface를 먼저 만들고 구현하는 일은 거의 없다.
+     * 라이브러리 구현이나 정교한 작업이 필요할 땐 사용할 일이 생길 수 있다.
+    */
+    ```
+
+  <br />
+  <br />
