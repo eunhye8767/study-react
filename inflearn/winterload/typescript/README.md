@@ -1083,3 +1083,319 @@
 
   <br />
   <br />
+
+### 7. 제네릭
+1. 제네릭 소개
+  - [제네릭 소개](https://ts.winterlood.com/0e41a293-21d9-419e-8e2a-57b5813e0582)
+    ```javascript
+    // 제네릭 == 범용적인, 종합 
+    // <T> => 타입 변수를 가르킨다.
+    function func<T>(value: T): T {
+      return value
+    }
+
+    let num = func(10); // number
+    let bool = func(true) // boolean
+
+    // 튜플 타입 적용할 때
+    let arr = func<[number, number, number]>([1,2,3]); // [number, number, number]
+    ```
+  <br />
+
+2. 타입 변수 응용하기
+  - [타입 변수 응용하기](https://ts.winterlood.com/0d88be7e-7804-4b03-9ea5-25bc23ada02c)
+  - 첫번째 사례
+    ```javascript
+    // 타입이 다를 경우, 여러개를 지정해서 사용할 수 있다.
+    function swap<T, U>(a:T, b: U) {
+      return [b, a]
+    }
+
+    const [a, b] = swap("1", 2);  // [number, string]
+    ```
+
+  - 두번째 사례
+    ```javascript
+    function returnFirstValue<T>(data:[T, ...unknown[]]) {
+      return data[0]
+    }
+
+    let num: returnFirstValue([0, 1, 2]); // 0 : number
+
+    let str: returnFirstValue([14, "hello", "mynameis"]);  // 14 : number
+    ```
+
+  - 세번째 사례
+    ```javascript
+    // length가 있는 지 확장하는 타입 변수(T).
+    function getLength<T extends { length: number }>(data: T) {
+      return data.length;
+    }
+
+    let var1 = getLength([1,2,3]);
+    let var2 = getLength("123456");
+    let var3 = getLength({ length: 10 });
+    let var4 = getLength(10);
+    ```
+  <br />
+
+3. map, forEach 메서드 타입 정의하기
+  - [map, forEach 메서드 타입 정의하기](https://ts.winterlood.com/d1f277c4-9576-4fbc-b8f7-00507f96bb07)
+  - map 메서드
+    ```javascript
+    const arr = [1, 2, 3]
+    
+    function map<T>(arr: T[], callback: (item: T) => T) {
+      let result = [];
+      for (let i = 0; i < arr.length; i++>) {
+        result.push(calback(arr[i]));
+      }
+    }
+
+    map(arr, (it) => it * 2); // [2,4,6]
+    map(["hi", "hello"], (it) => it.toUpperCase()); // ["HI", "HELLO"]
+
+    function map2<T, U>(arr: T[], callback: (item: T) => U) {
+      let result = [];
+      for (let i = 0; i < arr.length; i++>) {
+        result.push(calback(arr[i]));
+      }
+    }
+
+    map(["hi", "hello"], (it) => parseInt(it)); // [NaN, NaN]
+    ```
+
+  - forEach 메서드
+    ```javascript
+    const arr2 = [1,2,3]
+
+    function forEach<T>(arr: T[], callback: (item: T) => void) {
+      for (let i = 0; i < arr.length; i++>) {
+        calback(arr[i])
+      }
+    }
+
+    forEach(arr2, (it) => console.log(it.toFixed()))
+    ```
+  <br />
+
+4. 제네릭 인터페이스 & 제네릭 타입 별칭
+  - [제네릭 인터페이스 & 제네릭 타입 별칭](https://ts.winterlood.com/f674004b-5584-4c9c-badb-d9593b3bb288)
+  - 제네릭 인터페이스
+    ```javascript
+    /**
+     * K, V 처럼
+     * 타입 변수 => 타입 파라미터 , 제네릭 타입 변수, 제네릭 타입 파라미터 로 불러진다.
+    */
+
+    interface KeyPair<K, V> {
+      key: K;
+      value: V;
+    }
+
+    let keyPair: KeyPair<string, number> = {
+      ket : "key",
+      value: 0,
+    }
+
+    let keyPair: KeyPair<boolean, string[]> = {
+      key: true,
+      value: ["1"]
+    }
+    ```
+
+  - 인덱스 시그니처 & 제네릭 인터페이스
+    ```javascript
+    interface Map<V> {
+      [key: string]: V;
+    }
+
+    let stringMap: Map<string> = {
+      key: "value"
+    }
+    
+    let stringMap: Map<boolean> = {
+      key: true
+    }
+    ```
+
+  - 제네릭 타입 별칭
+    ```javascript
+    type Map2<V> = {
+      [key: string]: V;
+    }
+
+    let stringMap2: Map2<string> = {
+      key: "hello"
+    }
+    ```
+
+  - 제네릭 인터페이스의 활용 예시
+    - 유저 관리 프로그램
+    - 유저 구분 : 학생 유저 / 개발자 유저
+    ```javascript
+    interface Student {
+      type: "student";
+      school: string;
+    }
+
+    interface Developer {
+      type: "developer";
+      skill: string;
+    }
+
+    interface User {
+      name: string;
+      profile: Student | Developer;
+    }
+
+    function goToSchool(user: User) {
+      if (user.profile.type !== "student") {
+        console.log("잘 못 오셨습니다");
+        return;
+      }
+
+      const school = user.profile.school;
+      console.log(`${school} 등교 완료`);
+    }
+
+    const developerUser: User = {
+      name: "이은혜",
+      profile: {
+        type: "developer",
+        skill: "TypeScript",
+      }
+    }
+    
+    const studentUser: User = {
+      name: "박요셉",
+      profile: {
+        type: "student",
+        scroll: "온수초",
+      }
+    }
+    ```
+
+    - 많은 유저와 단계가 많아지게 되면 불필요한 함수 등이 많아질 수 있어<Br />이럴 때 제너릭을 이용한다.
+    ```javascript
+    interface Student {
+      type: "student";
+      school: string;
+    }
+
+    interface Developer {
+      type: "developer";
+      skill: string;
+    }
+
+    interface User<T> {
+      name: string;
+      profile: T;
+    }
+
+    function goToSchool(user: User<Student>) {
+      const school = user.profile.school;
+      console.log(`${school} 등교 완료`);
+    }
+
+    const developerUser: User<Developer> = {
+      name: "이은혜",
+      profile: {
+        type: "developer",
+        skill: "TypeScript",
+      }
+    }
+    
+    const studentUser: User<Student> = {
+      name: "박요셉",
+      profile: {
+        type: "student",
+        scroll: "온수초",
+      }
+    }
+    ```
+
+  <br />
+
+5. 제네릭 클래스
+  - [제네릭 클래스](https://ts.winterlood.com/b9f92968-95e6-434e-bd33-a0fd48bbf070)
+    ```javascript
+    class List<T> {
+      constructor(private list: T[]) {}
+
+      push(data: T) {
+        this.list.push(data)
+      }
+
+      pop() {
+        return this.list.pop();
+      }
+
+      print() {
+        console.log(this.list);
+      }
+    }
+
+    const numberList = new List([1,2,3])
+    numberList.pop();
+    numberList.push(4);
+    numberList.print(); // [1,2,4]
+    ```
+  <br />
+
+6. 프로미스와 제네릭
+  - [프로미스와 제네릭](https://ts.winterlood.com/8ea82f04-a28a-4987-8a46-12fd40d277cd)
+    ```javascript
+    /**
+     * resolve 
+     *   ㄴ resolve 타입은 unknown 으로 타입값을 명시해줘야 한다.
+    */
+    const promise = new Promise<number>((resolve, reject) => {
+      setTimeout(() => {
+        // 성공
+        // resolve(20);
+        
+        // 실패
+        reject("~~때문에 실패")
+      })
+    })
+
+    promise.then((response) => {
+      console.log(response * 10)
+    })
+
+    promise.then((err) => {
+      if (typeof err === "string") {
+        console.log(err)
+      }
+    })
+    ```
+
+  - 프로미스를 반환하는 함수의 타입을 정의 (ex. 서버에서 게시글을 받아와야 하는 상황)
+    ```javascript
+    interface Post {
+      id: number;
+      title: string;
+      content: string;
+    }
+
+    function fetchPost(): Promise<Post> {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve({
+            id: 1,
+            title: "게시글 제목",
+            content: "게시글 컨텐츠"
+          })
+        }, 3000)
+      })
+    }
+
+    const postRequest = fetchPost();
+    postRequest.then((post) => {
+      post.id;
+    })
+    ```
+
+<br />
+<br />
