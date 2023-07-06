@@ -1399,3 +1399,173 @@
 
 <br />
 <br />
+
+### 8. 타입 조작하기
+1. 타입 조작하기
+  - [타입 조작하기](https://ts.winterlood.com/982bf09c-010e-4c10-97d8-4601801e1256)
+  <Br />
+
+2. 인덱스도 엑세스 타입
+  - [인덱스도 엑세스 타입](https://ts.winterlood.com/4be60954-bc0e-4458-a58d-c0b367eb8ef4)
+  - 객체 타입
+    ```javascript
+    interface Post {
+      title: string;
+      content: string;
+      author: {
+        id: number;
+        name: string;
+        age: string
+      }
+    }
+
+    // Post["??"]  => "??" 타입을 뜻 한다. 변수 아님!!
+    // 만약, id만 갖고 와야 한다면, Post["author"]["id"]
+    function printAuthorInfo(author: Post["author"]) {
+      console.log(`${author.name}-${author.id}`)
+    }
+
+    const post: Post = {
+      title: "게시글 제목",
+      content: "게시글 본문",
+      author: {
+        id: 1,
+        name: "이은혜",
+        age: 37,
+      }
+    }
+    ```
+
+  - 배열 타입
+    ```javascript
+    type PostList = {
+      title: string;
+      content: string;
+      author: {
+        id: number;
+        name: string;
+        age: string
+      }
+    }[];
+
+    function printAuthorInfo(author: PostList[number]["author"]) {
+      console.log(`${author.name}-${author.id}`)
+    }
+
+    // PostList[number]는 PostList 배열 타입으로부터 요소의 타입을 추출하는 인덱스드 엑세스 타입.
+    // number 또는 숫자를 적어줘도 된다.
+    const post: PostList[number] = {
+      title: "게시글 제목",
+      content: "게시글 본문",
+      author: {
+        id: 1,
+        name: "이은혜",
+        age: 37,
+      }
+    }
+    ```
+  - 튜블 타입
+    ```javascript
+    type Tup = [number, string, boolean];
+    type Tup0 = Tup[0];
+    type Tup1 = Tup[1];
+    type Tup2 = Tup[2];
+
+    // Tup[number] => number | string | boolean
+    // 유니언 타입으로 불러온다.
+    type Tup3 = Tup[number]
+    ```
+  <Br />
+
+3. keyof 연산자
+  - [keyof 연산자](https://ts.winterlood.com/44b2a02c-3969-480d-9914-44675356bfd0)
+  - 객체 타입에 적용하는 `keyof` 연산자
+    ```javascript
+    interface Person {
+      name: string;
+      age: number;
+    }
+
+    // keyof Person => Person의 name, age 유니온 타입 값을 가져온다.
+    // 키의 종류가 많을 땐, 유용하게 쓰일 수 있다!!!
+    function getPropertyKey(person: Person, key: keyof Person) {
+      return person[key]
+    }
+
+    const person: Person = {
+      name: "이은혜",
+      age: 37
+    }
+    ```
+
+  - `keyof`와 `typeof`는 같이 사용할 수 있다.
+    - `typeof`로 person의 타입값을 추론할 수 있다.
+    ```javascript
+    type Person = typeof person;
+
+    function getPropertyKey(person: Person, key: keyof typeof person) {
+      return person[key]
+    }
+
+    const person: Person = {
+      name: "이은혜",
+      age: 37
+    }
+    ```
+  <Br />
+
+4. 맵드 타입
+  - [맵드 타입](https://ts.winterlood.com/5bff2945-5325-4ca6-b986-c20d5006338b)
+  - 객체 타입을 조작하는 `맵드 타입` : `맵드 타입`은 `interface`에서 사용할 수 없다.<br />**무조건 `type`에서 사용 가능하다.**
+    ```javascript
+    interface User {
+      id: number;
+      name: string;
+      age: number;
+    }
+
+    type PartiaUser = {
+      // key : value
+      [key in "id" | "name" | "age"]?: User[key]
+    }
+    
+    type BooleanUser = {
+      // key : value
+      readonly [key in keyof User]?: boolean
+    }
+
+    // 한 명의 유저 정보를 불러오는 기능
+    function fetchUser(): User {
+      // 기능
+      return {
+        id: 1,
+        name: "이은혜",
+        age: 37
+      }
+    }
+
+    // 한 명의 유저 정보를 수집하는 기능
+    function updateUser(user: PartiaUser) {
+      // 수정하는 기능
+    }
+
+    // age 값만 수정하면 되는데, 전체를 다 입력해야 하는 상황이 생긴다..
+    updateUser({
+      //id: 1,
+      //name: "이은혜",
+      age: 25,
+    })
+    ```
+  <Br />
+
+5. 템플릿 리터럴 타입
+  - [템플릿 리터럴 타입](https://ts.winterlood.com/e21aa95d-b2be-46d6-8a63-849e0ca50e0a)
+    ```javascript
+    type Color = "red" | "black" | "green";
+    type Animal = "dog" | "cat" | "chicken";
+    
+    type ColoredAnimal = `${Color}-${Animal}`
+    ```
+
+  <Br />
+  <Br />
