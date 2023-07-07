@@ -1563,9 +1563,60 @@
     ```javascript
     type Color = "red" | "black" | "green";
     type Animal = "dog" | "cat" | "chicken";
-    
+
     type ColoredAnimal = `${Color}-${Animal}`
     ```
 
   <Br />
   <Br />
+
+### 9. 조건부 타입
+1. 조건부 타입 소개
+  - [조건부 타입 소개](https://ts.winterlood.com/129fe6ed-953c-4ee1-a4c4-ba64f2b127c4)
+    ```javascript
+    // number
+    type A = number extends string ? string : number
+
+    type ObjA = {
+      a: number;
+    };
+
+    type ObjB = {
+      a: number;
+      b: number;
+    };
+
+    // ObjB는 ObjA의 서브 타입으로 참 => number
+    type B = ObjB extends ObjA ? number : string;
+    ```
+
+  - 제네릭과 조건부 타입
+    ```javascript
+    type StringNumberSwitch<T> = T extends number ? string : number;
+
+    let varA: StringNumberSwitch<number>;  // string 타입
+    let varB: StringNumberSwitch<string>;  // number 타입
+
+    //function removeSpaces(text: string | undefined | null) {
+    // 함수 오버로딩 활용
+    function removeSpaces<T>(text: T): T extends string ? string : undefined;
+    function removeSpaces(text: any) {
+      if (typeof text === "string") {
+        return text.replaceAll(" ", "")
+      } else {
+        return undefined;
+      }
+    }
+
+    let result = removeSpaces("hi lee eun hye");
+    result.toUpperCase();
+    ```
+  <br />
+
+2. 분산적인 조건부 타입
+  - [분산적인 조건부 타입](https://ts.winterlood.com/dd8b6923-f49b-43f0-a775-167a33d1e0d1)
+  <br />
+
+3. infer-조건부 타입 내에서 타입 추론하기
+  - [infer-조건부 타입 내에서 타입 추론하기](https://ts.winterlood.com/3c169c2f-4ef8-41fd-a820-cf8ee03e5b48)
+  <br />
