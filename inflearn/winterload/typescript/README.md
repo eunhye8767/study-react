@@ -1620,3 +1620,223 @@
 3. infer-조건부 타입 내에서 타입 추론하기
   - [infer-조건부 타입 내에서 타입 추론하기](https://ts.winterlood.com/3c169c2f-4ef8-41fd-a820-cf8ee03e5b48)
   <br />
+  <br />
+
+### 10. 유틸리티 타입
+1. 유틸리티 타입 소개
+  - [유틸리티 타입 소개](https://ts.winterlood.com/a5b224e2-3f3e-432c-8bfb-7b338762514f)
+  - [Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+  <br />
+
+2. 맵드 타입 기반의 유틸리티 타입 1 - Partial, Required, Readonly
+  - [맵드 타입 기반의 유틸리티 타입 1 - Partial, Required, Readonly](https://ts.winterlood.com/5844ef4d-0f38-4093-ab86-361184c62fb7)
+  -  `Partial<T>` 
+    ```javascript
+    /*
+     * Partial<T>
+     * -> 부분적인, 일부분의
+     * -> 특정 객체 타입의 모든 프로퍼티를 선택적 프로퍼티 바꿔주는 타입
+     */
+
+    interface Post {
+      title: string;
+      tags: string[];
+      content: string;
+      thumbnailURL?: string;
+    }
+
+    type Partial<T> = {
+      [key in keyof T]?: T[key];
+    }
+
+    // 임시저장용 변수
+    const draft: Partial<Post> = {
+      title: "제목 나중에 짓자",
+      content: "초안....",
+    }
+    ```
+    <br />
+
+  -  `Required<T>` 
+    ```javascript
+    /*
+     * Required<T>
+     * -> 필수의, 필수적인
+     * -> 특정 객체 타입의 모든 프로퍼티를 필수 프로퍼티로 바꿔주는 타입
+     */
+
+    interface Post {
+      title: string;
+      tags: string[];
+      content: string;
+      thumbnailURL?: string;
+    }
+
+    // -? 를 적용하면 선택적 -> 필수적으로 변경.
+    type Required<T> = {
+      [key in keyof T]-?: T[key];
+    }
+
+    // 반드시 썸네일 프로퍼티가 존재해야 하는 게시글
+    const withThumbnailPost: Required<Post> = {
+      title: "한입 타스 후기",
+      tags: ["ts"],
+      content: "",
+      thumbnailURL: "https://...",
+    };
+    ```
+  -  `Readonly<T>` 
+    ```javascript
+    /*
+     * Readonly<T>
+     * -> 읽기전용 수정불가
+     * -> 특정 객체 타입에서 모든 프로퍼티를 읽기 전용 프로퍼티로 만들어주는 타입
+     */
+
+    interface Post {
+      title: string;
+      tags: string[];
+      content: string;
+      thumbnailURL?: string;
+    }
+
+    type Readonly<T> = {
+      readonly [key in keyof T]: T[key];
+    }
+
+    const readonlyPost: Readonly<Post> = {
+      title: "보호된 게시글입니다.",
+      tags: [],
+      content: "",
+    };
+
+    // 에러발생. 수정불가함!!!
+    readonlyPost.content = '해킹당함';
+    ```
+  <br />
+
+3. 맵트 타입 기반의 유틸리티 타입 2 - Pick, Omit, Record
+  - [맵트 타입 기반의 유틸리티 타입 2 - Pick, Omit, Record](https://ts.winterlood.com/13a8c1f6-f0b3-4690-929e-a0fda17895f7)
+  - `Pick<T, K>`
+    ```javascript
+    /*
+     * Pick<T, K>
+     * -> 뽑다, 고르다
+     * -> 객체 타입으로 부터 특정 프로퍼티만 딱 골라내는 그런 타입
+     */
+
+    interface Post {
+      title: string;
+      tags: string[];
+      content: string;
+      thumbnailURL?: string;
+    }
+
+    type Pick<T, K extends keyof T> = {
+      [key in K]: T[key]
+    }
+
+    const legacyPost: Pick<Post, "title"|"content"> = {
+      title: "옛날 글",
+      content: "옛날 컨텐츠".
+    }
+    ```
+  - `Omit<T, K>`
+    ```javascript
+    /*
+     * Omit<T, K>
+     * -> 생략하다, 빼다
+     * -> 객체 타입으로 부터 특정 프로퍼티를 제거하는 타입
+     */
+
+    interface Post {
+      title: string;
+      tags: string[];
+      content: string;
+      thumbnailURL?: string;
+    }
+
+    type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>;
+    // T = Post, K = "title"
+    // Pick<Post, Exclude<keyof Post, "title">>
+    // Exclude => 해당 값을 제외.
+    // Pick<Post, Exclude<"title"|"content"|"tags"|"thumbnailURL", "title">>
+    // Pick<Post, "content"|"tags"|"thumbnailURL">
+
+    const noTitlePost: Omit<Post, "title"> = {
+      content: "",
+      tags: [],
+      thumbnailURL: "",
+    }    
+    ```
+  - `Record<K, V>`
+    ```javascript
+    /*
+     * Record<K, V>
+     * -> 동일한 타입의 객체 타입을 만들어준다.
+     * -> { large: {url: string} }
+     */
+
+    type Record<K extends keyof any, V> = {
+      [key in K]: V;
+    }
+
+    type Thumbnail = Record<"large"|"medium"|"small", {url: string}>
+    ```
+  <br />
+
+4. 조건부 타입 기반의 유틸리티 타입 - Exclude, Extract, ReturnType
+  - [조건부 타입 기반의 유틸리티 타입 - Exclude, Extract, ReturnType](https://ts.winterlood.com/1c7e7130-67d6-4028-ad06-448c65863dab)
+  - `Exclude<T, U>`
+    ```javascript
+    /*
+     * `Exclude<T, U>`
+     * -> 제외하다, 추방하다
+     * -> T에서 U를 제거하는 타입
+     */
+
+    type Exclude<T, U> = T extends U ? never : T;
+    // 1단계
+    // Exclude<string, boolean> |
+    // Exclude<boolean, boolean>
+
+    // 2단계
+    // string
+    // never 
+
+    // 최종적으로
+    // string | never 이지만, 합집함에서 never은 공집합으로 사라진다.
+    // 결과적으로 string
+
+    type A = Exclude<string | boolean, boolean>;
+    ```
+  - `Extract<T, U>`
+    ```javascript
+    /*
+     * Extract<T, U>
+     * -> T에서 U를 추출하는 타입
+     */
+
+    type Extrac<T, U> = T extends U ? T : never;
+
+    type B = Extract<string | boolean, boolean>;
+    ```
+  - `ReturnType<T>`
+    ```javascript
+    /*
+     * ReturnType<T>
+     * -> 함수의 반환값 타입을 추출하는 타입
+     */
+
+    type ReturnType<T extends (...args: any) => any> = T extends (
+      ...args: any
+    ) => inter R ? R : never;
+
+    type ReturnA = ReturnType<typeof funcA>; // string
+
+    function funcA() {
+      return "hello"
+    }
+    ```
+  <br />
+  <br />
