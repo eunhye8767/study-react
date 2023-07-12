@@ -1840,3 +1840,43 @@
     ```
   <br />
   <br />
+
+### 11. 보너스) 리액트와 타입스크립트
+1. 타입스크립트 리액트 시작하기
+  - 리액트 -> 리액트 & 타입스크립트로 변환하는 방법
+  - `npx create-react-app .` 설치
+  - `npm i @types/node @types/react @types/react-dom @types/jest` 설치
+  - 컴파일러 옵션 세팅 : 루트 경로, `tsconfig.json` 생성
+    ```javascript
+    {
+      "compilerOptions": {
+        "target": "ES5",
+        "module": "CommonJS",
+        "strict": true,
+        "allowJs": true,
+
+        /**
+         * default로 내보내는 값이 없을 때,
+         * import 오류 발생 시, 켜주기.
+        */
+        "esModuleInterop": true,
+
+        "jsx": "react-jsx"
+      },
+      "include": ["src"]
+    }
+    ```
+  - 모든 `JS` 파일을 `JSX`로 바꿔준다
+  - 개별 하나씩 `TSX` 파일로 변환한다
+  <br />
+
+2. 상태관리와 Props 1
+  <br />
+
+3. Context API
+  <br />
+
+4. 외부 라이브러리 사용하기
+  <br />
+
+5. 타입스크립트 템플릿 소개
