@@ -1879,3 +1879,8 @@
   - `package.json` 파일에서 `@types/???`를 볼 수 있다.
     - `@types` => Definitely Types 라고도 한다.
   <br />
+
+3. 리액트에서 타입스크립트로 다운 받을 수 있다.
+  - [공식 문서, Adding TypeScript](https://create-react-app.dev/docs/adding-typescript)
+  - `npx create-react-app 폴더명 --template typescript`<br />현재 폴더 설치 시, 폴더명 위치에 `.`으로 적용.
+  - 자동으로 타입스크립트 환경에 맞춰 설치 된다.
