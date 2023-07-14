@@ -4,7 +4,7 @@ import Editor from "./components/Editor";
 import TodoItem from "./components/TodoItem";
 
 import { Todo } from "./types";
-import { type } from "os";
+// import _ from "lodash"
 
 type Action =
   | {

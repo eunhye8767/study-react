@@ -1870,10 +1870,12 @@
   - 개별 하나씩 `TSX` 파일로 변환한다
   <br />
 
-2. Context API
+2. 외부 라이브러리 사용하기
+  - [npmjs.com](https://www.npmjs.com/)
+  - https://www.npmjs.com/package/lodash
+    - `[DT]`로 되어 있다.
+    - 이 경우, `[DT]`를 클릭하면, `https://www.npmjs.com/package/@types/lodash` 타입스크립트로 다운 받을 수 있다.
+    - 사용하기 전에 타입스크립트 버전이 있는 지 확인 하면 된다.
+  - `package.json` 파일에서 `@types/???`를 볼 수 있다.
+    - `@types` => Definitely Types 라고도 한다.
   <br />
-
-4. 외부 라이브러리 사용하기
-  <br />
-
-5. 타입스크립트 템플릿 소개
