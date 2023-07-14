@@ -1870,10 +1870,7 @@
   - 개별 하나씩 `TSX` 파일로 변환한다
   <br />
 
-2. 상태관리와 Props 1
-  <br />
-
-3. Context API
+2. Context API
   <br />
 
 4. 외부 라이브러리 사용하기
