@@ -3,8 +3,7 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 
 import { DataView } from 'components/DataView';
-import { TextInput } from 'components/TextInput';
-import { Button } from 'components/Button';
+import { TodoInput } from 'components/TodoInput';
 
 const Container = styled.div`
   display: flex;
@@ -22,13 +21,9 @@ function App() {
     '공부를 해야겠지요',
   ]);
 
-  const [toDo, setToDo] = useState('');
-
-  const onAdd = () => {
-    if (toDo === '') return;
-
-    setToDoList([...toDoList, toDo])
-  }
+  const onAdd = (toDo: string) => {
+    setToDoList([...toDoList, toDo]);
+  };
 
   const onDelete = (todo: string) => {
     setToDoList(toDoList.filter((item) => item !== todo));
@@ -37,8 +32,7 @@ function App() {
   return (
     <Container>
       <DataView toDoList={toDoList} onDelete={onDelete} />
-      <TextInput value={toDo} onChange={setToDo} />
-      <Button label="추가" color='#304ffe' onClick={onAdd} />
+      <TodoInput onAdd={onAdd} />
     </Container>
   );
 }
