@@ -31,7 +31,7 @@ function Nav() {
         src="https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.svg" 
         alt="Netflix logo"
         className='nav__logo'
-        onClick={ () => window.location.reload() }
+        onClick={ () => navigate('/') }
       />
 
       <input
