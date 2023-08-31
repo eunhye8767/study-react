@@ -3,11 +3,6 @@ import styled from '@emotion/styled';
 import { Title } from 'components/Title';
 import { ToDoList } from 'components/ToDoList';
 
-interface Props {
-  readonly toDoList: ReadonlyArray<string>;
-  readonly onDelete?: (todo: string) => void;
-}
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -18,11 +13,11 @@ const Container = styled.div`
   border-radius: 8px;
 `;
 
-export const DataView = ({ toDoList, onDelete }: Props) => {
+export const DataView = () => {
   return (
     <Container>
       <Title label="할 일 목록" />
-      <ToDoList toDoList={toDoList} onDelete={onDelete} />
+      <ToDoList />
     </Container>
   );
 };

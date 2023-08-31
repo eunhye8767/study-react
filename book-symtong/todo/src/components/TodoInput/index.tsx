@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import styled from '@emotion/styled';
 
 import { TextInput } from 'components/TextInput';
 import { Button } from 'components/Button';
 import { Title } from 'components/Title';
+import { ToDoListContext } from 'contexts/ToDoList';
 
 interface Props {
-  readonly onAdd: (toDo: string) => void;
+  readonly onClose: (toDo: string) => void;
 }
 
 const Container = styled.div`
@@ -46,7 +47,8 @@ const InputContainer = styled.div`
   justify-content: center;
 `;
 
-export const TodoInput = ({ onAdd }: Props) => {
+export const ToDoInput = ({ onClose }: Props) => {
+  const { onAdd } = useContext(ToDoListContext);
   const [toDo, setToDo] = useState('');
 
   const onAddTodo = () => {
@@ -54,6 +56,7 @@ export const TodoInput = ({ onAdd }: Props) => {
 
     onAdd(toDo);
     setToDo('');
+    onClose(toDo);
   };
 
   return (

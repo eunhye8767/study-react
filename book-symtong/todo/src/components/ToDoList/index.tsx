@@ -1,17 +1,17 @@
-import styled from '@emotion/styled';
-import { TodoItem } from 'components/ToDoItem';
+import { useContext } from 'react';
 
-interface Props {
-  readonly toDoList: ReadonlyArray<string>;
-  readonly onDelete?: (todo: string) => void;
-}
+import styled from '@emotion/styled';
+
+import { TodoItem } from 'components/ToDoItem';
+import { ToDoListContext } from 'contexts/ToDoList';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export const ToDoList = ({ toDoList, onDelete }: Props) => {
+export const ToDoList = () => {
+  const { toDoList, onDelete } = useContext(ToDoListContext);
   return (
     <Container>
       {toDoList.map((todo) => {

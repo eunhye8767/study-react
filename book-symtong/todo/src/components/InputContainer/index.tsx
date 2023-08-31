@@ -1,26 +1,22 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
-import { TodoInput } from 'components/TodoInput';
+import { ToDoInput } from 'components/ToDoInput';
 import { ShowInputButton } from 'components/ShowInputButton';
+import { ToDoListContext } from 'contexts/ToDoList';
 
-interface Props {
-  readonly onAdd: (toDo: string) => void;
-}
-
-export const InputContainer = ({ onAdd }: Props) => {
+export const InputContainer = () => {
+  const { onAdd } = useContext(ToDoListContext);
   const [showToDoInput, setShowToDoInput] = useState(false);
 
-  const onAddToDo = (toDo: string) => {
-    onAdd(toDo)
-    setShowToDoInput(!showToDoInput)
-  }
+  const onClose = (toDo: string) => {
+    onAdd(toDo);
+    setShowToDoInput(!showToDoInput);
+  };
 
   return (
     <>
-      {showToDoInput && <TodoInput onAdd={onAddToDo} />}
-      <ShowInputButton 
-        show={showToDoInput} 
-        onClick={() => setShowToDoInput(!showToDoInput)} />
+      {showToDoInput && <ToDoInput onClose={onClose} />}
+      <ShowInputButton show={showToDoInput} onClick={() => setShowToDoInput(!showToDoInput)} />
     </>
   );
 };
