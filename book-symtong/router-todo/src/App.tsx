@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 
 import { DataView } from "pages/DataView";
 import { ToDoInput } from "pages/ToDoInput";
-import { InputContainer } from "components/InputContainer";
+import { Header } from "components/Header";
 import { ToDoListContextProvider } from "contexts/ToDoList";
 
 const Container = styled.div`
@@ -23,6 +23,8 @@ function App() {
   return (
     <Container>
       <ToDoListContextProvider>
+        <Header />
+
         <Routes>
           <Route path="/" element={<DataView />} />
           <Route path="/add" element={<ToDoInput />} />
