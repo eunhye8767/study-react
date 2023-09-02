@@ -1,8 +1,9 @@
-import styled from '@emotion/styled';
+import styled from "@emotion/styled";
+import { Routes, Route } from "react-router-dom";
 
-import { DataView } from 'components/DataView';
-import { InputContainer } from 'components/InputContainer';
-import { ToDoListContextProvider } from 'contexts/ToDoList';
+import { DataView } from "components/DataView";
+import { InputContainer } from "components/InputContainer";
+import { ToDoListContextProvider } from "contexts/ToDoList";
 
 const Container = styled.div`
   display: flex;
@@ -17,8 +18,17 @@ function App() {
   return (
     <Container>
       <ToDoListContextProvider>
-        <DataView />
-        <InputContainer />
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <DataView />
+                <InputContainer />
+              </>
+            }
+          />
+        </Routes>
       </ToDoListContextProvider>
     </Container>
   );
