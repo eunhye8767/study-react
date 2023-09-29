@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { ToDoListContextProvider } from 'contexts/ToDoList';
+
+import { Header } from 'components/organisms/Header';
+import { ToDoListPage } from 'pages/ToDoListPage';
+import { ToDoInputPage } from 'pages/ToDoInputPage';
+import { NotFound } from 'pages/NotFound';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ToDoListContextProvider>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<ToDoListPage />} />
+          <Route path="/add" element={<ToDoInputPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </ToDoListContextProvider>
   );
 }
 
