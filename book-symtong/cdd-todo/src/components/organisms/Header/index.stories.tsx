@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { AppTitle } from '.';
+import { Header } from '.';
 
 const meta = {
-  title: 'Atoms/AppTitle',
-  component: AppTitle,
+  title: 'Organisms/Header',
+  component: Header,
   parameters: {
     // default 색상 적용
     backgrounds: {
@@ -13,9 +13,11 @@ const meta = {
     },
   },
   tags: ['autodocs'],
-} satisfies Meta<typeof AppTitle>;
+} satisfies Meta<typeof Header>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  args: {},
+};

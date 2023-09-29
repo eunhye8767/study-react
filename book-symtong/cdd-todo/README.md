@@ -1,5 +1,40 @@
 ## 스토리북 v7~
 
+- [v7 예제 샘플코드](https://github.com/dev-yakuza/react_with_typescript_book_examples/tree/main/ch11.cdd-todo/storybook-v7)
+
+```javascript
+import type { Meta, StoryObj } from '@storybook/react';
+
+import { 컴포넌트명 } from '컴포넌트 경로';
+
+const meta = {
+  title: '폴더명/컴포넌트명',
+  component: 컴포넌트명,
+  parameters: {
+    // default 배경 적용
+    backgrounds: {
+      default: '문구',
+      values: [{ name: '문구', value: '색상값' }],
+    },
+  },
+  tags: ['autodocs'],
+  argTypes: {},
+} satisfies Meta<typeof 컴포넌트명>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: {
+    //...
+  },
+};
+```
+
+<br />
+<hr />
+<br />
+
 ### 1. default 색상 적용
 
 ```javascript
@@ -16,8 +51,8 @@ const meta = {
       default: 'Header background color',
       values: [{ name: 'Header background color', value: '#304ffe' }],
     },
-    tags: ['autodocs'],
   },
+  tags: ['autodocs'],
   argTypes: {},
 } satisfies Meta<typeof AppTitle>;
 
@@ -32,7 +67,7 @@ export const Default: Story = {
 
 #### 1.1. Link 사용했을 때
 
-- 원래는 `App.tsx`에 적용하지만 현재 상황 기준으로 처리해야할 때<br />해당 페이지에서 `BrowserRouter`을 적용해준다.
+- `.storybook/preview.ts`에 추가하기
 
 ```javascript
 import { BrowserRouter, Link } from 'react-router-dom';

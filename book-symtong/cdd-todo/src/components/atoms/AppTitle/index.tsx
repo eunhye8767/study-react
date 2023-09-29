@@ -1,4 +1,4 @@
-import { BrowserRouter, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import styled from '@emotion/styled';
 
@@ -10,9 +10,5 @@ const Container = styled(Link)`
 `;
 
 export const AppTitle = () => {
-  return (
-    <BrowserRouter>
-      <Container to="/">할 일 목록 앱</Container>
-    </BrowserRouter>
-  );
+  return <Container to="/">할 일 목록 앱</Container>;
 };
