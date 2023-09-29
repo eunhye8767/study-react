@@ -1,16 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Header } from '.';
+import { ToDoItem } from '.';
 
 const meta = {
-  title: 'Organisms/Header',
-  component: Header,
+  title: 'Organisms/ToDoItem',
+  component: ToDoItem,
   tags: ['autodocs'],
-} satisfies Meta<typeof Header>;
+} satisfies Meta<typeof ToDoItem>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  args: {},
+  args: {
+    label: '리액트 공부하기',
+  },
 };

@@ -65,29 +65,39 @@ export const Default: Story = {
 
 ```
 
-#### 1.1. Link 사용했을 때
+#### 1.1. Link 사용할 때
 
-- `.storybook/preview.ts`에 추가하기
+1. `.storybook/preview.ts` 파일을 `.tsx` 파일로 변경
+2. 기존 파일을 보면 JSX 문법을 사용하고 있습니다. <br />하지만 `.ts` 파일은 `TypeScript`라는 의미이기에 이 파일에서는 JSX 문법을 이해할 수 없습니다.<br />그래서 **`.tsx(TypeScript JSX)`로 변경하여 TypeScript 기반의 JSX 파일이라는 것**을 알려 줘야 합니다.
 
 ```javascript
-import { BrowserRouter, Link } from 'react-router-dom';
+// .storybook/preview.tsx
+import type { Preview } from '@storybook/react';
 
-import styled from '@emotion/styled';
+import { BrowserRouter } from 'react-router-dom';
+import React from 'react';
 
-const Container = styled(Link)`
-  color: #fff;
-  font-size: 20px;
-  text-decoration: none;
-  cursor: pointer;
-`;
-
-export const AppTitle = () => {
-  return (
-    <BrowserRouter>
-      <Container to="/">할 일 목록 앱</Container>
-    </BrowserRouter>
-  );
+const preview: Preview = {
+  parameters: {
+    actions: { argTypesRegex: '^on[A-Z].*' },
+    controls: {
+      matchers: {
+        color: /(background|color)$/i,
+        date: /Date$/,
+      },
+    },
+  },
 };
+
+export default preview;
+
+export const decorators = [
+  (Story) => (
+    <BrowserRouter>
+      <Story />
+    </BrowserRouter>
+  ),
+];
 ```
 
 <br />
